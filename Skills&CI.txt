@@ -1,0 +1,28 @@
+Playwright-cli: https://github.com/microsoft/playwright
+--headed 
+Para que acceda al sitio web e implemente los cambios solicitudes.
+
+GitHub CLI → https://github.com/cli/cli
+
+Cloudflare Tunnel → https://github.com/cloudflare/cloudflared
+
+Railway CLI -> https://github.com/railwayapp/cli
+
+Context7 → https://github.com/upstash/context7
+Aplica la correción del código usando los parámetros más actuales y funcionales.
+
+Frontend Design Skill - https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md
+
+Impecable: https://github.com/pbakaus/impeccable
+
+Interface Design - https://www.skills.sh/dammyjay93/interface-design/interface-design
+Para corregir el diseño de una interfaz frontend
+
+API Design Principles - https://github.com/wshobson/agents
+Para obtener buenas prácticas para creación de APIs
+
+Brainstorming Skill (Superpowers) - https://github.com/obra/superpowers
+Para hacer una lluvia de ideas para estructurar un proyecto
+
+Systematic Debugging Skill (Superpowers) - https://github.com/obra/superpowers
+Para corregir errores de manera sistemática
