@@ -43,5 +43,13 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-/.agents
-/.docs
+# Agents and docs
+.agents/
+.docs/
+docs/
+AGENTS.md
+
+# Environment files
+.env
+.env.*
+!.env.example
