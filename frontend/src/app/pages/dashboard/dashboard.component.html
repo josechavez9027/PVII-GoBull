@@ -69,7 +69,9 @@
               <div class="profile-dropdown__header">
                 <div class="profile-dropdown__avatar">{{ getUserInitials() }}</div>
                 <div class="profile-dropdown__info">
-                  <strong class="profile-dropdown__name">{{ currentUser?.name || 'Usuario' }}</strong>
+                  <strong class="profile-dropdown__name">{{
+                    currentUser?.name || 'Usuario'
+                  }}</strong>
                   <span class="profile-dropdown__email">{{ currentUser?.email || '' }}</span>
                 </div>
               </div>
@@ -80,9 +82,22 @@
                 role="menuitem"
                 (click)="logout()"
               >
-                <svg class="profile-dropdown__icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z" clip-rule="evenodd"/>
-                  <path fill-rule="evenodd" d="M19 10a.75.75 0 00-.75-.75H8.704l2.47-2.47a.75.75 0 10-1.06-1.06l-3.75 3.75a.75.75 0 000 1.06l3.75 3.75a.75.75 0 101.06-1.06l-2.47-2.47H18.25A.75.75 0 0019 10z" clip-rule="evenodd"/>
+                <svg
+                  class="profile-dropdown__icon"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M19 10a.75.75 0 00-.75-.75H8.704l2.47-2.47a.75.75 0 10-1.06-1.06l-3.75 3.75a.75.75 0 000 1.06l3.75 3.75a.75.75 0 101.06-1.06l-2.47-2.47H18.25A.75.75 0 0019 10z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
                 <span>Cerrar sesión</span>
               </button>
@@ -682,7 +697,7 @@
 @if (showCreateModal) {
   <div class="modal-backdrop" (click)="closeCreateModal()" role="presentation">
     <div
-      class="modal-dialog"
+      class="modal-dialog modal-dialog--create"
       role="dialog"
       aria-modal="true"
       aria-labelledby="create-modal-title"
@@ -705,217 +720,226 @@
           @if (createError) {
             <div class="alert alert--danger" role="alert">
               <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/>
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                  clip-rule="evenodd"
+                />
               </svg>
               <div class="alert__message">{{ createError }}</div>
             </div>
           }
 
-          <!-- TIPO DE OPERACIÓN -->
-          <div class="form-group">
-            <label for="op-type" class="form-label">Tipo de operación *</label>
-            <select
-              id="op-type"
-              class="form-control"
-              [(ngModel)]="createForm.type"
-              name="type"
-              (change)="onTypeChange()"
-              required
-            >
-              <option value="DEP">Depósito</option>
-              <option value="BUY">Compra</option>
-              <option value="SELL">Venta</option>
-              <option value="RET">Retiro</option>
-              <option value="DIV">Diviendos</option>
-              <option value="TAX">Impuestos</option>
-            </select>
-          </div>
-
-          <!-- SÍMBOLO (BUY/SELL/DIV) -->
-          @if (showsSymbolField()) {
+          <div class="form-grid">
+            <!-- TIPO DE OPERACIÓN -->
             <div class="form-group">
-              <label for="op-symbol" class="form-label">Símbolo bursátil *</label>
-              <div
-                class="symbol-combobox"
-                role="combobox"
-                aria-haspopup="listbox"
-                aria-expanded="{{ showSymbolSuggestions }}"
-                aria-owns="symbol-suggestions"
+              <label for="op-type" class="form-label">Tipo de operación *</label>
+              <select
+                id="op-type"
+                class="form-control"
+                [(ngModel)]="createForm.type"
+                name="type"
+                (change)="onTypeChange()"
+                required
               >
-                <input
-                  id="op-symbol"
-                  type="text"
-                  class="form-control text-uppercase"
-                  placeholder="Ej. AAPL, NVDA, TSLA"
-                  [(ngModel)]="createForm.symbol"
-                  (ngModelChange)="onSymbolInput()"
-                  (keydown)="onSymbolKeydown($event)"
-                  (blur)="onSymbolBlur()"
-                  name="symbol"
-                  maxlength="20"
-                  autocomplete="off"
-                  role="searchbox"
-                  aria-autocomplete="list"
-                  aria-controls="symbol-suggestions"
-                  [attr.aria-activedescendant]="
-                    activeSuggestionIndex >= 0 ? 'symbol-opt-' + activeSuggestionIndex : null
-                  "
-                  required
-                />
-                @if (showSymbolSuggestions) {
-                  <ul
-                    id="symbol-suggestions"
-                    class="symbol-suggestions"
-                    role="listbox"
-                    aria-label="Instrumentos sugeridos"
-                  >
-                    @for (inst of symbolSuggestions; track inst.symbol; let i = $index) {
-                      <li
-                        role="option"
-                        [id]="'symbol-opt-' + i"
-                        [attr.aria-selected]="i === activeSuggestionIndex"
-                      >
-                        <button
-                          type="button"
-                          class="symbol-suggestions__item"
-                          [class.symbol-suggestions__item--active]="
-                            i === activeSuggestionIndex
-                          "
-                          (mousedown)="selectSymbolSuggestion(inst)"
-                          (mouseenter)="activeSuggestionIndex = i"
+                <option value="DEP">Depósito</option>
+                <option value="BUY">Compra</option>
+                <option value="SELL">Venta</option>
+                <option value="RET">Retiro</option>
+                <option value="DIV">Diviendos</option>
+                <option value="TAX">Impuestos/Comisiones</option>
+              </select>
+            </div>
+
+            <!-- FECHA -->
+            <div class="form-group">
+              <label for="op-date" class="form-label">Fecha de la operación *</label>
+              <input
+                id="op-date"
+                type="date"
+                class="form-control"
+                [(ngModel)]="createForm.date"
+                name="date"
+                required
+              />
+            </div>
+
+            <!-- SÍMBOLO (BUY/SELL/DIV) -->
+            @if (showsSymbolField()) {
+              <div class="form-group form-group--symbol">
+                <label for="op-symbol" class="form-label">Símbolo bursátil *</label>
+                <div
+                  class="symbol-combobox"
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-expanded="{{ showSymbolSuggestions }}"
+                  aria-owns="symbol-suggestions"
+                >
+                  <input
+                    id="op-symbol"
+                    type="text"
+                    class="form-control text-uppercase"
+                    placeholder="Ej. AAPL, NVDA, TSLA"
+                    [(ngModel)]="createForm.symbol"
+                    (ngModelChange)="onSymbolInput()"
+                    (keydown)="onSymbolKeydown($event)"
+                    (blur)="onSymbolBlur()"
+                    name="symbol"
+                    maxlength="20"
+                    autocomplete="off"
+                    role="searchbox"
+                    aria-autocomplete="list"
+                    aria-controls="symbol-suggestions"
+                    [attr.aria-activedescendant]="
+                      activeSuggestionIndex >= 0 ? 'symbol-opt-' + activeSuggestionIndex : null
+                    "
+                    required
+                  />
+                  @if (showSymbolSuggestions) {
+                    <ul
+                      id="symbol-suggestions"
+                      class="symbol-suggestions"
+                      role="listbox"
+                      aria-label="Instrumentos sugeridos"
+                    >
+                      @for (inst of symbolSuggestions; track inst.symbol; let i = $index) {
+                        <li
+                          role="option"
+                          [id]="'symbol-opt-' + i"
+                          [attr.aria-selected]="i === activeSuggestionIndex"
                         >
-                          <span class="symbol-suggestions__symbol">{{ inst.symbol }}</span>
-                          <span class="symbol-suggestions__name">{{ inst.name }}</span>
-                          <span class="symbol-suggestions__market">{{ inst.market }}</span>
-                        </button>
-                      </li>
-                    }
-                  </ul>
+                          <button
+                            type="button"
+                            class="symbol-suggestions__item"
+                            [class.symbol-suggestions__item--active]="i === activeSuggestionIndex"
+                            (mousedown)="selectSymbolSuggestion(inst)"
+                            (mouseenter)="activeSuggestionIndex = i"
+                          >
+                            <span class="symbol-suggestions__symbol">{{ inst.symbol }}</span>
+                            <span class="symbol-suggestions__name">{{ inst.name }}</span>
+                            <span class="symbol-suggestions__market">{{ inst.market }}</span>
+                          </button>
+                        </li>
+                      }
+                    </ul>
+                  }
+                </div>
+                @if (createForm.type === 'SELL' && createForm.symbol) {
+                  @let available = getOpenQtyForSymbol(createForm.symbol);
+                  <small class="form-help" [class.text-danger]="createForm.qty > available">
+                    Posición abierta: <strong>{{ available }} acc.</strong>
+                  </small>
                 }
               </div>
-              @if (createForm.type === 'SELL' && createForm.symbol) {
-                @let available = getOpenQtyForSymbol(createForm.symbol);
-                <small class="form-help" [class.text-danger]="createForm.qty > available">
-                  Posición abierta disponible: <strong>{{ available }} acciones</strong>
+            }
+
+            <!-- NOMBRE (BLOQUEADO / DATO INFORMATIVO PARA ACCIONES, CONCEPTO PARA FLUJO DE EFECTIVO) -->
+            <div class="form-group">
+              <label for="op-name" class="form-label">
+                @if (showsSymbolField()) {
+                  Nombre de la empresa / acción
+                  <span class="badge-informative">Dato informativo</span>
+                } @else {
+                  Concepto *
+                }
+              </label>
+              <input
+                id="op-name"
+                type="text"
+                class="form-control"
+                [class.form-control--readonly]="showsSymbolField()"
+                [placeholder]="showsSymbolField() ? '' : ''"
+                [(ngModel)]="createForm.name"
+                name="name"
+                [readonly]="showsSymbolField()"
+                [tabindex]="showsSymbolField() ? -1 : 0"
+                [attr.aria-readonly]="showsSymbolField() ? 'true' : null"
+                required
+              />
+            </div>
+
+            <!-- CANTIDAD -->
+            @if (isTradeType()) {
+              <div class="form-group">
+                <label for="op-qty" class="form-label">Cantidad de acciones *</label>
+                <input
+                  id="op-qty"
+                  type="number"
+                  step="any"
+                  min="0.0001"
+                  class="form-control"
+                  [(ngModel)]="createForm.qty"
+                  name="qty"
+                  required
+                />
+              </div>
+            }
+
+            <!-- MONTO TOTAL -->
+            <div class="form-group" [class.form-group--full]="!isTradeType() && showsSymbolField()">
+              <label for="op-total" class="form-label">Monto total (MXN) *</label>
+              <input
+                id="op-total"
+                type="number"
+                step="0.01"
+                min="0.01"
+                class="form-control"
+                [class.form-control--invalid]="hasInsufficientCash()"
+                placeholder="0.00"
+                [(ngModel)]="createForm.totalPrice"
+                name="totalPrice"
+                required
+              />
+              @if (isTradeType() && createForm.totalPrice && createForm.qty > 0) {
+                <small class="form-help text-info">
+                  Precio unitario:
+                  <strong>${{ getEstimatedUnitPrice() | number: '1.2-2' }} MXN</strong> por acción
                 </small>
               }
             </div>
-          }
 
-          <!-- NOMBRE (BLOQUEADO / DATO INFORMATIVO PARA ACCIONES, CONCEPTO PARA FLUJO DE EFECTIVO) -->
-          <div class="form-group">
-            <label for="op-name" class="form-label">
-              @if (showsSymbolField()) {
-                Nombre de la empresa / acción
-                <span class="badge-informative">Dato informativo</span>
-              } @else {
-                Concepto *
-              }
-            </label>
-            <input
-              id="op-name"
-              type="text"
-              class="form-control"
-              [class.form-control--readonly]="showsSymbolField()"
-              [placeholder]="
-                showsSymbolField()
-                  ? 'Se completa en automático desde el catálogo'
-                  : 'Ej. Depósito inicial'
-              "
-              [(ngModel)]="createForm.name"
-              name="name"
-              [readonly]="showsSymbolField()"
-              [tabindex]="showsSymbolField() ? -1 : 0"
-              [attr.aria-readonly]="showsSymbolField() ? 'true' : null"
-              required
-            />
-            @if (showsSymbolField()) {
-              <small class="form-help text-muted">
-                Dato informativo obtenido automáticamente del catálogo según el símbolo seleccionado.
-              </small>
-            }
-          </div>
-
-          <!-- FECHA -->
-          <div class="form-group">
-            <label for="op-date" class="form-label">Fecha de la operación *</label>
-            <input
-              id="op-date"
-              type="date"
-              class="form-control"
-              [(ngModel)]="createForm.date"
-              name="date"
-              required
-            />
-          </div>
-
-          <!-- CANTIDAD -->
-          <div class="form-group">
-            <label for="op-qty" class="form-label">Cantidad de acciones *</label>
-            <input
-              id="op-qty"
-              type="number"
-              step="any"
-              min="0.0001"
-              class="form-control"
-              [(ngModel)]="createForm.qty"
-              name="qty"
-              [disabled]="!isTradeType()"
-              required
-            />
-            @if (!isTradeType()) {
-              <small class="form-help text-muted">Fijo en 1 para este tipo de movimiento.</small>
-            }
-          </div>
-
-          <!-- MONTO TOTAL -->
-          <div class="form-group">
-            <label for="op-total" class="form-label">Monto total (MXN) *</label>
-            <input
-              id="op-total"
-              type="number"
-              step="0.01"
-              min="0.01"
-              class="form-control"
-              [class.form-control--invalid]="hasInsufficientCash()"
-              placeholder="0.00"
-              [(ngModel)]="createForm.totalPrice"
-              name="totalPrice"
-              required
-            />
-            @if (isTradeType() && createForm.totalPrice && createForm.qty > 0) {
-              <small class="form-help text-info">
-                Precio unitario calculado:
-                <strong>${{ getEstimatedUnitPrice() | number: '1.2-2' }} MXN</strong> por acción
-              </small>
-            }
-
+            <!-- CAJA DISPONIBLE -->
             @if (isCashOutflowType()) {
-              <div
-                class="cash-indicator"
-                [class.cash-indicator--danger]="hasInsufficientCash()"
-                role="status"
-              >
-                <div class="cash-indicator__header">
-                  <span class="cash-indicator__label">
-                    <span class="cash-indicator__dot"></span>
-                    Caja disponible:
-                  </span>
-                  <strong class="cash-indicator__amount">
-                    ${{ getAvailableCash() | number: '1.2-2' }} MXN
-                  </strong>
-                </div>
-
-                @if (hasInsufficientCash()) {
-                  <div class="cash-indicator__alert" role="alert">
-                    <svg class="cash-indicator__alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
-                    </svg>
-                    <div class="cash-indicator__alert-text">
-                      <strong>Fondos insuficientes:</strong> El monto ingresado (${{ createForm.totalPrice | number: '1.2-2' }} MXN) supera los ${{ getAvailableCash() | number: '1.2-2' }} MXN en caja. Reduce el importe o realiza un depósito previo.
-                    </div>
+              <div class="form-group--full">
+                <div
+                  class="cash-indicator"
+                  [class.cash-indicator--danger]="hasInsufficientCash()"
+                  role="status"
+                >
+                  <div class="cash-indicator__header">
+                    <span class="cash-indicator__label">
+                      <span class="cash-indicator__dot"></span>
+                      Caja disponible:
+                    </span>
+                    <strong class="cash-indicator__amount">
+                      ${{ getAvailableCash() | number: '1.2-2' }} MXN
+                    </strong>
                   </div>
-                }
+
+                  @if (hasInsufficientCash()) {
+                    <div class="cash-indicator__alert" role="alert">
+                      <svg
+                        class="cash-indicator__alert-icon"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <div class="cash-indicator__alert-text">
+                        <strong>Fondos insuficientes:</strong> El monto ingresado (${{
+                          createForm.totalPrice | number: '1.2-2'
+                        }}
+                        MXN) supera los ${{ getAvailableCash() | number: '1.2-2' }} MXN en caja.
+                        Reduce el importe o realiza un depósito previo.
+                      </div>
+                    </div>
+                  }
+                </div>
               </div>
             }
           </div>
