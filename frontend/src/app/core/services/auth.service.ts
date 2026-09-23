@@ -12,6 +12,9 @@ export interface AuthResponse {
   token?: string;
   user?: User;
   message?: string;
+  success?: boolean;
+  notFound?: boolean;
+  code?: string;
 }
 
 @Injectable({
@@ -34,8 +37,8 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/logout`, {});
   }
 
-  me(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`);
+  me(): Observable<{ user: User }> {
+    return this.http.get<{ user: User }>(`${this.apiUrl}/me`);
   }
 
   forgotPassword(email: string): Observable<AuthResponse> {

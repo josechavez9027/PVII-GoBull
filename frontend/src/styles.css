@@ -108,6 +108,7 @@ h6,
 
 /* Base button styles */
 .btn {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -150,6 +151,7 @@ h6,
 
 .btn-block {
   width: 100%;
+  box-sizing: border-box;
 }
 
 .btn-text {

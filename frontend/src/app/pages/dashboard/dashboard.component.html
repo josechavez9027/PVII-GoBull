@@ -52,7 +52,43 @@
         >
           Ayuda <span aria-hidden="true">⌄</span>
         </button>
-        <button class="profile-button" type="button" aria-label="Abrir perfil de usuario">U</button>
+        <div class="profile-menu-container" (keydown)="onProfileKeydown($event)">
+          <button
+            class="profile-button"
+            type="button"
+            [attr.aria-expanded]="showProfileMenu"
+            aria-haspopup="true"
+            aria-label="Abrir menú de usuario"
+            (click)="toggleProfileMenu($event)"
+          >
+            {{ getUserInitials() }}
+          </button>
+
+          @if (showProfileMenu) {
+            <div class="profile-dropdown" role="menu" aria-orientation="vertical">
+              <div class="profile-dropdown__header">
+                <div class="profile-dropdown__avatar">{{ getUserInitials() }}</div>
+                <div class="profile-dropdown__info">
+                  <strong class="profile-dropdown__name">{{ currentUser?.name || 'Usuario' }}</strong>
+                  <span class="profile-dropdown__email">{{ currentUser?.email || '' }}</span>
+                </div>
+              </div>
+              <div class="profile-dropdown__divider" role="separator"></div>
+              <button
+                class="profile-dropdown__item profile-dropdown__item--danger"
+                type="button"
+                role="menuitem"
+                (click)="logout()"
+              >
+                <svg class="profile-dropdown__icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd" d="M19 10a.75.75 0 00-.75-.75H8.704l2.47-2.47a.75.75 0 10-1.06-1.06l-3.75 3.75a.75.75 0 000 1.06l3.75 3.75a.75.75 0 101.06-1.06l-2.47-2.47H18.25A.75.75 0 0019 10z" clip-rule="evenodd"/>
+                </svg>
+                <span>Cerrar sesión</span>
+              </button>
+            </div>
+          }
+        </div>
       </div>
     </header>
 
@@ -86,16 +122,6 @@
         <div class="metric-card">
           <div class="metric-card__header">
             <span class="metric-card__title">Patrimonio total</span>
-            <span class="metric-badge metric-badge--primary">Cartera</span>
-          </div>
-          <div class="metric-card__value text-metric text-primary-colored">
-            ${{ summary.patrimonio | number: '1.2-2' }} <span class="currency-tag">MXN</span>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-card__header">
-            <span class="metric-card__title">Nivel neutral (Capital propio)</span>
             @let perf = getPerformanceVsNeutral();
             @if (perf.status === 'positive') {
               <span class="metric-badge metric-badge--success"
@@ -106,8 +132,18 @@
                 >{{ perf.percent | number: '1.1-1' }}%</span
               >
             } @else {
-              <span class="metric-badge metric-badge--neutral">Neutro</span>
+              <span class="metric-badge metric-badge--neutral">0.0%</span>
             }
+          </div>
+          <div class="metric-card__value text-metric text-primary-colored">
+            ${{ summary.patrimonio | number: '1.2-2' }} <span class="currency-tag">MXN</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-card__header">
+            <span class="metric-card__title">Nivel neutral (Capital propio)</span>
+            <span class="metric-badge metric-badge--neutral">Neutro</span>
           </div>
           <div class="metric-card__value text-metric text-secondary-metric">
             ${{ summary.neutral | number: '1.2-2' }} <span class="currency-tag">MXN</span>
@@ -257,13 +293,139 @@
               <table data-testid="operations-table" aria-label="Tabla de operaciones financieras">
                 <thead>
                   <tr>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Símbolo</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col" class="text-right">Cantidad</th>
-                    <th scope="col" class="text-right">Precio Unitario</th>
-                    <th scope="col" class="text-right">Monto Total</th>
+                    <th
+                      scope="col"
+                      class="th-sortable"
+                      [class.th-sortable--active]="sortColumn === 'type'"
+                      [attr.aria-sort]="getAriaSort('type')"
+                      (click)="sortBy('type')"
+                      title="Ordenar por Tipo"
+                    >
+                      <div class="th-content">
+                        <span>Tipo</span>
+                        <span class="sort-indicator" aria-hidden="true">
+                          @if (sortColumn === 'type') {
+                            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                          } @else {
+                            <span class="sort-indicator--inactive">⇅</span>
+                          }
+                        </span>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="th-sortable"
+                      [class.th-sortable--active]="sortColumn === 'name'"
+                      [attr.aria-sort]="getAriaSort('name')"
+                      (click)="sortBy('name')"
+                      title="Ordenar por Nombre"
+                    >
+                      <div class="th-content">
+                        <span>Nombre</span>
+                        <span class="sort-indicator" aria-hidden="true">
+                          @if (sortColumn === 'name') {
+                            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                          } @else {
+                            <span class="sort-indicator--inactive">⇅</span>
+                          }
+                        </span>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="th-sortable"
+                      [class.th-sortable--active]="sortColumn === 'symbol'"
+                      [attr.aria-sort]="getAriaSort('symbol')"
+                      (click)="sortBy('symbol')"
+                      title="Ordenar por Símbolo"
+                    >
+                      <div class="th-content">
+                        <span>Símbolo</span>
+                        <span class="sort-indicator" aria-hidden="true">
+                          @if (sortColumn === 'symbol') {
+                            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                          } @else {
+                            <span class="sort-indicator--inactive">⇅</span>
+                          }
+                        </span>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="th-sortable"
+                      [class.th-sortable--active]="sortColumn === 'date'"
+                      [attr.aria-sort]="getAriaSort('date')"
+                      (click)="sortBy('date')"
+                      title="Ordenar por Fecha"
+                    >
+                      <div class="th-content">
+                        <span>Fecha</span>
+                        <span class="sort-indicator" aria-hidden="true">
+                          @if (sortColumn === 'date') {
+                            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                          } @else {
+                            <span class="sort-indicator--inactive">⇅</span>
+                          }
+                        </span>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="th-sortable text-right"
+                      [class.th-sortable--active]="sortColumn === 'qty'"
+                      [attr.aria-sort]="getAriaSort('qty')"
+                      (click)="sortBy('qty')"
+                      title="Ordenar por Cantidad"
+                    >
+                      <div class="th-content th-content--right">
+                        <span>Cantidad</span>
+                        <span class="sort-indicator" aria-hidden="true">
+                          @if (sortColumn === 'qty') {
+                            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                          } @else {
+                            <span class="sort-indicator--inactive">⇅</span>
+                          }
+                        </span>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="th-sortable text-right"
+                      [class.th-sortable--active]="sortColumn === 'unitPrice'"
+                      [attr.aria-sort]="getAriaSort('unitPrice')"
+                      (click)="sortBy('unitPrice')"
+                      title="Ordenar por Precio Unitario"
+                    >
+                      <div class="th-content th-content--right">
+                        <span>Precio Unitario</span>
+                        <span class="sort-indicator" aria-hidden="true">
+                          @if (sortColumn === 'unitPrice') {
+                            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                          } @else {
+                            <span class="sort-indicator--inactive">⇅</span>
+                          }
+                        </span>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="th-sortable text-right"
+                      [class.th-sortable--active]="sortColumn === 'totalPrice'"
+                      [attr.aria-sort]="getAriaSort('totalPrice')"
+                      (click)="sortBy('totalPrice')"
+                      title="Ordenar por Monto Total"
+                    >
+                      <div class="th-content th-content--right">
+                        <span>Monto Total</span>
+                        <span class="sort-indicator" aria-hidden="true">
+                          @if (sortColumn === 'totalPrice') {
+                            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                          } @else {
+                            <span class="sort-indicator--inactive">⇅</span>
+                          }
+                        </span>
+                      </div>
+                    </th>
                     <th scope="col" class="text-center">Acciones</th>
                   </tr>
                 </thead>
@@ -318,7 +480,7 @@
                       </td>
                     </tr>
                   } @else {
-                    @for (op of operations; track op.id) {
+                    @for (op of paginatedOperations; track op.id) {
                       <tr>
                         <td>
                           <span class="tag" [ngClass]="getTagClass(op.type)">
@@ -360,8 +522,64 @@
             </div>
 
             <div class="report-card__footer">
-              <span>Mostrando {{ operations.length }} registros filtrados</span>
-              <span class="text-muted">Moneda de referencia: MXN</span>
+              <div class="pagination-info">
+                <span class="pagination-range">
+                  Mostrando <strong>{{ pageStart }}-{{ pageEnd }}</strong> de
+                  <strong>{{ operations.length }}</strong> registros
+                </span>
+                <div class="pagination-page-size">
+                  <label for="page-size-select" class="pagination-label">Filas por página:</label>
+                  <select
+                    id="page-size-select"
+                    class="pagination-select"
+                    [ngModel]="pageSize"
+                    (ngModelChange)="onPageSizeChange($event)"
+                    aria-label="Registros por página"
+                  >
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="20">20</option>
+                    <option [ngValue]="50">50</option>
+                  </select>
+                </div>
+              </div>
+
+              @if (totalPages > 1) {
+                <nav class="pagination-controls" aria-label="Paginación de operaciones">
+                  <button
+                    class="pagination-btn"
+                    type="button"
+                    [disabled]="currentPage === 1"
+                    (click)="prevPage()"
+                    aria-label="Página anterior"
+                  >
+                    ‹ Anterior
+                  </button>
+
+                  <div class="pagination-pages">
+                    @for (p of getPages(); track p) {
+                      <button
+                        class="pagination-page-btn"
+                        [class.pagination-page-btn--active]="p === currentPage"
+                        type="button"
+                        [attr.aria-current]="p === currentPage ? 'page' : null"
+                        (click)="setPage(p)"
+                      >
+                        {{ p }}
+                      </button>
+                    }
+                  </div>
+
+                  <button
+                    class="pagination-btn"
+                    type="button"
+                    [disabled]="currentPage === totalPages"
+                    (click)="nextPage()"
+                    aria-label="Página siguiente"
+                  >
+                    Siguiente ›
+                  </button>
+                </nav>
+              }
             </div>
           </div>
         </div>

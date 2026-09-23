@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -96,14 +96,22 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   authService = inject(AuthService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
 
   name = '';
   email = '';
   password = '';
   errorMsg = '';
+
+  ngOnInit(): void {
+    const prefillEmail = this.route.snapshot.queryParams['email'];
+    if (prefillEmail) {
+      this.email = prefillEmail;
+    }
+  }
 
   onSubmit(event: Event) {
     event.preventDefault();

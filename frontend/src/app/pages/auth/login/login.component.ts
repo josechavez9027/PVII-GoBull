@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
@@ -96,6 +96,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   authService = inject(AuthService);
   router = inject(Router);
+  cd = inject(ChangeDetectorRef);
 
   email = '';
   password = '';
@@ -111,6 +112,7 @@ export class LoginComponent {
       },
       error: (err) => {
         this.errorMsg = err.error?.message || 'Error al iniciar sesión';
+        this.cd.detectChanges();
         console.error(err);
       },
     });

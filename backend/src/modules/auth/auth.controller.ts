@@ -43,20 +43,38 @@ export class AuthController {
   
   async forgotPassword(req: Request, res: Response) {
     try {
-      const { email } = z.object({ email: z.string().email() }).parse(req.body);
+      const { email } = z
+        .object({
+          email: z.string().email('Ingresa un correo electrónico válido'),
+        })
+        .parse(req.body);
+
       try {
         const token = await authService.createPasswordResetToken(email);
         // Send actual email asynchronously (don't await so we respond fast)
-        mailService.sendPasswordResetEmail(email, token).catch(err => {
-          console.error("Fallo al enviar correo en segundo plano:", err);
+        mailService.sendPasswordResetEmail(email, token).catch((err) => {
+          console.error('Fallo al enviar correo en segundo plano:', err);
         });
         console.log(`[AUTH] Token de recuperación generado para ${email}`);
-      } catch (err) {
-        // Ignorar error si no existe para no revelar información
+        return res.json({
+          success: true,
+          message: 'El mensaje ha sido enviado, revisa tu correo para continuar el proceso.',
+        });
+      } catch (err: any) {
+        if (err.message === 'Usuario no encontrado') {
+          return res.status(404).json({
+            success: false,
+            notFound: true,
+            message: 'No se ha encontrado el correo en la lista de usuarios.',
+          });
+        }
+        throw err;
       }
-      res.json({ message: 'Si el correo está registrado, se ha enviado un enlace de recuperación.' });
     } catch (error: any) {
-      res.status(400).json({ message: 'Correo inválido' });
+      if (error && error.errors && error.errors.length > 0) {
+        return res.status(400).json({ message: error.errors[0].message });
+      }
+      return res.status(400).json({ message: error.message || 'Error al procesar la solicitud' });
     }
   }
   

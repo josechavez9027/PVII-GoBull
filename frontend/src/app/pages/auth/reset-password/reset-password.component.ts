@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -89,6 +89,7 @@ export class ResetPasswordComponent implements OnInit {
   authService = inject(AuthService);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  cd = inject(ChangeDetectorRef);
 
   token = '';
   newPassword = '';
@@ -101,6 +102,7 @@ export class ResetPasswordComponent implements OnInit {
       this.token = params['token'] || '';
       if (!this.token) {
         this.errorMsg = 'No se encontró un token válido en el enlace.';
+        this.cd.detectChanges();
       }
     });
   }
@@ -118,11 +120,13 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.isLoading = true;
+    this.cd.detectChanges();
 
     this.authService.resetPassword({ token: this.token, newPassword: this.newPassword }).subscribe({
       next: (res) => {
         this.isLoading = false;
         this.successMsg = res.message || 'Contraseña actualizada correctamente.';
+        this.cd.detectChanges();
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 3000);
@@ -130,6 +134,7 @@ export class ResetPasswordComponent implements OnInit {
       error: (err) => {
         this.isLoading = false;
         this.errorMsg = err.error?.message || 'Error al restablecer la contraseña.';
+        this.cd.detectChanges();
       },
     });
   }

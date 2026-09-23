@@ -1,6 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { DashboardComponent } from './dashboard.component';
 import {
@@ -14,12 +15,15 @@ import {
   InstrumentsService,
   Instrument,
 } from '../../core/services/instruments.service';
+import { AuthService } from '../../core/services/auth.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
   let operationsService: any;
   let exportService: any;
+  let authService: any;
+  let router: any;
 
   const mockOperations: Operation[] = [
     {
@@ -128,12 +132,23 @@ describe('DashboardComponent', () => {
       suggest: vi.fn().mockReturnValue(of({ instruments: mockInstruments })),
     };
 
+    const authSpy = {
+      me: vi.fn().mockReturnValue(of({ user: { id: 'u1', name: 'Jose Chavez', email: 'jose@gobull.com' } })),
+      logout: vi.fn().mockReturnValue(of({ message: 'OK' })),
+    };
+
+    const routerSpy = {
+      navigate: vi.fn().mockResolvedValue(true),
+    };
+
     await TestBed.configureTestingModule({
       imports: [DashboardComponent],
       providers: [
         { provide: OperationsService, useValue: opsSpy },
         { provide: ExportService, useValue: expSpy },
         { provide: InstrumentsService, useValue: instSpy },
+        { provide: AuthService, useValue: authSpy },
+        { provide: Router, useValue: routerSpy },
         provideHttpClient(),
         provideHttpClientTesting(),
       ],
@@ -141,6 +156,8 @@ describe('DashboardComponent', () => {
 
     operationsService = TestBed.inject(OperationsService);
     exportService = TestBed.inject(ExportService);
+    authService = TestBed.inject(AuthService);
+    router = TestBed.inject(Router);
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -162,6 +179,19 @@ describe('DashboardComponent', () => {
     const perf = component.getPerformanceVsNeutral();
     expect(perf.diff).toBe(70);
     expect(perf.status).toBe('positive');
+  });
+
+  it('should display performance badge in Patrimonio total metric card', () => {
+    fixture.detectChanges();
+    const metricCards = fixture.nativeElement.querySelectorAll('.metric-card');
+    // Card 1: Caja disponible, Card 2: Patrimonio total, Card 3: Nivel neutral
+    expect(metricCards.length).toBe(3);
+    const patrimonioCard = metricCards[1];
+    expect(patrimonioCard.querySelector('.metric-card__title').textContent).toContain('Patrimonio total');
+    const badge = patrimonioCard.querySelector('.metric-badge');
+    expect(badge).toBeTruthy();
+    expect(badge.classList).toContain('metric-badge--success');
+    expect(badge.textContent).toContain('+2.3%');
   });
 
   it('should switch tabs between operations and analysis', () => {
@@ -428,5 +458,172 @@ describe('DashboardComponent', () => {
     expect(operationsService.createOperation).toHaveBeenCalledWith(
       expect.objectContaining({ type: 'BUY', totalPrice: 1000 }),
     );
+  });
+
+  describe('Profile button and session menu', () => {
+    it('should compute two initials from full name', () => {
+      component.currentUser = { id: '1', name: 'Jose Chavez', email: 'jose@gobull.com' };
+      expect(component.getUserInitials()).toBe('JC');
+
+      component.currentUser = { id: '2', name: 'Maria Elena Sanchez', email: 'maria@gobull.com' };
+      expect(component.getUserInitials()).toBe('ME');
+    });
+
+    it('should compute initials from single name', () => {
+      component.currentUser = { id: '3', name: 'Carlos', email: 'carlos@gobull.com' };
+      expect(component.getUserInitials()).toBe('CA');
+    });
+
+    it('should compute initials from email if name is empty', () => {
+      component.currentUser = { id: '4', name: '', email: 'ana.lopez@gobull.com' };
+      expect(component.getUserInitials()).toBe('AL');
+
+      component.currentUser = { id: '5', name: '', email: 'rodrigo@gobull.com' };
+      expect(component.getUserInitials()).toBe('RO');
+    });
+
+    it('should fallback to US if no user name or email', () => {
+      component.currentUser = null;
+      expect(component.getUserInitials()).toBe('US');
+    });
+
+    it('should toggle profile menu on toggleProfileMenu', () => {
+      expect(component.showProfileMenu).toBe(false);
+      const fakeEvent = { stopPropagation: vi.fn() } as any;
+      component.toggleProfileMenu(fakeEvent);
+      expect(component.showProfileMenu).toBe(true);
+      expect(fakeEvent.stopPropagation).toHaveBeenCalled();
+
+      component.toggleProfileMenu(fakeEvent);
+      expect(component.showProfileMenu).toBe(false);
+    });
+
+    it('should close profile menu on Escape key', () => {
+      component.showProfileMenu = true;
+      component.onProfileKeydown({ key: 'Escape' } as KeyboardEvent);
+      expect(component.showProfileMenu).toBe(false);
+    });
+
+    it('should close profile menu on document click outside', () => {
+      component.showProfileMenu = true;
+      const fakeClick = new MouseEvent('click');
+      component.onDocumentClick(fakeClick);
+      expect(component.showProfileMenu).toBe(false);
+    });
+
+    it('should call authService.logout and navigate to /login', () => {
+      component.showProfileMenu = true;
+      component.logout();
+      expect(component.showProfileMenu).toBe(false);
+      expect(authService.logout).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    });
+  });
+
+  describe('Pagination and Sorting', () => {
+    it('should default to 10 records per page on page 1 with 10, 20, 50 options', () => {
+      expect(component.pageSize).toBe(10);
+      expect(component.currentPage).toBe(1);
+      expect(component.pageSizeOptions).toEqual([10, 20, 50]);
+    });
+
+    it('should paginate items correctly across pages', () => {
+      // Create 25 mock operations
+      const manyOps: Operation[] = Array.from({ length: 25 }, (_, i) => ({
+        id: `op-multi-${i + 1}`,
+        type: 'BUY',
+        name: `Asset ${String.fromCharCode(65 + (i % 26))}`,
+        symbol: `SYM${i}`,
+        date: `2026-09-${String((i % 28) + 1).padStart(2, '0')}T10:00:00.000Z`,
+        qty: i + 1,
+        totalPrice: (i + 1) * 100,
+        createdAt: '2026-09-01T10:00:00.000Z',
+      }));
+
+      component.operations = manyOps;
+      expect(component.totalPages).toBe(3);
+      expect(component.paginatedOperations.length).toBe(10);
+      expect(component.pageStart).toBe(1);
+      expect(component.pageEnd).toBe(10);
+
+      component.nextPage();
+      expect(component.currentPage).toBe(2);
+      expect(component.paginatedOperations.length).toBe(10);
+      expect(component.pageStart).toBe(11);
+      expect(component.pageEnd).toBe(20);
+
+      component.nextPage();
+      expect(component.currentPage).toBe(3);
+      expect(component.paginatedOperations.length).toBe(5);
+      expect(component.pageStart).toBe(21);
+      expect(component.pageEnd).toBe(25);
+
+      component.prevPage();
+      expect(component.currentPage).toBe(2);
+      component.setPage(1);
+      expect(component.currentPage).toBe(1);
+    });
+
+    it('should allow changing page size to 20 and 50 and reset to page 1', () => {
+      const manyOps: Operation[] = Array.from({ length: 25 }, (_, i) => ({
+        id: `op-size-${i}`,
+        type: 'BUY',
+        name: `Asset ${i}`,
+        symbol: 'SYM',
+        date: '2026-09-01T10:00:00.000Z',
+        qty: 1,
+        totalPrice: 100,
+        createdAt: '2026-09-01T10:00:00.000Z',
+      }));
+
+      component.operations = manyOps;
+      component.currentPage = 2;
+
+      component.onPageSizeChange(20);
+      expect(component.pageSize).toBe(20);
+      expect(component.currentPage).toBe(1);
+      expect(component.paginatedOperations.length).toBe(20);
+
+      component.onPageSizeChange(50);
+      expect(component.pageSize).toBe(50);
+      expect(component.currentPage).toBe(1);
+      expect(component.paginatedOperations.length).toBe(25);
+    });
+
+    it('should sort operations ascending and descending by column', () => {
+      component.sortBy('totalPrice');
+      expect(component.sortColumn).toBe('totalPrice');
+      expect(component.sortDirection).toBe('asc');
+      const ascPrices = component.sortedOperations.map((o) => o.totalPrice);
+      for (let i = 0; i < ascPrices.length - 1; i++) {
+        expect(ascPrices[i]).toBeLessThanOrEqual(ascPrices[i + 1]);
+      }
+
+      component.sortBy('totalPrice');
+      expect(component.sortDirection).toBe('desc');
+      const descPrices = component.sortedOperations.map((o) => o.totalPrice);
+      for (let i = 0; i < descPrices.length - 1; i++) {
+        expect(descPrices[i]).toBeGreaterThanOrEqual(descPrices[i + 1]);
+      }
+    });
+
+    it('should sort by name alphabetically', () => {
+      component.sortBy('name');
+      expect(component.sortColumn).toBe('name');
+      expect(component.sortDirection).toBe('asc');
+      const names = component.sortedOperations.map((o) => o.name.toLowerCase());
+      expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
+    });
+
+    it('should return correct getAriaSort string', () => {
+      component.sortColumn = 'date';
+      component.sortDirection = 'asc';
+      expect(component.getAriaSort('date')).toBe('ascending');
+
+      component.sortDirection = 'desc';
+      expect(component.getAriaSort('date')).toBe('descending');
+
+      expect(component.getAriaSort('qty')).toBe('none');
+    });
   });
 });

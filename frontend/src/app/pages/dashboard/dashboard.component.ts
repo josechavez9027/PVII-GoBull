@@ -7,9 +7,11 @@ import {
   ElementRef,
   ViewChild,
   ChangeDetectorRef,
+  HostListener,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   OperationsService,
   Operation,
@@ -20,6 +22,17 @@ import {
 } from '../../core/services/operations.service';
 import { ExportService } from '../../core/services/export.service';
 import { InstrumentsService, Instrument } from '../../core/services/instruments.service';
+import { AuthService, User } from '../../core/services/auth.service';
+export type SortColumn =
+  | 'type'
+  | 'name'
+  | 'symbol'
+  | 'date'
+  | 'qty'
+  | 'unitPrice'
+  | 'totalPrice'
+  | '';
+export type SortDirection = 'asc' | 'desc';
 
 @Component({
   selector: 'app-dashboard',
@@ -47,6 +60,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   summary: CapitalSummary = { caja: 0, patrimonio: 0, neutral: 0 };
   isLoading = false;
   errorMessage = '';
+
+  // Pagination & Sorting
+  pageSize: number = 10;
+  readonly pageSizeOptions: number[] = [10, 20, 50];
+  currentPage: number = 1;
+  sortColumn: SortColumn = '';
+  sortDirection: SortDirection = 'asc';
 
   // Filters
   filterType: OperationType | '' = '';
@@ -87,6 +107,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isSuggestingSymbols = false;
   private symbolSuggestTimer: ReturnType<typeof setTimeout> | null = null;
 
+  // User profile & session
+  currentUser: User | null = null;
+  showProfileMenu = false;
+
   // Chart instance
   private chartInstance: any = null;
   private isBrowser: boolean;
@@ -95,6 +119,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private operationsService: OperationsService,
     private exportService: ExportService,
     private instrumentsService: InstrumentsService,
+    private authService: AuthService,
+    private router: Router,
+    private hostElement: ElementRef,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) platformId: object,
   ) {
@@ -103,6 +130,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadData();
+    this.loadUser();
   }
 
   ngOnDestroy(): void {
@@ -140,6 +168,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.operations = res.operations;
+          if (this.currentPage > this.totalPages) {
+            this.currentPage = this.totalPages;
+          }
           this.isLoading = false;
           this.cd.markForCheck();
         },
@@ -181,6 +212,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   applyFilters(): void {
+    this.currentPage = 1;
     this.loadData();
   }
 
@@ -189,6 +221,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.filterFrom = '';
     this.filterTo = '';
     this.filterQuery = '';
+    this.currentPage = 1;
     this.loadData();
   }
 
@@ -199,6 +232,206 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.filterTo) parts.push(`Hasta: ${this.filterTo}`);
     if (this.filterQuery) parts.push(`Búsqueda: "${this.filterQuery}"`);
     return parts.length > 0 ? parts.join(', ') : 'Todas las operaciones (sin filtros)';
+  }
+
+  // SORTING & PAGINATION
+  get sortedOperations(): Operation[] {
+    if (!this.sortColumn) {
+      return this.operations;
+    }
+
+    const col = this.sortColumn;
+    const dir = this.sortDirection === 'asc' ? 1 : -1;
+
+    return [...this.operations].sort((a, b) => {
+      switch (col) {
+        case 'type':
+          return a.type.localeCompare(b.type) * dir;
+        case 'name':
+          return (a.name || '').localeCompare(b.name || '', 'es', { sensitivity: 'base' }) * dir;
+        case 'symbol': {
+          const symA = a.symbol || '';
+          const symB = b.symbol || '';
+          if (!symA && !symB) return 0;
+          if (!symA) return 1;
+          if (!symB) return -1;
+          return symA.localeCompare(symB, 'es', { sensitivity: 'base' }) * dir;
+        }
+        case 'date':
+          return (new Date(a.date).getTime() - new Date(b.date).getTime()) * dir;
+        case 'qty':
+          return (a.qty - b.qty) * dir;
+        case 'unitPrice': {
+          const unitA = a.totalPrice / (a.qty || 1);
+          const unitB = b.totalPrice / (b.qty || 1);
+          return (unitA - unitB) * dir;
+        }
+        case 'totalPrice':
+          return (a.totalPrice - b.totalPrice) * dir;
+        default:
+          return 0;
+      }
+    });
+  }
+
+  get paginatedOperations(): Operation[] {
+    const sorted = this.sortedOperations;
+    const start = (this.currentPage - 1) * this.pageSize;
+    return sorted.slice(start, start + this.pageSize);
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.operations.length / this.pageSize));
+  }
+
+  get pageStart(): number {
+    if (this.operations.length === 0) return 0;
+    return (this.currentPage - 1) * this.pageSize + 1;
+  }
+
+  get pageEnd(): number {
+    return Math.min(this.currentPage * this.pageSize, this.operations.length);
+  }
+
+  setPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.cd.markForCheck();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.setPage(this.currentPage - 1);
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.setPage(this.currentPage + 1);
+    }
+  }
+
+  onPageSizeChange(newSize: number): void {
+    this.pageSize = Number(newSize);
+    this.currentPage = 1;
+    this.cd.markForCheck();
+  }
+
+  sortBy(column: SortColumn): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.currentPage = 1;
+    this.cd.markForCheck();
+  }
+
+  getAriaSort(column: SortColumn): 'ascending' | 'descending' | 'none' {
+    if (this.sortColumn !== column) {
+      return 'none';
+    }
+    return this.sortDirection === 'asc' ? 'ascending' : 'descending';
+  }
+
+  getPages(): number[] {
+    const total = this.totalPages;
+    if (total <= 7) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+    const current = this.currentPage;
+    const pages = new Set<number>();
+    pages.add(1);
+    pages.add(total);
+    for (let i = Math.max(1, current - 2); i <= Math.min(total, current + 2); i++) {
+      pages.add(i);
+    }
+    return Array.from(pages).sort((a, b) => a - b);
+  }
+
+  // USER PROFILE & SESSION
+  loadUser(): void {
+    this.authService.me().subscribe({
+      next: (res) => {
+        this.currentUser = res.user;
+        this.cd.markForCheck();
+      },
+      error: () => {},
+    });
+  }
+
+  getUserInitials(): string {
+    const name = (this.currentUser?.name || '').trim();
+    if (name) {
+      const parts = name.split(/\s+/).filter(Boolean);
+      if (parts.length >= 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+      if (parts[0].length >= 2) {
+        return parts[0].slice(0, 2).toUpperCase();
+      }
+      return parts[0][0].toUpperCase();
+    }
+
+    const email = (this.currentUser?.email || '').trim();
+    if (email) {
+      const username = email.split('@')[0];
+      const emailParts = username.split(/[._-]/).filter(Boolean);
+      if (emailParts.length >= 2) {
+        return (emailParts[0][0] + emailParts[1][0]).toUpperCase();
+      }
+      if (username.length >= 2) {
+        return username.slice(0, 2).toUpperCase();
+      }
+      return username[0].toUpperCase();
+    }
+
+    return 'US';
+  }
+
+  toggleProfileMenu(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.showProfileMenu = !this.showProfileMenu;
+    this.cd.markForCheck();
+  }
+
+  closeProfileMenu(): void {
+    this.showProfileMenu = false;
+    this.cd.markForCheck();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.showProfileMenu && this.hostElement?.nativeElement) {
+      const container = this.hostElement.nativeElement.querySelector('.profile-menu-container');
+      if (container && !container.contains(event.target as Node)) {
+        this.showProfileMenu = false;
+        this.cd.markForCheck();
+      }
+    }
+  }
+
+  onProfileKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape' && this.showProfileMenu) {
+      this.showProfileMenu = false;
+      this.cd.markForCheck();
+    }
+  }
+
+  logout(): void {
+    this.showProfileMenu = false;
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        this.router.navigate(['/login']);
+      },
+    });
   }
 
   // CREATE OPERATION
