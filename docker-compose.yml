@@ -25,7 +25,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     container_name: gobull_migrate
-    command: ['npx', 'prisma', 'migrate', 'deploy']
+    command: ['sh', '-c', 'npx prisma migrate deploy && node prisma/seed.js --if-empty']
     environment:
       DATABASE_URL: mysql://user:password@mysql:3306/gobull
     depends_on:

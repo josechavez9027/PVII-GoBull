@@ -1,5 +1,6 @@
 // Descarga el listado completo de Alpha Vantage (LISTING_STATUS, 1 llamada)
-// y genera el catalogo normalizado en docs/data/catalogo.json.
+// y genera el catalogo normalizado en prisma/seed-data/catalogo.json (versionado,
+// para que el seed funcione en cualquier clon sin consumir cuota de la API).
 // Solo instrumentos con status=Active + bloque curado BMV.
 // Uso: node scripts/fetch-catalog.mjs [--reuse]  (--reuse reusa el CSV ya descargado)
 import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'node:fs';
@@ -7,7 +8,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..');
-const dataDir = join(rootDir, 'docs', 'data');
+const dataDir = join(rootDir, 'prisma', 'seed-data');
 mkdirSync(dataDir, { recursive: true });
 
 const RAW_CSV = join(dataDir, 'listing-status.csv');

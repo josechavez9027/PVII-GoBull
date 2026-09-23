@@ -1,17 +1,26 @@
-// Seed del catalogo de instrumentos (docs/data/catalogo.json).
+// Seed del catalogo de instrumentos (prisma/seed-data/catalogo.json).
 // Refresco total e idempotente: borra y reinserta en lotes.
 // Uso: npm run prisma:seed  (requiere ALPHAVANTAGE? no; solo DATABASE_URL)
+// Con --if-empty solo siembra si la tabla Instrument esta vacia (bootstrap en compose).
 const { PrismaClient } = require('@prisma/client');
 const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
 
-const CATALOG = join(__dirname, '..', 'docs', 'data', 'catalogo.json');
+const CATALOG = join(__dirname, 'seed-data', 'catalogo.json');
 const BATCH = 1000;
+const IF_EMPTY = process.argv.includes('--if-empty');
 
 async function main() {
   const catalog = JSON.parse(readFileSync(CATALOG, 'utf8'));
   const prisma = new PrismaClient();
   try {
+    if (IF_EMPTY) {
+      const existing = await prisma.instrument.count();
+      if (existing > 0) {
+        console.log(`Seed omitido: ya hay ${existing} instrumentos`);
+        return;
+      }
+    }
     await prisma.instrument.deleteMany({});
     let inserted = 0;
     for (let i = 0; i < catalog.length; i += BATCH) {
