@@ -20,6 +20,20 @@ services:
     networks:
       - gobull
 
+  migrate:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: gobull_migrate
+    command: ['npx', 'prisma', 'migrate', 'deploy']
+    environment:
+      DATABASE_URL: mysql://user:password@mysql:3306/gobull
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - gobull
+
   backend:
     build:
       context: .
@@ -41,6 +55,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     networks:
       - gobull
 
