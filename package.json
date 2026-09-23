@@ -1,10 +1,29 @@
 {
+  "name": "gobull",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently -n mysql,backend,frontend -c blue,green,magenta \"npm run db:up\" \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "npm start --prefix backend",
+    "start:frontend": "npm start --prefix frontend",
+    "db:up": "docker compose up -d mysql",
+    "db:down": "docker compose stop mysql",
+    "db:logs": "docker compose logs -f mysql",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
+    "prisma:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "express": "^5.2.1",
     "mysql2": "^3.24.4"
   },
   "devDependencies": {
+    "concurrently": "^10.0.5",
     "prisma": "^5.22.0"
   }
 }

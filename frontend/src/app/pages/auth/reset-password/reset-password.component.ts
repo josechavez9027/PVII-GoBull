@@ -15,13 +15,26 @@ import { AuthService } from '../../../core/services/auth.service';
     </div>
 
     <form class="auth-form" (submit)="onSubmit($event)" *ngIf="!successMsg">
-      <div *ngIf="errorMsg" class="error-msg" style="color: var(--state-danger, red); margin-bottom: 10px;">
+      <div
+        *ngIf="errorMsg"
+        class="error-msg"
+        style="color: var(--state-danger, red); margin-bottom: 10px;"
+      >
         {{ errorMsg }}
       </div>
 
       <div class="form-group">
         <label for="password" class="form-label">Nueva contraseña</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Mínimo 6 caracteres" required [(ngModel)]="newPassword" [disabled]="isLoading">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          placeholder="Mínimo 6 caracteres"
+          required
+          [(ngModel)]="newPassword"
+          [disabled]="isLoading"
+        />
       </div>
 
       <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading">
@@ -29,7 +42,10 @@ import { AuthService } from '../../../core/services/auth.service';
       </button>
     </form>
 
-    <div *ngIf="successMsg" style="color: var(--state-success, green); margin-bottom: 20px; text-align: center; padding: 15px; border: 1px solid var(--state-success, green); border-radius: 4px;">
+    <div
+      *ngIf="successMsg"
+      style="color: var(--state-success, green); margin-bottom: 20px; text-align: center; padding: 15px; border: 1px solid var(--state-success, green); border-radius: 4px;"
+    >
       {{ successMsg }}
       <p style="margin-top: 10px; font-size: 14px;">Redirigiendo al inicio de sesión...</p>
     </div>
@@ -40,32 +56,34 @@ import { AuthService } from '../../../core/services/auth.service';
       </p>
     </div>
   `,
-  styles: [`
-    .form-header {
-      margin-bottom: var(--space-8);
-    }
-    .form-header h2 {
-      margin-bottom: var(--space-2);
-      color: var(--text-primary);
-    }
-    .text-secondary {
-      color: var(--text-secondary);
-    }
-    .auth-form {
-      margin-bottom: var(--space-8);
-    }
-    .link-primary {
-      color: var(--border-accent-blue);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .link-primary:hover {
-      text-decoration: underline;
-    }
-    .form-footer {
-      text-align: center;
-    }
-  `]
+  styles: [
+    `
+      .form-header {
+        margin-bottom: var(--space-8);
+      }
+      .form-header h2 {
+        margin-bottom: var(--space-2);
+        color: var(--text-primary);
+      }
+      .text-secondary {
+        color: var(--text-secondary);
+      }
+      .auth-form {
+        margin-bottom: var(--space-8);
+      }
+      .link-primary {
+        color: var(--border-accent-blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .link-primary:hover {
+        text-decoration: underline;
+      }
+      .form-footer {
+        text-align: center;
+      }
+    `,
+  ],
 })
 export class ResetPasswordComponent implements OnInit {
   authService = inject(AuthService);
@@ -79,7 +97,7 @@ export class ResetPasswordComponent implements OnInit {
   isLoading = false;
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.token = params['token'] || '';
       if (!this.token) {
         this.errorMsg = 'No se encontró un token válido en el enlace.';
@@ -90,7 +108,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.isLoading) return;
-    
+
     this.errorMsg = '';
     this.successMsg = '';
 
@@ -112,7 +130,7 @@ export class ResetPasswordComponent implements OnInit {
       error: (err) => {
         this.isLoading = false;
         this.errorMsg = err.error?.message || 'Error al restablecer la contraseña.';
-      }
+      },
     });
   }
 }

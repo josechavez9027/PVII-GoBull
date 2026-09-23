@@ -11,17 +11,32 @@ import { AuthService } from '../../../core/services/auth.service';
   template: `
     <div class="form-header">
       <h2 class="text-display">Recuperar contraseña</h2>
-      <p class="text-body text-secondary">Ingresa tu correo electrónico y te enviaremos un enlace para restablecerla.</p>
+      <p class="text-body text-secondary">
+        Ingresa tu correo electrónico y te enviaremos un enlace para restablecerla.
+      </p>
     </div>
 
     <form class="auth-form" (submit)="onSubmit($event)">
-      <div *ngIf="errorMsg" class="error-msg" style="color: var(--state-danger, red); margin-bottom: 10px;">
+      <div
+        *ngIf="errorMsg"
+        class="error-msg"
+        style="color: var(--state-danger, red); margin-bottom: 10px;"
+      >
         {{ errorMsg }}
       </div>
 
       <div class="form-group">
         <label for="email" class="form-label">Correo electrónico</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="nombre@ejemplo.com" required [(ngModel)]="email" [disabled]="isLoading">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          placeholder="nombre@ejemplo.com"
+          required
+          [(ngModel)]="email"
+          [disabled]="isLoading"
+        />
       </div>
 
       <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading">
@@ -35,36 +50,38 @@ import { AuthService } from '../../../core/services/auth.service';
       </p>
     </div>
   `,
-  styles: [`
-    .form-header {
-      margin-bottom: var(--space-8);
-    }
-    .form-header h2 {
-      margin-bottom: var(--space-2);
-      color: var(--text-primary);
-    }
-    .text-secondary {
-      color: var(--text-secondary);
-    }
-    .auth-form {
-      margin-bottom: var(--space-8);
-    }
-    .link-primary {
-      color: var(--border-accent-blue);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .link-primary:hover {
-      text-decoration: underline;
-    }
-    .form-footer {
-      text-align: center;
-    }
-  `]
+  styles: [
+    `
+      .form-header {
+        margin-bottom: var(--space-8);
+      }
+      .form-header h2 {
+        margin-bottom: var(--space-2);
+        color: var(--text-primary);
+      }
+      .text-secondary {
+        color: var(--text-secondary);
+      }
+      .auth-form {
+        margin-bottom: var(--space-8);
+      }
+      .link-primary {
+        color: var(--border-accent-blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .link-primary:hover {
+        text-decoration: underline;
+      }
+      .form-footer {
+        text-align: center;
+      }
+    `,
+  ],
 })
 export class ForgotPasswordComponent {
   authService = inject(AuthService);
-  
+
   email = '';
   errorMsg = '';
   isLoading = false;
@@ -72,7 +89,7 @@ export class ForgotPasswordComponent {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.isLoading) return;
-    
+
     this.errorMsg = '';
     this.isLoading = true;
 
@@ -84,8 +101,7 @@ export class ForgotPasswordComponent {
       error: (err) => {
         this.isLoading = false;
         this.errorMsg = err.error?.message || 'Error al procesar la solicitud.';
-      }
+      },
     });
   }
 }
-

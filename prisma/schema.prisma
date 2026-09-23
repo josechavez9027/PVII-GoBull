@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OperationType {
+  DIV
+  DEP
+  RET
+  BUY
+  SELL
+  TAX
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -16,6 +25,7 @@ model User {
   updatedAt DateTime @updatedAt
   
   passwordResetTokens PasswordResetToken[]
+  operations          Operation[]
 }
 
 model PasswordResetToken {
@@ -26,4 +36,39 @@ model PasswordResetToken {
   
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum InstrumentKind {
+  STOCK
+  ETF
+  OTHER
+}
+
+model Instrument {
+  id        String         @id @default(uuid())
+  symbol    String         @unique
+  name      String
+  market    String
+  kind      InstrumentKind @default(STOCK)
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([symbol])
+}
+
+model Operation {
+  id         String        @id @default(uuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type       OperationType
+  name       String
+  symbol     String?
+  date       DateTime
+  qty        Float         @default(1)
+  totalPrice Decimal       @db.Decimal(18, 2)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@index([userId, date])
 }

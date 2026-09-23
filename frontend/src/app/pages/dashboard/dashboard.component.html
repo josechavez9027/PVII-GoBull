@@ -1,18 +1,23 @@
 <div class="app-shell">
+  <!-- SIDEBAR NAVEGACIÓN -->
   <aside class="sidebar" aria-label="Navegación principal">
     <div class="sidebar__topbar">
       <span class="sidebar__mark" aria-hidden="true">G</span>
-      <span class="sidebar__brand" data-testid="brand">GoBull</span>
+      <span class="sidebar__brand" data-testid="brand">
+        <span class="brand-go-text">Go</span><span class="brand-bull-text">Bull</span>
+      </span>
       <button class="icon-button icon-button--sidebar" type="button" aria-label="Contraer menú">
         ≡
       </button>
     </div>
 
-    <nav class="sidebar__nav" style="margin-top: 2rem;">
+    <nav class="sidebar__nav">
       @for (item of navigation; track item.label) {
         <a
           class="nav-item"
-          [class.nav-item--active]="item.active"
+          [class.nav-item--active]="
+            item.label === 'Operaciones' || (item.label === 'Inicio' && activeTab === 'operations')
+          "
           href="#"
           (click)="$event.preventDefault()"
         >
@@ -23,30 +28,790 @@
     </nav>
 
     <div class="sidebar__footer">
-      <span class="status-dot" aria-hidden="true" style="background-color: var(--border-state-success);"></span><span>Sistema conectado</span>
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>Sistema conectado</span>
     </div>
   </aside>
 
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="main-content">
+    <!-- TOPBAR CONTEXTUAL -->
     <header class="topbar">
       <div class="breadcrumbs">
-        <span>GoBull</span><span aria-hidden="true">/</span><strong>Inicio</strong>
+        <span>GoBull</span>
+        <span aria-hidden="true">/</span>
+        <span>Cartera</span>
+        <span aria-hidden="true">/</span>
+        <strong>Operaciones y Exportaciones</strong>
       </div>
       <div class="topbar__actions">
-        <button class="outline-button outline-button--info" type="button">
+        <button
+          class="outline-button outline-button--info"
+          type="button"
+          aria-label="Centro de ayuda"
+        >
           Ayuda <span aria-hidden="true">⌄</span>
         </button>
-        <button class="profile-button" type="button" aria-label="Abrir perfil">U</button>
+        <button class="profile-button" type="button" aria-label="Abrir perfil de usuario">U</button>
       </div>
     </header>
 
-    <section class="page-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center;">
-      <h1 class="text-display" style="margin-bottom: var(--space-4);">Bienvenido a GoBull</h1>
-      <p class="text-body text-secondary" style="max-width: 400px; margin-bottom: var(--space-8);">
-        El módulo principal de operaciones estará disponible próximamente en el siguiente Sprint.
-      </p>
-      
-      <div class="empty-state-placeholder" style="width: 80px; height: 80px; opacity: 0.05; background-color: var(--text-primary); border-radius: 50%;"></div>
-    </section>
+    <div class="page-content">
+      <!-- ENCABEZADO DE VISTA -->
+      <section class="page-heading">
+        <div>
+          <h1 class="text-display">Operaciones y Exportaciones</h1>
+        </div>
+
+        <div class="heading-actions">
+          <button class="btn-primary" type="button" (click)="openCreateModal()">
+            <span class="btn-icon" aria-hidden="true">+</span>
+            <span>Nueva operación</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- MÉTRICAS DE CAPITAL (SUPERIORES) -->
+      <section class="metrics-grid" aria-label="Resumen de capital">
+        <div class="metric-card">
+          <div class="metric-card__header">
+            <span class="metric-card__title">Caja disponible</span>
+            <span class="metric-badge metric-badge--info">Efectivo</span>
+          </div>
+          <div class="metric-card__value text-metric">
+            ${{ summary.caja | number: '1.2-2' }} <span class="currency-tag">MXN</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-card__header">
+            <span class="metric-card__title">Patrimonio total</span>
+            <span class="metric-badge metric-badge--primary">Cartera</span>
+          </div>
+          <div class="metric-card__value text-metric text-primary-colored">
+            ${{ summary.patrimonio | number: '1.2-2' }} <span class="currency-tag">MXN</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-card__header">
+            <span class="metric-card__title">Nivel neutral (Capital propio)</span>
+            @let perf = getPerformanceVsNeutral();
+            @if (perf.status === 'positive') {
+              <span class="metric-badge metric-badge--success"
+                >+{{ perf.percent | number: '1.1-1' }}%</span
+              >
+            } @else if (perf.status === 'negative') {
+              <span class="metric-badge metric-badge--danger"
+                >{{ perf.percent | number: '1.1-1' }}%</span
+              >
+            } @else {
+              <span class="metric-badge metric-badge--neutral">Neutro</span>
+            }
+          </div>
+          <div class="metric-card__value text-metric text-secondary-metric">
+            ${{ summary.neutral | number: '1.2-2' }} <span class="currency-tag">MXN</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- NAVEGACIÓN POR PESTAÑAS -->
+      <div class="dashboard-tabs-container">
+        <div class="dashboard-tabs" role="tablist" aria-label="Secciones del dashboard">
+          <button
+            class="dashboard-tab"
+            [class.dashboard-tab--active]="activeTab === 'operations'"
+            type="button"
+            role="tab"
+            [attr.aria-selected]="activeTab === 'operations'"
+            (click)="setTab('operations')"
+          >
+            <span class="tab-icon" aria-hidden="true">▣</span>
+            <span>Operaciones ({{ operations.length }})</span>
+          </button>
+
+          <button
+            class="dashboard-tab"
+            [class.dashboard-tab--active]="activeTab === 'analysis'"
+            type="button"
+            role="tab"
+            [attr.aria-selected]="activeTab === 'analysis'"
+            (click)="setTab('analysis')"
+          >
+            <span class="tab-icon" aria-hidden="true">▤</span>
+            <span>Análisis y Posiciones</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PESTAÑA 1: OPERACIONES -->
+      @if (activeTab === 'operations') {
+        <div class="tab-panel" role="tabpanel">
+          <!-- BARRA DE FILTROS -->
+          <div class="filters-card">
+            <div class="filters-row">
+              <div class="filter-item filter-item--type">
+                <label for="filter-type" class="filter-label">Tipo de operación</label>
+                <select
+                  id="filter-type"
+                  class="filter-select"
+                  [(ngModel)]="filterType"
+                  (change)="applyFilters()"
+                >
+                  <option value="">Todos los tipos</option>
+                  <option value="DEP">DEP - Depósito</option>
+                  <option value="BUY">BUY - Compra de acciones</option>
+                  <option value="SELL">SELL - Venta de acciones</option>
+                  <option value="RET">RET - Retiro</option>
+                  <option value="DIV">DIV - Dividendo</option>
+                  <option value="TAX">TAX - Impuesto</option>
+                </select>
+              </div>
+
+              <div class="filter-item">
+                <label for="filter-from" class="filter-label">Desde</label>
+                <input
+                  id="filter-from"
+                  type="date"
+                  class="filter-input"
+                  [(ngModel)]="filterFrom"
+                  (change)="applyFilters()"
+                />
+              </div>
+
+              <div class="filter-item">
+                <label for="filter-to" class="filter-label">Hasta</label>
+                <input
+                  id="filter-to"
+                  type="date"
+                  class="filter-input"
+                  [(ngModel)]="filterTo"
+                  (change)="applyFilters()"
+                />
+              </div>
+
+              <div class="filter-item filter-item--search">
+                <label for="filter-query" class="filter-label">Buscar símbolo / nombre</label>
+                <div class="search-input-wrap">
+                  <input
+                    id="filter-query"
+                    type="text"
+                    class="filter-input"
+                    placeholder="Ej. AAPL, Apple, Dividendo..."
+                    [(ngModel)]="filterQuery"
+                    (keyup.enter)="applyFilters()"
+                  />
+                  <button class="btn-search" type="button" (click)="applyFilters()" title="Buscar">
+                    🔍
+                  </button>
+                </div>
+              </div>
+
+              <div class="filter-actions">
+                <button
+                  class="outline-button outline-button--neutral btn-compact"
+                  type="button"
+                  (click)="resetFilters()"
+                  title="Restablecer filtros"
+                >
+                  Limpiar filtros
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- REPORTE Y TABLA DE OPERACIONES -->
+          <div class="report-card">
+            <div class="report-card__toolbar">
+              <div class="report-card__toolbar-left">
+                <h2 class="text-heading">Historial de Operaciones</h2>
+                <span class="badge-count">{{ operations.length }} registros</span>
+              </div>
+
+              <div class="report-card__toolbar-right">
+                <button
+                  class="outline-button outline-button--primary download-button"
+                  type="button"
+                  data-testid="download-action"
+                  [disabled]="operations.length === 0"
+                  (click)="exportExcel()"
+                >
+                  <span aria-hidden="true">⬇</span>
+                  <span>Descargar Excel</span>
+                </button>
+
+                <button
+                  class="outline-button outline-button--info download-button"
+                  type="button"
+                  [disabled]="operations.length === 0"
+                  (click)="exportPdf()"
+                >
+                  <span aria-hidden="true">📄</span>
+                  <span>Descargar PDF</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- CONTENEDOR DE TABLA -->
+            <div class="table-wrap">
+              <table data-testid="operations-table" aria-label="Tabla de operaciones financieras">
+                <thead>
+                  <tr>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Símbolo</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col" class="text-right">Cantidad</th>
+                    <th scope="col" class="text-right">Precio Unitario</th>
+                    <th scope="col" class="text-right">Monto Total</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if (isLoading) {
+                    <tr>
+                      <td colspan="8" class="table-empty-message">Cargando operaciones...</td>
+                    </tr>
+                  } @else if (operations.length === 0) {
+                    <tr>
+                      <td colspan="8" class="table-empty-cell">
+                        <div class="table-empty-state">
+                          <svg
+                            class="empty-icon-svg"
+                            aria-hidden="true"
+                            width="42"
+                            height="42"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                          </svg>
+                          <h3 class="text-heading">Sin operaciones que mostrar</h3>
+                          <p class="text-body text-secondary">
+                            @if (filterType || filterFrom || filterTo || filterQuery) {
+                              No se encontraron registros con los filtros seleccionados.
+                            } @else {
+                              Aún no has registrado movimientos. Comienza agregando un depósito o
+                              compra de acciones.
+                            }
+                          </p>
+                          @if (filterType || filterFrom || filterTo || filterQuery) {
+                            <button
+                              class="outline-button outline-button--neutral"
+                              type="button"
+                              (click)="resetFilters()"
+                            >
+                              Restablecer filtros
+                            </button>
+                          } @else {
+                            <button class="btn-primary" type="button" (click)="openCreateModal()">
+                              + Registrar primera operación
+                            </button>
+                          }
+                        </div>
+                      </td>
+                    </tr>
+                  } @else {
+                    @for (op of operations; track op.id) {
+                      <tr>
+                        <td>
+                          <span class="tag" [ngClass]="getTagClass(op.type)">
+                            {{ op.type }}
+                          </span>
+                        </td>
+                        <td class="font-medium text-dark">{{ op.name }}</td>
+                        <td>
+                          @if (op.symbol) {
+                            <span class="symbol-pill">{{ op.symbol }}</span>
+                          } @else {
+                            <span class="text-muted">—</span>
+                          }
+                        </td>
+                        <td class="date-cell">{{ op.date | date: 'dd/MM/yyyy' }}</td>
+                        <td class="text-right tabular-nums">{{ op.qty | number: '1.0-4' }}</td>
+                        <td class="text-right tabular-nums">
+                          ${{ op.totalPrice / op.qty | number: '1.2-2' }} MXN
+                        </td>
+                        <td class="text-right tabular-nums font-semibold">
+                          ${{ op.totalPrice | number: '1.2-2' }} MXN
+                        </td>
+                        <td class="text-center">
+                          <button
+                            class="action-btn-danger"
+                            type="button"
+                            title="Eliminar operación"
+                            aria-label="Eliminar operación {{ op.name }}"
+                            (click)="openDeleteModal(op)"
+                          >
+                            Eliminar
+                          </button>
+                        </td>
+                      </tr>
+                    }
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <div class="report-card__footer">
+              <span>Mostrando {{ operations.length }} registros filtrados</span>
+              <span class="text-muted">Moneda de referencia: MXN</span>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- PESTAÑA 2: ANÁLISIS -->
+      @if (activeTab === 'analysis') {
+        <div class="tab-panel" role="tabpanel">
+          <!-- GRÁFICO DE CAPITAL VS NEUTRAL -->
+          <div class="report-card chart-container-card">
+            <div class="report-card__toolbar">
+              <div>
+                <h2 class="text-heading">Evolución del Patrimonio vs. Nivel Neutral</h2>
+                <p class="text-caption text-secondary">
+                  Comportamiento histórico del capital respecto al capital propio aportado.
+                </p>
+              </div>
+              <div class="chart-legend-indicator">
+                <span class="indicator-dot indicator-dot--green"></span>
+                <span class="text-caption">Sobre neutral (rendimiento positivo)</span>
+                <span class="indicator-dot indicator-dot--neutral" style="margin-left: 12px"></span>
+                <span class="text-caption">Línea neutral</span>
+              </div>
+            </div>
+
+            <div class="chart-canvas-wrapper">
+              <canvas #chartCanvas></canvas>
+            </div>
+          </div>
+
+          <!-- POSICIONES ABIERTAS -->
+          <div class="report-card" style="margin-top: var(--space-6)">
+            <div class="report-card__toolbar">
+              <div>
+                <h2 class="text-heading">Posiciones Abiertas por Símbolo</h2>
+                <p class="text-caption text-secondary">
+                  Acciones en cartera con saldo neto mayor a 0, valuadas a su costo promedio
+                  ponderado.
+                </p>
+              </div>
+              <span class="badge-count">{{ positions.length }} posiciones activas</span>
+            </div>
+
+            <div class="table-wrap">
+              <table aria-label="Posiciones abiertas en cartera">
+                <thead>
+                  <tr>
+                    <th scope="col">Símbolo</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col" class="text-right">Cantidad en cartera</th>
+                    <th scope="col" class="text-right">Costo Promedio Ponderado</th>
+                    <th scope="col" class="text-right">Importe a Costo Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if (positions.length === 0) {
+                    <tr>
+                      <td colspan="5" class="table-empty-cell">
+                        <div class="table-empty-state">
+                          <p class="text-body text-secondary">
+                            No tienes posiciones abiertas actualmente. Al comprar acciones
+                            aparecerán aquí automáticamente.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  } @else {
+                    @for (pos of positions; track pos.symbol) {
+                      <tr>
+                        <td>
+                          <span class="symbol-pill symbol-pill--active">{{ pos.symbol }}</span>
+                        </td>
+                        <td class="font-medium text-dark">{{ pos.name }}</td>
+                        <td class="text-right tabular-nums">{{ pos.qty | number: '1.0-4' }}</td>
+                        <td class="text-right tabular-nums">
+                          ${{ pos.avgCost | number: '1.2-2' }} MXN
+                        </td>
+                        <td class="text-right tabular-nums font-semibold text-primary-colored">
+                          ${{ pos.totalCost | number: '1.2-2' }} MXN
+                        </td>
+                      </tr>
+                    }
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <div class="report-card__footer">
+              <span>Valuación basada en compras y ventas registradas</span>
+              <span class="text-muted">Sin marcado a mercado (Sprint 2)</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
   </main>
 </div>
+
+<!-- MODAL: NUEVA OPERACIÓN -->
+@if (showCreateModal) {
+  <div class="modal-backdrop" (click)="closeCreateModal()" role="presentation">
+    <div
+      class="modal-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="create-modal-title"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="modal-header">
+        <h2 id="create-modal-title" class="text-heading">Registrar Nueva Operación</h2>
+        <button
+          class="modal-close-btn"
+          type="button"
+          aria-label="Cerrar modal"
+          (click)="closeCreateModal()"
+        >
+          ✕
+        </button>
+      </div>
+
+      <form (ngSubmit)="submitCreate()">
+        <div class="modal-body">
+          @if (createError) {
+            <div class="alert alert--danger" role="alert">
+              <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/>
+              </svg>
+              <div class="alert__message">{{ createError }}</div>
+            </div>
+          }
+
+          <!-- TIPO DE OPERACIÓN -->
+          <div class="form-group">
+            <label for="op-type" class="form-label">Tipo de operación *</label>
+            <select
+              id="op-type"
+              class="form-control"
+              [(ngModel)]="createForm.type"
+              name="type"
+              (change)="onTypeChange()"
+              required
+            >
+              <option value="DEP">Depósito</option>
+              <option value="BUY">Compra</option>
+              <option value="SELL">Venta</option>
+              <option value="RET">Retiro</option>
+              <option value="DIV">Diviendos</option>
+              <option value="TAX">Impuestos</option>
+            </select>
+          </div>
+
+          <!-- SÍMBOLO (BUY/SELL/DIV) -->
+          @if (showsSymbolField()) {
+            <div class="form-group">
+              <label for="op-symbol" class="form-label">Símbolo bursátil *</label>
+              <div
+                class="symbol-combobox"
+                role="combobox"
+                aria-haspopup="listbox"
+                aria-expanded="{{ showSymbolSuggestions }}"
+                aria-owns="symbol-suggestions"
+              >
+                <input
+                  id="op-symbol"
+                  type="text"
+                  class="form-control text-uppercase"
+                  placeholder="Ej. AAPL, NVDA, TSLA"
+                  [(ngModel)]="createForm.symbol"
+                  (ngModelChange)="onSymbolInput()"
+                  (keydown)="onSymbolKeydown($event)"
+                  (blur)="onSymbolBlur()"
+                  name="symbol"
+                  maxlength="20"
+                  autocomplete="off"
+                  role="searchbox"
+                  aria-autocomplete="list"
+                  aria-controls="symbol-suggestions"
+                  [attr.aria-activedescendant]="
+                    activeSuggestionIndex >= 0 ? 'symbol-opt-' + activeSuggestionIndex : null
+                  "
+                  required
+                />
+                @if (showSymbolSuggestions) {
+                  <ul
+                    id="symbol-suggestions"
+                    class="symbol-suggestions"
+                    role="listbox"
+                    aria-label="Instrumentos sugeridos"
+                  >
+                    @for (inst of symbolSuggestions; track inst.symbol; let i = $index) {
+                      <li
+                        role="option"
+                        [id]="'symbol-opt-' + i"
+                        [attr.aria-selected]="i === activeSuggestionIndex"
+                      >
+                        <button
+                          type="button"
+                          class="symbol-suggestions__item"
+                          [class.symbol-suggestions__item--active]="
+                            i === activeSuggestionIndex
+                          "
+                          (mousedown)="selectSymbolSuggestion(inst)"
+                          (mouseenter)="activeSuggestionIndex = i"
+                        >
+                          <span class="symbol-suggestions__symbol">{{ inst.symbol }}</span>
+                          <span class="symbol-suggestions__name">{{ inst.name }}</span>
+                          <span class="symbol-suggestions__market">{{ inst.market }}</span>
+                        </button>
+                      </li>
+                    }
+                  </ul>
+                }
+              </div>
+              @if (createForm.type === 'SELL' && createForm.symbol) {
+                @let available = getOpenQtyForSymbol(createForm.symbol);
+                <small class="form-help" [class.text-danger]="createForm.qty > available">
+                  Posición abierta disponible: <strong>{{ available }} acciones</strong>
+                </small>
+              }
+            </div>
+          }
+
+          <!-- NOMBRE (BLOQUEADO / DATO INFORMATIVO PARA ACCIONES, CONCEPTO PARA FLUJO DE EFECTIVO) -->
+          <div class="form-group">
+            <label for="op-name" class="form-label">
+              @if (showsSymbolField()) {
+                Nombre de la empresa / acción
+                <span class="badge-informative">Dato informativo</span>
+              } @else {
+                Concepto *
+              }
+            </label>
+            <input
+              id="op-name"
+              type="text"
+              class="form-control"
+              [class.form-control--readonly]="showsSymbolField()"
+              [placeholder]="
+                showsSymbolField()
+                  ? 'Se completa en automático desde el catálogo'
+                  : 'Ej. Depósito inicial'
+              "
+              [(ngModel)]="createForm.name"
+              name="name"
+              [readonly]="showsSymbolField()"
+              [tabindex]="showsSymbolField() ? -1 : 0"
+              [attr.aria-readonly]="showsSymbolField() ? 'true' : null"
+              required
+            />
+            @if (showsSymbolField()) {
+              <small class="form-help text-muted">
+                Dato informativo obtenido automáticamente del catálogo según el símbolo seleccionado.
+              </small>
+            }
+          </div>
+
+          <!-- FECHA -->
+          <div class="form-group">
+            <label for="op-date" class="form-label">Fecha de la operación *</label>
+            <input
+              id="op-date"
+              type="date"
+              class="form-control"
+              [(ngModel)]="createForm.date"
+              name="date"
+              required
+            />
+          </div>
+
+          <!-- CANTIDAD -->
+          <div class="form-group">
+            <label for="op-qty" class="form-label">Cantidad de acciones *</label>
+            <input
+              id="op-qty"
+              type="number"
+              step="any"
+              min="0.0001"
+              class="form-control"
+              [(ngModel)]="createForm.qty"
+              name="qty"
+              [disabled]="!isTradeType()"
+              required
+            />
+            @if (!isTradeType()) {
+              <small class="form-help text-muted">Fijo en 1 para este tipo de movimiento.</small>
+            }
+          </div>
+
+          <!-- MONTO TOTAL -->
+          <div class="form-group">
+            <label for="op-total" class="form-label">Monto total (MXN) *</label>
+            <input
+              id="op-total"
+              type="number"
+              step="0.01"
+              min="0.01"
+              class="form-control"
+              [class.form-control--invalid]="hasInsufficientCash()"
+              placeholder="0.00"
+              [(ngModel)]="createForm.totalPrice"
+              name="totalPrice"
+              required
+            />
+            @if (isTradeType() && createForm.totalPrice && createForm.qty > 0) {
+              <small class="form-help text-info">
+                Precio unitario calculado:
+                <strong>${{ getEstimatedUnitPrice() | number: '1.2-2' }} MXN</strong> por acción
+              </small>
+            }
+
+            @if (isCashOutflowType()) {
+              <div
+                class="cash-indicator"
+                [class.cash-indicator--danger]="hasInsufficientCash()"
+                role="status"
+              >
+                <div class="cash-indicator__header">
+                  <span class="cash-indicator__label">
+                    <span class="cash-indicator__dot"></span>
+                    Caja disponible:
+                  </span>
+                  <strong class="cash-indicator__amount">
+                    ${{ getAvailableCash() | number: '1.2-2' }} MXN
+                  </strong>
+                </div>
+
+                @if (hasInsufficientCash()) {
+                  <div class="cash-indicator__alert" role="alert">
+                    <svg class="cash-indicator__alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                    </svg>
+                    <div class="cash-indicator__alert-text">
+                      <strong>Fondos insuficientes:</strong> El monto ingresado (${{ createForm.totalPrice | number: '1.2-2' }} MXN) supera los ${{ getAvailableCash() | number: '1.2-2' }} MXN en caja. Reduce el importe o realiza un depósito previo.
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn-secondary"
+            type="button"
+            (click)="closeCreateModal()"
+            [disabled]="isSubmittingCreate"
+          >
+            Cancelar
+          </button>
+          <button
+            class="btn-primary"
+            type="submit"
+            [disabled]="isSubmittingCreate || hasInsufficientCash()"
+            [title]="hasInsufficientCash() ? 'El monto supera la caja disponible' : ''"
+          >
+            {{ isSubmittingCreate ? 'Guardando...' : 'Guardar operación' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+<!-- MODAL: CONFIRMAR ELIMINACIÓN -->
+@if (showDeleteModal && operationToDelete) {
+  <div class="modal-backdrop" (click)="closeDeleteModal()" role="presentation">
+    <div
+      class="modal-dialog modal-dialog--sm"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="delete-modal-title"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="modal-header">
+        <h2 id="delete-modal-title" class="text-heading text-danger">Eliminar Operación</h2>
+        <button
+          class="modal-close-btn"
+          type="button"
+          aria-label="Cerrar modal"
+          (click)="closeDeleteModal()"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="modal-body">
+        @if (deleteError) {
+          <div class="alert alert--danger" role="alert">
+            {{ deleteError }}
+          </div>
+        }
+
+        <p class="text-body" style="margin-bottom: var(--space-3)">
+          ¿Estás seguro de que deseas eliminar esta operación?
+        </p>
+
+        <div class="delete-details-card">
+          <div class="detail-row">
+            <span class="detail-label">Tipo:</span>
+            <span class="tag" [ngClass]="getTagClass(operationToDelete.type)">{{
+              operationToDelete.type
+            }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Concepto:</span>
+            <span class="font-semibold">{{ operationToDelete.name }}</span>
+          </div>
+          @if (operationToDelete.symbol) {
+            <div class="detail-row">
+              <span class="detail-label">Símbolo:</span>
+              <span class="symbol-pill">{{ operationToDelete.symbol }}</span>
+            </div>
+          }
+          <div class="detail-row">
+            <span class="detail-label">Fecha:</span>
+            <span>{{ operationToDelete.date | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Monto:</span>
+            <span class="font-semibold"
+              >${{ operationToDelete.totalPrice | number: '1.2-2' }} MXN</span
+            >
+          </div>
+        </div>
+
+        <p class="text-caption text-secondary" style="margin-top: var(--space-3)">
+          Al eliminarla se recalcularán automáticamente la caja disponible, el patrimonio total y
+          las posiciones abiertas.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          class="btn-secondary"
+          type="button"
+          (click)="closeDeleteModal()"
+          [disabled]="isSubmittingDelete"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn-danger"
+          type="button"
+          (click)="confirmDelete()"
+          [disabled]="isSubmittingDelete"
+        >
+          {{ isSubmittingDelete ? 'Eliminando...' : 'Sí, eliminar operación' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -2,23 +2,23 @@
 
 :root {
   /* Colors */
-  --bg-canvas: #F5F7F9;
-  --bg-sidebar: #0A91E8;
-  --bg-surface: #FFFFFF;
-  --bg-surface-raised: #FAFDFF;
-  --border-subtle: #E3E9ED;
-  --text-primary: #202C38;
+  --bg-canvas: #f5f7f9;
+  --bg-sidebar: #0a91e8;
+  --bg-surface: #ffffff;
+  --bg-surface-raised: #fafdff;
+  --border-subtle: #e3e9ed;
+  --text-primary: #202c38;
   --text-secondary: #576670;
-  --text-muted: #71808C;
+  --text-muted: #71808c;
 
   /* State Colors */
-  --border-primary: #087DC9;
-  --border-accent-blue: #159BD7;
-  --brand-bull: #3AB576;
-  --border-state-success: #63A86B;
-  --border-state-danger: #D75B61;
-  --border-state-warning: #D99C26;
-  --border-state-info: #159BD7;
+  --border-primary: #087dc9;
+  --border-accent-blue: #159bd7;
+  --brand-bull: #3ab576;
+  --border-state-success: #63a86b;
+  --border-state-danger: #d75b61;
+  --border-state-warning: #d99c26;
+  --border-state-info: #159bd7;
 
   /* Spacing */
   --space-1: 4px;
@@ -37,32 +37,73 @@
   --radius-lg: 14px;
 }
 
-html, body {
+html,
+body {
   min-height: 100%;
   margin: 0;
   background-color: var(--bg-canvas);
   color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6, .brand-text {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.brand-text {
   font-family: 'Inter Tight', 'Inter', sans-serif;
   margin: 0;
 }
 
 /* Typography scale */
-.text-display { font-size: 32px; font-weight: 500; }
-.text-title { font-size: 24px; font-weight: 700; }
-.text-heading { font-size: 18px; font-weight: 700; }
-.text-body { font-size: 14px; font-weight: 400; }
-.text-label { font-size: 12px; font-weight: 700; }
-.text-caption { font-size: 11px; font-weight: 500; }
-.text-metric { font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.text-display {
+  font-size: 32px;
+  font-weight: 500;
+}
+.text-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+.text-heading {
+  font-size: 18px;
+  font-weight: 700;
+}
+.text-body {
+  font-size: 14px;
+  font-weight: 400;
+}
+.text-label {
+  font-size: 12px;
+  font-weight: 700;
+}
+.text-caption {
+  font-size: 11px;
+  font-weight: 500;
+}
+.text-metric {
+  font-size: 28px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 
 @media (max-width: 640px) {
-  .text-display { font-size: 28px; }
-  .text-title { font-size: 20px; }
+  .text-display {
+    font-size: 28px;
+  }
+  .text-title {
+    font-size: 20px;
+  }
 }
 
 /* Base button styles */
@@ -86,7 +127,8 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   border: 1px solid var(--border-primary);
   color: var(--border-primary);
 }
-.btn-primary:hover, .btn-primary:focus-visible {
+.btn-primary:hover,
+.btn-primary:focus-visible {
   background-color: var(--border-primary);
   color: #fff;
   outline: 2px solid var(--border-accent-blue);
@@ -98,7 +140,8 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
 }
-.btn-secondary:hover, .btn-secondary:focus-visible {
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
   background-color: var(--border-subtle);
   color: var(--text-primary);
   outline: 2px solid var(--border-accent-blue);
@@ -141,7 +184,9 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   padding: 0 var(--space-3);
   font-size: 14px;
   color: var(--text-primary);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   box-sizing: border-box;
   width: 100%;
 }

@@ -1,10 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { App } from './app';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [App, DashboardComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
   });
 
@@ -15,7 +19,8 @@ describe('App', () => {
   });
 
   it('should render the GoBull operations shell', async () => {
-    const fixture = TestBed.createComponent(App);
+    const fixture = TestBed.createComponent(DashboardComponent);
+    fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('[data-testid="brand"]')?.textContent).toContain('GoBull');
@@ -27,7 +32,8 @@ describe('App', () => {
   });
 
   it('should define a separate hover fill color for outlined buttons', async () => {
-    const fixture = TestBed.createComponent(App);
+    const fixture = TestBed.createComponent(DashboardComponent);
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const componentStyles = Array.from(document.head.querySelectorAll('style'))

@@ -1,0 +1,11 @@
+.git
+.gitignore
+**/node_modules
+**/dist
+**/.angular
+**/.vscode
+**/.env
+**/*.log
+database
+docs
+.agents

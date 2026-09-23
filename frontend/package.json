@@ -20,9 +20,13 @@
     "@angular/platform-server": "^22.1.0",
     "@angular/router": "^22.1.0",
     "@angular/ssr": "^22.1.8",
+    "@types/pdfmake": "^0.3.3",
+    "chart.js": "^4.5.1",
     "express": "^5.1.0",
+    "pdfmake": "^0.3.11",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@angular/build": "^22.1.8",
