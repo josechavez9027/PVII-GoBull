@@ -1,14 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 import { App } from './app';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AppShellComponent } from './shared/shell/app-shell.component';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App, DashboardComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      imports: [App, DashboardComponent, AppShellComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
     }).compileComponents();
   });
 
@@ -19,11 +21,16 @@ describe('App', () => {
   });
 
   it('should render the GoBull operations shell', async () => {
+    const shellFixture = TestBed.createComponent(AppShellComponent);
+    shellFixture.detectChanges();
+    await shellFixture.whenStable();
+    const shellCompiled = shellFixture.nativeElement as HTMLElement;
+    expect(shellCompiled.querySelector('[data-testid="brand"]')?.textContent).toContain('GoBull');
+
     const fixture = TestBed.createComponent(DashboardComponent);
     fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('[data-testid="brand"]')?.textContent).toContain('GoBull');
     expect(compiled.querySelector('h1')?.textContent).toContain('Exportaciones');
     expect(compiled.querySelector('[data-testid="operations-table"]')).toBeTruthy();
     expect(compiled.querySelector('[data-testid="download-action"]')?.textContent).toContain(

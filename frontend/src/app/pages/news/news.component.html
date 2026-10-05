@@ -1,0 +1,214 @@
+<div class="news-page">
+  <!-- ENCABEZADO Y BARRA DE BÚSQUEDA -->
+  <section class="news-header">
+    <div class="news-header__title-area">
+      <h1 class="text-display">Noticias Financieras</h1>
+      <p class="text-secondary text-subheading">
+        Cobertura en tiempo real, análisis de mercado y menciones relevantes para tu cartera.
+      </p>
+    </div>
+
+    <div class="news-header__search-area">
+      <div class="search-input-wrapper">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          class="search-input"
+          placeholder="Buscar noticias o tickers (ej. AAPL, FED)..."
+          [value]="searchQuery"
+          (input)="onSearchInput($event)"
+          aria-label="Buscar noticias o tickers"
+        />
+        @if (searchQuery) {
+          <button
+            type="button"
+            class="search-clear-btn"
+            (click)="searchQuery = ''; pagination.page = 1; loadNews()"
+            aria-label="Limpiar búsqueda"
+          >
+            ✕
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTROS Y CONTROLES -->
+  <section class="news-controls">
+    <!-- Píldoras de Categorías -->
+    <div class="category-pills" role="tablist" aria-label="Filtrar por categoría">
+      <button
+        type="button"
+        class="category-pill"
+        [class.category-pill--active]="selectedCategory === ''"
+        (click)="selectCategory('')"
+        role="tab"
+        [attr.aria-selected]="selectedCategory === ''"
+      >
+        <span>Todas</span>
+        <span class="pill-count">{{ getTotalCount() }}</span>
+      </button>
+
+      @for (cat of categories; track cat.category) {
+        <button
+          type="button"
+          class="category-pill"
+          [class.category-pill--active]="selectedCategory === cat.category"
+          (click)="selectCategory(cat.category)"
+          role="tab"
+          [attr.aria-selected]="selectedCategory === cat.category"
+        >
+          <span>{{ cat.category }}</span>
+          <span class="pill-count">{{ cat.count }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- Barra de Ordenamiento y Filtro de Favoritos -->
+    <div class="news-subbar">
+      <div class="sort-tabs" role="tablist" aria-label="Criterio de orden">
+        <button
+          type="button"
+          class="sort-tab"
+          [class.sort-tab--active]="sortOption === 'recent' && !onlyFavorites"
+          (click)="setSortOption('recent')"
+          [disabled]="onlyFavorites"
+        >
+          Recientes
+        </button>
+        <button
+          type="button"
+          class="sort-tab"
+          [class.sort-tab--active]="sortOption === 'relevance' && !onlyFavorites"
+          (click)="setSortOption('relevance')"
+          [disabled]="onlyFavorites"
+        >
+          Para ti (Relevancia)
+        </button>
+      </div>
+
+      <div class="subbar-actions">
+        <button
+          type="button"
+          class="btn-toggle-favs"
+          [class.btn-toggle-favs--active]="onlyFavorites"
+          (click)="toggleFavoritesOnly()"
+        >
+          <span aria-hidden="true">{{ onlyFavorites ? '★' : '☆' }}</span>
+          <span>Solo favoritos</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVISO DE ERROR DE DETALLE (DEEP LINK INVÁLIDO) -->
+  @if (detailErrorMessage) {
+    <div class="banner-alert banner-alert--warning" role="alert">
+      <span class="alert-icon" aria-hidden="true">⚠️</span>
+      <span>{{ detailErrorMessage }}</span>
+    </div>
+  }
+
+  <!-- ESTADO DE ERROR DE LISTADO -->
+  @if (errorMessage) {
+    <div class="banner-alert banner-alert--danger" role="alert">
+      <span class="alert-icon" aria-hidden="true">⚠️</span>
+      <div class="alert-content">
+        <span>{{ errorMessage }}</span>
+        <button type="button" class="btn-retry" (click)="loadNews()">Reintentar</button>
+      </div>
+    </div>
+  }
+
+  <!-- ESTADO DE CARGA (SKELETONS) -->
+  @if (isLoading) {
+    <div class="news-grid" aria-busy="true" aria-label="Cargando noticias">
+      @for (item of [1, 2, 3, 4, 5, 6]; track item) {
+        <div class="news-card-skeleton">
+          <div class="skeleton-line skeleton-meta"></div>
+          <div class="skeleton-media"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-title-sub"></div>
+            <div class="skeleton-line skeleton-snippet"></div>
+          </div>
+          <div class="skeleton-footer"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- ESTADO VACÍO -->
+  @if (!isLoading && !errorMessage && articles.length === 0) {
+    <div class="news-empty-state">
+      <div class="empty-icon" aria-hidden="true">📰</div>
+      <h3 class="empty-title">Aún no hay noticias en esta categoría</h3>
+      <p class="empty-description">
+        No se encontraron noticias que coincidan con los filtros o términos de búsqueda
+        seleccionados.
+      </p>
+      <button type="button" class="btn-clear-filters" (click)="clearFilters()">
+        Limpiar filtros
+      </button>
+    </div>
+  }
+
+  <!-- GRID DE NOTICIAS -->
+  @if (!isLoading && articles.length > 0) {
+    <div class="news-grid">
+      @for (article of articles; track article.id) {
+        <app-news-card
+          [article]="article"
+          (selectArticle)="openDetail($event)"
+          (toggleFavorite)="onToggleFavorite($event)"
+        ></app-news-card>
+      }
+    </div>
+
+    <!-- PAGINACIÓN -->
+    <nav class="pagination-bar" aria-label="Paginación de noticias">
+      <span class="pagination-info">
+        Mostrando {{ (pagination.page - 1) * pagination.limit + 1 }} a
+        {{
+          pagination.page * pagination.limit > pagination.total
+            ? pagination.total
+            : pagination.page * pagination.limit
+        }}
+        de {{ pagination.total }} noticias
+      </span>
+
+      <div class="pagination-controls">
+        <button
+          type="button"
+          class="btn-pagination"
+          [disabled]="pagination.page <= 1"
+          (click)="onPageChange(pagination.page - 1)"
+        >
+          « Anterior
+        </button>
+
+        <span class="pagination-current">
+          Página {{ pagination.page }} de {{ pagination.totalPages }}
+        </span>
+
+        <button
+          type="button"
+          class="btn-pagination"
+          [disabled]="pagination.page >= pagination.totalPages"
+          (click)="onPageChange(pagination.page + 1)"
+        >
+          Siguiente »
+        </button>
+      </div>
+    </nav>
+  }
+
+  <!-- MODAL / DRAWER DE DETALLE -->
+  @if (selectedArticle) {
+    <app-news-detail
+      [article]="selectedArticle"
+      (close)="closeDetail()"
+      (toggleFavorite)="onToggleFavorite($event)"
+    ></app-news-detail>
+  }
+</div>

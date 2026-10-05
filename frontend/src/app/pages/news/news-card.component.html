@@ -1,0 +1,99 @@
+<article
+  class="news-card"
+  (click)="selectArticle.emit(article)"
+  tabindex="0"
+  (keydown.enter)="selectArticle.emit(article)"
+  (keydown.space)="selectArticle.emit(article); $event.preventDefault()"
+  role="button"
+  [attr.aria-label]="'Noticia: ' + article.title"
+>
+  <!-- Cabecera de metadatos -->
+  <div class="news-card__meta">
+    <span class="badge badge--category">{{ article.category }}</span>
+
+    @if (article.inPortfolio) {
+      <span class="badge badge--portfolio">
+        <span class="portfolio-dot" aria-hidden="true"></span>
+        En tu cartera
+      </span>
+    }
+
+    <div class="news-card__meta-right">
+      <span class="meta-source">{{ article.source }}</span>
+      <span class="meta-dot" aria-hidden="true">·</span>
+      <span class="meta-time">{{ getRelativeTime(article.publishedAt) }}</span>
+      <span class="meta-lang">({{ article.language }})</span>
+    </div>
+  </div>
+
+  <!-- Imagen / Miniatura -->
+  <div class="news-card__media">
+    @if (article.imageUrl && !imageError) {
+      <img
+        [src]="article.imageUrl"
+        [alt]="article.title"
+        class="news-card__image"
+        loading="lazy"
+        (error)="onImageError()"
+      />
+    } @else {
+      <div class="news-card__image-placeholder" aria-hidden="true">
+        <span class="placeholder-icon">📰</span>
+        <span class="placeholder-text">{{ article.category }}</span>
+      </div>
+    }
+
+    <!-- Botón de favorito flotante o integrado -->
+    <button
+      type="button"
+      class="btn-favorite"
+      [class.btn-favorite--active]="article.isFavorite"
+      (click)="onFavoriteClick($event)"
+      [attr.aria-label]="article.isFavorite ? 'Quitar de favoritos' : 'Guardar en favoritos'"
+      [title]="article.isFavorite ? 'Quitar de favoritos' : 'Guardar en favoritos'"
+    >
+      <span class="favorite-icon" aria-hidden="true">{{ article.isFavorite ? '★' : '☆' }}</span>
+      <span class="favorite-count">{{ article.favoriteCount }}</span>
+    </button>
+  </div>
+
+  <!-- Contenido: Título y Snippet -->
+  <div class="news-card__body">
+    <h3 class="news-card__title" [title]="article.title">
+      {{ article.title }}
+    </h3>
+
+    @if (article.snippet || article.description) {
+      <p class="news-card__snippet">
+        {{ article.snippet || article.description }}
+      </p>
+    }
+  </div>
+
+  <!-- Pie de tarjeta: Sentimiento y Símbolos -->
+  <div class="news-card__footer">
+    <div class="sentiment-container">
+      <span class="badge badge--sentiment" [ngClass]="getSentimentClass(article.sentiment)">
+        <span class="sentiment-indicator" aria-hidden="true"></span>
+        {{ getSentimentLabel(article.sentiment) }}
+      </span>
+
+      @if (article.score !== undefined) {
+        <span class="badge badge--score" title="Score de relevancia">
+          {{ article.score }} pts
+        </span>
+      }
+    </div>
+
+    @if (article.symbols && article.symbols.length > 0) {
+      <div class="symbols-list">
+        @for (sym of article.symbols.slice(0, 3); track sym.symbol) {
+          <span class="symbol-tag">{{ sym.symbol }}</span>
+        }
+        @if (article.symbols.length > 3) {
+          <span class="symbol-tag symbol-tag--more">+{{ article.symbols.length - 3 }}</span>
+        }
+      </div>
+    }
+  </div>
+</article>

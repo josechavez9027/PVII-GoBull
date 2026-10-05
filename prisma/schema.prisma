@@ -26,6 +26,8 @@ model User {
   
   passwordResetTokens PasswordResetToken[]
   operations          Operation[]
+  favoriteNews        FavoriteNews[]
+  newsViews           NewsView[]
 }
 
 model PasswordResetToken {
@@ -71,4 +73,100 @@ model Operation {
   updatedAt  DateTime      @updatedAt
 
   @@index([userId, date])
+}
+
+// ── Noticias financieras (Marketaux) ─────────────────────────────
+
+enum NewsCategory {
+  MERCADOS
+  EMPRESAS
+  ECONOMIA
+  CRIPTO
+  DIVISAS
+  ENERGIA
+  TECNOLOGIA
+  SALUD
+  OTROS
+}
+
+model NewsArticle {
+  id            String       @id @default(uuid())
+  providerId    String       @unique @db.VarChar(64)
+  title         String       @db.VarChar(512)
+  description   String?      @db.Text
+  snippet       String?      @db.Text
+  url           String       @unique @db.VarChar(768)
+  imageUrl      String?      @db.Text
+  source        String       @db.VarChar(191)
+  language      String       @db.VarChar(8)
+  publishedAt   DateTime
+  category      NewsCategory @default(OTROS)
+  sentiment     Float?
+  viewCount     Int          @default(0)
+  favoriteCount Int          @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  symbols   NewsArticleSymbol[]
+  favorites FavoriteNews[]
+  views     NewsView[]
+
+  @@index([category, publishedAt])
+  @@index([publishedAt])
+}
+
+model FavoriteNews {
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  articleId String
+  article   NewsArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+
+  @@id([userId, articleId])
+  @@index([articleId])
+}
+
+model NewsView {
+  id        String      @id @default(uuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  articleId String
+  article   NewsArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  viewedAt  DateTime    @default(now())
+
+  @@index([articleId, viewedAt])
+  @@index([userId, viewedAt])
+}
+
+model NewsArticleSymbol {
+  id         String      @id @default(uuid())
+  articleId  String
+  article    NewsArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  symbol     String      @db.VarChar(32)
+  matchScore Float?
+  sentiment  Float?
+
+  @@unique([articleId, symbol])
+  @@index([symbol])
+}
+
+// Contador persistido de peticiones diarias al proveedor (dia UTC).
+model NewsProviderUsage {
+  day            DateTime @id @db.Date
+  requests       Int      @default(0)
+  symbolRequests Int      @default(0)
+  updatedAt      DateTime @updatedAt
+}
+
+// Estado de la ultima corrida de cada job de sincronizacion.
+model NewsSyncState {
+  job           String    @id @db.VarChar(32)
+  lastRunAt     DateTime?
+  lastSuccessAt DateTime?
+  lastStatus    String    @default("NEVER") @db.VarChar(32)
+  lastError     String?   @db.Text
+  lastFetched   Int       @default(0)
+  lastCreated   Int       @default(0)
+  lastUpdated   Int       @default(0)
+  updatedAt     DateTime  @updatedAt
 }

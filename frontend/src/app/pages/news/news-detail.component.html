@@ -1,0 +1,145 @@
+<div class="detail-backdrop" (click)="close.emit()" role="presentation">
+  <div
+    class="detail-panel"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="'Detalle de noticia: ' + article.title"
+  >
+    <!-- Botón cerrar -->
+    <button
+      type="button"
+      class="btn-close"
+      (click)="close.emit()"
+      aria-label="Cerrar detalle"
+    >
+      ✕
+    </button>
+
+    <!-- Encabezado de metadatos -->
+    <div class="detail-meta">
+      <span class="badge badge--category">{{ article.category }}</span>
+
+      @if (article.inPortfolio) {
+        <span class="badge badge--portfolio">
+          <span class="portfolio-dot" aria-hidden="true"></span>
+          En tu cartera
+        </span>
+      }
+
+      <span class="meta-source">{{ article.source }}</span>
+      <span class="meta-dot" aria-hidden="true">·</span>
+      <span class="meta-time">{{ getRelativeTime(article.publishedAt) }}</span>
+      <span class="meta-lang">({{ article.language }})</span>
+
+      <span class="meta-stats">
+        <span title="Vistas">👁 {{ article.viewCount }}</span>
+        <span title="Favoritos">★ {{ article.favoriteCount }}</span>
+      </span>
+    </div>
+
+    <!-- Título principal -->
+    <h2 class="detail-title">
+      {{ article.title }}
+    </h2>
+
+    <!-- Imagen grande -->
+    @if (article.imageUrl && !imageError) {
+      <div class="detail-media">
+        <img
+          [src]="article.imageUrl"
+          [alt]="article.title"
+          class="detail-image"
+          (error)="onImageError()"
+        />
+      </div>
+    }
+
+    <!-- Sentimiento y puntuación -->
+    <div class="detail-sentiment-row">
+      <div class="sentiment-box">
+        <span class="sentiment-label-text">Sentimiento de mercado:</span>
+        <span class="badge badge--sentiment" [ngClass]="getSentimentClass(article.sentiment)">
+          <span class="sentiment-indicator" aria-hidden="true"></span>
+          {{ getSentimentLabel(article.sentiment) }}
+          @if (article.sentiment !== null) {
+            <span class="sentiment-score-raw">({{ article.sentiment }})</span>
+          }
+        </span>
+      </div>
+
+      @if (article.score !== undefined) {
+        <div class="score-box">
+          <span class="sentiment-label-text">Relevancia para ti:</span>
+          <span class="badge badge--score">{{ article.score }} / 100 pts</span>
+        </div>
+      }
+    </div>
+
+    <!-- Extracto / Descripción -->
+    <div class="detail-content">
+      @if (article.snippet) {
+        <p class="detail-snippet">
+          {{ article.snippet }}
+        </p>
+      }
+
+      @if (article.description && article.description !== article.snippet) {
+        <p class="detail-description">
+          {{ article.description }}
+        </p>
+      }
+    </div>
+
+    <!-- Símbolos financieros mencionados -->
+    @if (article.symbols && article.symbols.length > 0) {
+      <div class="detail-symbols-section">
+        <h4 class="section-subtitle">Instrumentos y activos mencionados</h4>
+        <div class="symbols-grid">
+          @for (sym of article.symbols; track sym.symbol) {
+            <div class="symbol-card">
+              <span class="symbol-name">{{ sym.symbol }}</span>
+              @if (sym.matchScore !== null) {
+                <span class="symbol-match" title="Fuerza de la mención">
+                  {{ sym.matchScore | number: '1.0-1' }}% relevancia
+                </span>
+              }
+              @if (sym.sentiment !== null) {
+                <span
+                  class="symbol-sentiment"
+                  [class.text-success]="sym.sentiment > 0.05"
+                  [class.text-danger]="sym.sentiment < -0.05"
+                >
+                  {{ sym.sentiment > 0 ? '+' : '' }}{{ sym.sentiment | number: '1.2-2' }} sent.
+                </span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Acciones finales -->
+    <div class="detail-actions">
+      <button
+        type="button"
+        class="btn-favorite-action"
+        [class.btn-favorite-action--active]="article.isFavorite"
+        (click)="onFavoriteClick()"
+      >
+        <span aria-hidden="true">{{ article.isFavorite ? '★' : '☆' }}</span>
+        <span>{{ article.isFavorite ? 'Guardado en favoritos' : 'Guardar en favoritos' }}</span>
+      </button>
+
+      <a
+        [href]="article.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-primary-link"
+      >
+        <span>Leer noticia completa en {{ article.source }}</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</div>

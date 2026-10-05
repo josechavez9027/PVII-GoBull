@@ -406,9 +406,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
-    if (this.showProfileMenu && this.hostElement?.nativeElement) {
-      const container = this.hostElement.nativeElement.querySelector('.profile-menu-container');
-      if (container && !container.contains(event.target as Node)) {
+    if (this.showProfileMenu) {
+      const container = this.hostElement?.nativeElement?.querySelector('.profile-menu-container');
+      if (!container || !container.contains(event.target as Node)) {
         this.showProfileMenu = false;
         this.cd.markForCheck();
       }
