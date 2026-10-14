@@ -1,0 +1,8 @@
+npm notice run backend@1.0.0 start
+npm notice run ts-node src/index.ts
+◇ injected env (20) from .env // tip: ⌘ override existing { override: true }
+Server is running on port 3000
+{"ts":"2026-10-14T17:49:56.287Z","level":"info","module":"news","event":"NEWS_SCHEDULER_STARTED","freshnessCron":"0 * * * *","depthCron":"0 */6 * * *","backfillCron":"20 */6 * * *","backfillDays":90,"languages":["es"],"retentionDays":90}
+[notifications.scheduler] Scheduler started with cron: */15 * * * *
+{"ts":"2026-10-14T17:50:06.624Z","level":"warn","module":"news","event":"NEWS_BUDGET_EXHAUSTED","job":"backfill","pagesDone":0,"detail":"Marketaux respondio 402 (usage_limit_reached): The usage limit for this account has been reached."}
+{"ts":"2026-10-14T17:50:06.659Z","level":"info","module":"news","event":"NEWS_SYNC_DONE","job":"backfill","status":"SKIPPED_BUDGET","requests":1,"fetched":0,"created":0,"updated":0,"error":"Marketaux respondio 402 (usage_limit_reached): The usage limit for this account has been reached.","startedAt":"2026-10-14T17:50:06.289Z","finishedAt":"2026-10-14T17:50:06.631Z","durationMs":342}

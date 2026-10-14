@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 :host {
   display: block;
   height: 100%;
@@ -12,7 +16,9 @@
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
   position: relative;
 }
 

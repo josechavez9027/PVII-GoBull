@@ -1,7 +1,7 @@
-import type { PrismaClient } from '@prisma/client';
-import { prisma as defaultPrisma } from '../../services/prisma.service';
-import { OperationsService } from '../operations/operations.service';
-import { NEWS_CATEGORIES } from './news.types';
+import type { PrismaClient } from "@prisma/client";
+import { prisma as defaultPrisma } from "../../services/prisma.service";
+import { OperationsService } from "../operations/operations.service";
+import { NEWS_CATEGORIES } from "./news.types";
 import type {
   ListFavoritesFilters,
   ListNewsFilters,
@@ -9,7 +9,7 @@ import type {
   NewsCategory,
   NewsCategoryCount,
   PaginatedNewsResponse,
-} from './news.types';
+} from "./news.types";
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
@@ -24,7 +24,10 @@ export class NewsFeedService {
    * Calcula engagement según la regla 4.1:
    * engagement = min(1, (vistas_7d + 2 * favoritos_7d) / 50)
    */
-  async calculateEngagement7d(articleId: string, since = new Date(Date.now() - SEVEN_DAYS_MS)): Promise<number> {
+  async calculateEngagement7d(
+    articleId: string,
+    since = new Date(Date.now() - SEVEN_DAYS_MS),
+  ): Promise<number> {
     const [views, favorites] = await Promise.all([
       this.db.newsView.count({
         where: { articleId, viewedAt: { gte: since } },
@@ -53,14 +56,19 @@ export class NewsFeedService {
     engagement: number,
   ): number {
     // 1. Cartera (45 pts): mención de símbolo con posición abierta
-    const hasPortfolioSymbol = article.symbols.some((s) => userPortfolioSymbols.has(s.symbol.toUpperCase()));
+    const hasPortfolioSymbol = article.symbols.some((s) =>
+      userPortfolioSymbols.has(s.symbol.toUpperCase()),
+    );
     const cartera = hasPortfolioSymbol ? 1 : 0;
 
     // 2. Engagement (30 pts)
     const engagementScore = 30 * engagement;
 
     // 3. Recencia (15 pts): ventana de 72 horas
-    const hoursSince = Math.max(0, (Date.now() - article.publishedAt.getTime()) / (1000 * 3600));
+    const hoursSince = Math.max(
+      0,
+      (Date.now() - article.publishedAt.getTime()) / (1000 * 3600),
+    );
     const recencia = hoursSince < 72 ? 15 * (1 - hoursSince / 72) : 0;
 
     // 4. Afinidad (10 pts): basado en historial de lecturas y favoritos
@@ -73,7 +81,9 @@ export class NewsFeedService {
   /**
    * Obtiene la afinidad por categoría del usuario en los últimos 30 días [0, 1].
    */
-  async getUserCategoryAffinity(userId: string): Promise<Map<NewsCategory, number>> {
+  async getUserCategoryAffinity(
+    userId: string,
+  ): Promise<Map<NewsCategory, number>> {
     const since = new Date(Date.now() - THIRTY_DAYS_MS);
     const [views, favorites] = await Promise.all([
       this.db.newsView.findMany({
@@ -115,7 +125,11 @@ export class NewsFeedService {
   async getUserPortfolioSymbols(userId: string): Promise<Set<string>> {
     try {
       const positions = await this.operationsService.positions(userId);
-      return new Set(positions.filter((p) => p.qty > 0).map((p) => p.symbol.trim().toUpperCase()));
+      return new Set(
+        positions
+          .filter((p) => p.qty > 0)
+          .map((p) => p.symbol.trim().toUpperCase()),
+      );
     } catch {
       return new Set();
     }
@@ -124,7 +138,10 @@ export class NewsFeedService {
   /**
    * Listado paginado de noticias con filtros y metadatos de usuario (isFavorite, inPortfolio).
    */
-  async listNews(userId: string, filters: ListNewsFilters = {}): Promise<PaginatedNewsResponse> {
+  async listNews(
+    userId: string,
+    filters: ListNewsFilters = {},
+  ): Promise<PaginatedNewsResponse> {
     const page = Math.max(1, filters.page ?? 1);
     const limit = Math.min(50, Math.max(1, filters.limit ?? 12));
     const skip = (page - 1) * limit;
@@ -147,11 +164,17 @@ export class NewsFeedService {
     }
 
     if (filters.from) {
-      where.publishedAt = { ...(where.publishedAt ?? {}), gte: new Date(filters.from) };
+      where.publishedAt = {
+        ...(where.publishedAt ?? {}),
+        gte: new Date(filters.from),
+      };
     }
 
     if (filters.to) {
-      where.publishedAt = { ...(where.publishedAt ?? {}), lte: new Date(filters.to) };
+      where.publishedAt = {
+        ...(where.publishedAt ?? {}),
+        lte: new Date(filters.to),
+      };
     }
 
     if (filters.symbol?.trim()) {
@@ -159,7 +182,7 @@ export class NewsFeedService {
       where.symbols = { some: { symbol: sym } };
     }
 
-    if (filters.sort === 'relevance') {
+    if (filters.sort === "relevance") {
       return this.listRelevantNews(userId, { ...filters, page, limit });
     }
 
@@ -167,11 +190,13 @@ export class NewsFeedService {
       this.db.newsArticle.count({ where }),
       this.db.newsArticle.findMany({
         where,
-        orderBy: [{ publishedAt: 'desc' }],
+        orderBy: [{ publishedAt: "desc" }],
         skip,
         take: limit,
         include: {
-          symbols: { select: { symbol: true, matchScore: true, sentiment: true } },
+          symbols: {
+            select: { symbol: true, matchScore: true, sentiment: true },
+          },
           favorites: { where: { userId }, select: { userId: true } },
         },
       }),
@@ -193,7 +218,9 @@ export class NewsFeedService {
       viewCount: r.viewCount,
       favoriteCount: r.favoriteCount,
       isFavorite: r.favorites.length > 0,
-      inPortfolio: r.symbols.some((s) => userPortfolioSymbols.has(s.symbol.toUpperCase())),
+      inPortfolio: r.symbols.some((s) =>
+        userPortfolioSymbols.has(s.symbol.toUpperCase()),
+      ),
       symbols: r.symbols,
     }));
 
@@ -210,8 +237,12 @@ export class NewsFeedService {
 
   /**
    * Feed personalizado "Para ti" ordenado por score de relevancia.
+   * Solo incluye noticias que mencionan símbolos con posicion abierta del usuario.
    */
-  async listRelevantNews(userId: string, filters: ListNewsFilters = {}): Promise<PaginatedNewsResponse> {
+  async listRelevantNews(
+    userId: string,
+    filters: ListNewsFilters = {},
+  ): Promise<PaginatedNewsResponse> {
     const page = Math.max(1, filters.page ?? 1);
     const limit = Math.min(50, Math.max(1, filters.limit ?? 12));
 
@@ -219,6 +250,14 @@ export class NewsFeedService {
       this.getUserPortfolioSymbols(userId),
       this.getUserCategoryAffinity(userId),
     ]);
+
+    // Sin posiciones abiertas no hay nada que marcar como relevante.
+    if (userPortfolioSymbols.size === 0) {
+      return {
+        news: [],
+        pagination: { page, limit, total: 0, totalPages: 1 },
+      };
+    }
 
     const where: any = {};
     if (filters.category) where.category = filters.category;
@@ -231,23 +270,35 @@ export class NewsFeedService {
       ];
     }
     if (filters.from) {
-      where.publishedAt = { ...(where.publishedAt ?? {}), gte: new Date(filters.from) };
+      where.publishedAt = {
+        ...(where.publishedAt ?? {}),
+        gte: new Date(filters.from),
+      };
     }
     if (filters.to) {
-      where.publishedAt = { ...(where.publishedAt ?? {}), lte: new Date(filters.to) };
+      where.publishedAt = {
+        ...(where.publishedAt ?? {}),
+        lte: new Date(filters.to),
+      };
     }
+    // Puerta dura: solo noticias de simbolos con posicion abierta.
+    where.AND = [
+      { symbols: { some: { symbol: { in: [...userPortfolioSymbols] } } } },
+    ];
     if (filters.symbol?.trim()) {
       const sym = filters.symbol.trim().toUpperCase();
-      where.symbols = { some: { symbol: sym } };
+      where.AND.push({ symbols: { some: { symbol: sym } } });
     }
 
     // Traemos candidatos para calcular score y ordenar
     const candidates = await this.db.newsArticle.findMany({
       where,
-      orderBy: [{ publishedAt: 'desc' }],
+      orderBy: [{ publishedAt: "desc" }],
       take: 200,
       include: {
-        symbols: { select: { symbol: true, matchScore: true, sentiment: true } },
+        symbols: {
+          select: { symbol: true, matchScore: true, sentiment: true },
+        },
         favorites: { where: { userId }, select: { userId: true } },
       },
     });
@@ -256,8 +307,16 @@ export class NewsFeedService {
 
     // Calculamos score para cada candidato
     const scoredPromises = candidates.map(async (article) => {
-      const engagement = await this.calculateEngagement7d(article.id, sevenDaysAgo);
-      const score = this.calculateScore(article, userPortfolioSymbols, userCategoryAffinity, engagement);
+      const engagement = await this.calculateEngagement7d(
+        article.id,
+        sevenDaysAgo,
+      );
+      const score = this.calculateScore(
+        article,
+        userPortfolioSymbols,
+        userCategoryAffinity,
+        engagement,
+      );
 
       const dto: NewsArticleDto = {
         id: article.id,
@@ -275,7 +334,9 @@ export class NewsFeedService {
         viewCount: article.viewCount,
         favoriteCount: article.favoriteCount,
         isFavorite: article.favorites.length > 0,
-        inPortfolio: article.symbols.some((s) => userPortfolioSymbols.has(s.symbol.toUpperCase())),
+        inPortfolio: article.symbols.some((s) =>
+          userPortfolioSymbols.has(s.symbol.toUpperCase()),
+        ),
         score,
         symbols: article.symbols,
       };
@@ -285,7 +346,11 @@ export class NewsFeedService {
     const scoredArticles = await Promise.all(scoredPromises);
 
     // Ordenamiento por score desc y luego publishedAt desc
-    scoredArticles.sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || b.publishedAt.getTime() - a.publishedAt.getTime());
+    scoredArticles.sort(
+      (a, b) =>
+        (b.score ?? 0) - (a.score ?? 0) ||
+        b.publishedAt.getTime() - a.publishedAt.getTime(),
+    );
 
     const total = scoredArticles.length;
     const skip = (page - 1) * limit;
@@ -307,11 +372,13 @@ export class NewsFeedService {
    */
   async getCategoriesCount(): Promise<NewsCategoryCount[]> {
     const groups = await this.db.newsArticle.groupBy({
-      by: ['category'],
+      by: ["category"],
       _count: { id: true },
     });
 
-    const countMap = new Map<NewsCategory, number>(groups.map((g) => [g.category, g._count.id]));
+    const countMap = new Map<NewsCategory, number>(
+      groups.map((g) => [g.category, g._count.id]),
+    );
 
     return NEWS_CATEGORIES.map((cat) => ({
       category: cat,
@@ -322,11 +389,16 @@ export class NewsFeedService {
   /**
    * Detalle de un artículo por ID.
    */
-  async getArticleById(userId: string, id: string): Promise<NewsArticleDto | null> {
+  async getArticleById(
+    userId: string,
+    id: string,
+  ): Promise<NewsArticleDto | null> {
     const article = await this.db.newsArticle.findUnique({
       where: { id },
       include: {
-        symbols: { select: { symbol: true, matchScore: true, sentiment: true } },
+        symbols: {
+          select: { symbol: true, matchScore: true, sentiment: true },
+        },
         favorites: { where: { userId }, select: { userId: true } },
       },
     });
@@ -334,6 +406,24 @@ export class NewsFeedService {
     if (!article) return null;
 
     const userPortfolioSymbols = await this.getUserPortfolioSymbols(userId);
+    const inPortfolio = article.symbols.some((s) =>
+      userPortfolioSymbols.has(s.symbol.toUpperCase()),
+    );
+
+    // La relevancia solo se marca para noticias de posiciones abiertas.
+    let score: number | undefined;
+    if (inPortfolio) {
+      const [userCategoryAffinity, engagement] = await Promise.all([
+        this.getUserCategoryAffinity(userId),
+        this.calculateEngagement7d(article.id),
+      ]);
+      score = this.calculateScore(
+        article,
+        userPortfolioSymbols,
+        userCategoryAffinity,
+        engagement,
+      );
+    }
 
     return {
       id: article.id,
@@ -351,7 +441,8 @@ export class NewsFeedService {
       viewCount: article.viewCount,
       favoriteCount: article.favoriteCount,
       isFavorite: article.favorites.length > 0,
-      inPortfolio: article.symbols.some((s) => userPortfolioSymbols.has(s.symbol.toUpperCase())),
+      inPortfolio,
+      score,
       symbols: article.symbols,
     };
   }
@@ -359,21 +450,26 @@ export class NewsFeedService {
   /**
    * Registro de vista (regla 4.3): máximo 1 vista por usuario por artículo por día calendario UTC.
    */
-  async recordView(userId: string, articleId: string): Promise<{ viewed: boolean; viewCount: number }> {
+  async recordView(
+    userId: string,
+    articleId: string,
+  ): Promise<{ viewed: boolean; viewCount: number }> {
     const article = await this.db.newsArticle.findUnique({
       where: { id: articleId },
       select: { id: true, viewCount: true },
     });
 
     if (!article) {
-      const err = new Error('Noticia no encontrada');
-      (err as any).code = 'ARTICLE_NOT_FOUND';
+      const err = new Error("Noticia no encontrada");
+      (err as any).code = "ARTICLE_NOT_FOUND";
       (err as any).status = 404;
       throw err;
     }
 
     const now = new Date();
-    const startOfUtcDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+    const startOfUtcDay = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+    );
 
     // Verificar si ya vio este artículo hoy
     const existingToday = await this.db.newsView.findFirst({
@@ -411,15 +507,18 @@ export class NewsFeedService {
   /**
    * Guardado de favorito (regla 4.2): idempotente.
    */
-  async addFavorite(userId: string, articleId: string): Promise<{ isFavorite: boolean; favoriteCount: number }> {
+  async addFavorite(
+    userId: string,
+    articleId: string,
+  ): Promise<{ isFavorite: boolean; favoriteCount: number }> {
     const article = await this.db.newsArticle.findUnique({
       where: { id: articleId },
       select: { id: true, favoriteCount: true },
     });
 
     if (!article) {
-      const err = new Error('Noticia no encontrada');
-      (err as any).code = 'ARTICLE_NOT_FOUND';
+      const err = new Error("Noticia no encontrada");
+      (err as any).code = "ARTICLE_NOT_FOUND";
       (err as any).status = 404;
       throw err;
     }
@@ -450,15 +549,18 @@ export class NewsFeedService {
   /**
    * Eliminación de favorito (regla 4.2): idempotente.
    */
-  async removeFavorite(userId: string, articleId: string): Promise<{ isFavorite: boolean; favoriteCount: number }> {
+  async removeFavorite(
+    userId: string,
+    articleId: string,
+  ): Promise<{ isFavorite: boolean; favoriteCount: number }> {
     const article = await this.db.newsArticle.findUnique({
       where: { id: articleId },
       select: { id: true, favoriteCount: true },
     });
 
     if (!article) {
-      const err = new Error('Noticia no encontrada');
-      (err as any).code = 'ARTICLE_NOT_FOUND';
+      const err = new Error("Noticia no encontrada");
+      (err as any).code = "ARTICLE_NOT_FOUND";
       (err as any).status = 404;
       throw err;
     }
@@ -483,13 +585,19 @@ export class NewsFeedService {
       });
     });
 
-    return { isFavorite: false, favoriteCount: Math.max(0, updated.favoriteCount) };
+    return {
+      isFavorite: false,
+      favoriteCount: Math.max(0, updated.favoriteCount),
+    };
   }
 
   /**
    * Listado de favoritos del usuario autenticado.
    */
-  async listFavorites(userId: string, filters: ListFavoritesFilters = {}): Promise<PaginatedNewsResponse> {
+  async listFavorites(
+    userId: string,
+    filters: ListFavoritesFilters = {},
+  ): Promise<PaginatedNewsResponse> {
     const page = Math.max(1, filters.page ?? 1);
     const limit = Math.min(50, Math.max(1, filters.limit ?? 12));
     const skip = (page - 1) * limit;
@@ -516,13 +624,15 @@ export class NewsFeedService {
       this.db.favoriteNews.count({ where }),
       this.db.favoriteNews.findMany({
         where,
-        orderBy: [{ createdAt: 'desc' }],
+        orderBy: [{ createdAt: "desc" }],
         skip,
         take: limit,
         include: {
           article: {
             include: {
-              symbols: { select: { symbol: true, matchScore: true, sentiment: true } },
+              symbols: {
+                select: { symbol: true, matchScore: true, sentiment: true },
+              },
             },
           },
         },
@@ -545,7 +655,9 @@ export class NewsFeedService {
       viewCount: f.article.viewCount,
       favoriteCount: f.article.favoriteCount,
       isFavorite: true,
-      inPortfolio: f.article.symbols.some((s) => userPortfolioSymbols.has(s.symbol.toUpperCase())),
+      inPortfolio: f.article.symbols.some((s) =>
+        userPortfolioSymbols.has(s.symbol.toUpperCase()),
+      ),
       symbols: f.article.symbols,
     }));
 

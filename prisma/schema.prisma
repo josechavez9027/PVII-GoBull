@@ -28,6 +28,9 @@ model User {
   operations          Operation[]
   favoriteNews        FavoriteNews[]
   newsViews           NewsView[]
+  pushSubscriptions   PushSubscription[]
+  newsNotifications   NewsNotification[]
+  newsSetting         UserNewsSetting?
 }
 
 model PasswordResetToken {
@@ -107,9 +110,10 @@ model NewsArticle {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 
-  symbols   NewsArticleSymbol[]
-  favorites FavoriteNews[]
-  views     NewsView[]
+  symbols       NewsArticleSymbol[]
+  favorites     FavoriteNews[]
+  views         NewsView[]
+  notifications NewsNotification[]
 
   @@index([category, publishedAt])
   @@index([publishedAt])
@@ -169,4 +173,51 @@ model NewsSyncState {
   lastCreated   Int       @default(0)
   lastUpdated   Int       @default(0)
   updatedAt     DateTime  @updatedAt
+}
+
+enum NewsNotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  READ
+}
+
+model PushSubscription {
+  id        String    @id @default(uuid())
+  userId    String    @db.VarChar(36)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String    @unique @db.VarChar(500)
+  p256dh    String    @db.VarChar(255)
+  auth      String    @db.VarChar(255)
+  userAgent String?   @db.VarChar(512)
+  createdAt DateTime  @default(now())
+  revokedAt DateTime?
+
+  @@index([userId])
+}
+
+model NewsNotification {
+  id        String                 @id @default(uuid())
+  userId    String                 @db.VarChar(36)
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  articleId String                 @db.VarChar(36)
+  article   NewsArticle            @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  score     Int
+  status    NewsNotificationStatus @default(PENDING)
+  sentAt    DateTime?
+  readAt    DateTime?
+  createdAt DateTime               @default(now())
+
+  @@unique([userId, articleId])
+  @@index([userId, createdAt])
+}
+
+model UserNewsSetting {
+  userId      String   @id @db.VarChar(36)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pushEnabled Boolean  @default(true)
+  minScore    Int      @default(70)
+  maxPerDay   Int      @default(5)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

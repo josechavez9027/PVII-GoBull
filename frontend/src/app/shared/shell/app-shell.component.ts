@@ -10,6 +10,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService, User } from '../../core/services/auth.service';
+import { NotificationsService } from '../../core/services/notifications.service';
+import { NotificationBellComponent } from '../../pages/news/notification-bell.component';
 
 export interface BreadcrumbItem {
   label: string;
@@ -19,7 +21,7 @@ export interface BreadcrumbItem {
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NotificationBellComponent],
   templateUrl: './app-shell.component.html',
   styleUrl: './app-shell.component.css',
 })
@@ -41,6 +43,7 @@ export class AppShellComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private notificationsService: NotificationsService,
     private router: Router,
     private hostElement: ElementRef,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -134,13 +137,15 @@ export class AppShellComponent implements OnInit {
 
   logout(): void {
     this.showProfileMenu = false;
-    this.authService.logout().subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      },
-      error: () => {
-        this.router.navigate(['/login']);
-      },
+    this.notificationsService.revokePushSubscription().finally(() => {
+      this.authService.logout().subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+        },
+        error: () => {
+          this.router.navigate(['/login']);
+        },
+      });
     });
   }
 }

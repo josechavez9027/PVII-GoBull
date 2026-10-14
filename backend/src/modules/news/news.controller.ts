@@ -1,8 +1,12 @@
-import { Request, Response } from 'express';
-import { OperationsService } from '../operations/operations.service';
-import { NewsFeedService } from './news.feed.service';
-import { articleIdParamSchema, listFavoritesQuerySchema, listNewsQuerySchema } from './news.schemas';
-import { getNewsSyncService, type NewsSyncService } from './news.service';
+import { Request, Response } from "express";
+import { OperationsService } from "../operations/operations.service";
+import { NewsFeedService } from "./news.feed.service";
+import {
+  articleIdParamSchema,
+  listFavoritesQuerySchema,
+  listNewsQuerySchema,
+} from "./news.schemas";
+import { getNewsSyncService, type NewsSyncService } from "./news.service";
 
 const PORTFOLIO_SYNC_COOLDOWN_MS = 15 * 60 * 1000;
 const VIEW_RATE_LIMIT_WINDOW_MS = 60 * 1000;
@@ -36,7 +40,10 @@ export class NewsController {
       res.json({ status });
     } catch {
       res.status(500).json({
-        error: { code: 'INTERNAL_ERROR', message: 'No se pudo consultar el estado de las noticias' },
+        error: {
+          code: "INTERNAL_ERROR",
+          message: "No se pudo consultar el estado de las noticias",
+        },
       });
     }
   }
@@ -45,8 +52,8 @@ export class NewsController {
   async syncPortfolio(req: Request, res: Response) {
     const service = this.syncService();
     if (!service.isConfigured) {
-      const code = 'NEWS_PROVIDER_UNAVAILABLE';
-      const message = 'El proveedor de noticias no esta configurado';
+      const code = "NEWS_PROVIDER_UNAVAILABLE";
+      const message = "El proveedor de noticias no esta configurado";
       return res.status(503).json({ error: { code, message } });
     }
 
@@ -54,7 +61,7 @@ export class NewsController {
     const last = this.lastPortfolioSync.get(userId) ?? 0;
     const waitMs = PORTFOLIO_SYNC_COOLDOWN_MS - (Date.now() - last);
     if (waitMs > 0) {
-      const code = 'NEWS_SYNC_COOLDOWN';
+      const code = "NEWS_SYNC_COOLDOWN";
       const message = `Espera ${Math.ceil(waitMs / 60000)} min antes de volver a sincronizar`;
       return res.status(429).json({ error: { code, message } });
     }
@@ -67,7 +74,10 @@ export class NewsController {
       res.json({ result: { ...result, symbols: symbols.length } });
     } catch {
       res.status(500).json({
-        error: { code: 'INTERNAL_ERROR', message: 'No se pudo sincronizar las noticias de la cartera' },
+        error: {
+          code: "INTERNAL_ERROR",
+          message: "No se pudo sincronizar las noticias de la cartera",
+        },
       });
     }
   }
@@ -79,7 +89,7 @@ export class NewsController {
       const result = await this.feedService.listNews(req.user.id, filters);
       res.json(result);
     } catch (error: any) {
-      this.sendError(res, error, 'Parámetros de búsqueda inválidos');
+      this.sendError(res, error, "Parámetros de búsqueda inválidos");
     }
   }
 
@@ -89,7 +99,7 @@ export class NewsController {
       const categories = await this.feedService.getCategoriesCount();
       res.json({ categories });
     } catch (error: any) {
-      this.sendError(res, error, 'No se pudieron consultar las categorías');
+      this.sendError(res, error, "No se pudieron consultar las categorías");
     }
   }
 
@@ -97,10 +107,13 @@ export class NewsController {
   async relevant(req: Request, res: Response) {
     try {
       const filters = listNewsQuerySchema.parse(req.query);
-      const result = await this.feedService.listRelevantNews(req.user.id, filters);
+      const result = await this.feedService.listRelevantNews(
+        req.user.id,
+        filters,
+      );
       res.json(result);
     } catch (error: any) {
-      this.sendError(res, error, 'Parámetros de consulta inválidos');
+      this.sendError(res, error, "Parámetros de consulta inválidos");
     }
   }
 
@@ -111,7 +124,11 @@ export class NewsController {
       const result = await this.feedService.listFavorites(req.user.id, filters);
       res.json(result);
     } catch (error: any) {
-      this.sendError(res, error, 'Parámetros de consulta de favoritos inválidos');
+      this.sendError(
+        res,
+        error,
+        "Parámetros de consulta de favoritos inválidos",
+      );
     }
   }
 
@@ -123,14 +140,14 @@ export class NewsController {
       if (!article) {
         return res.status(404).json({
           error: {
-            code: 'ARTICLE_NOT_FOUND',
-            message: 'Noticia no encontrada',
+            code: "ARTICLE_NOT_FOUND",
+            message: "Noticia no encontrada",
           },
         });
       }
       res.json({ article });
     } catch (error: any) {
-      this.sendError(res, error, 'ID de noticia inválido');
+      this.sendError(res, error, "ID de noticia inválido");
     }
   }
 
@@ -148,8 +165,8 @@ export class NewsController {
       if (userViews.length >= MAX_VIEWS_PER_WINDOW) {
         return res.status(429).json({
           error: {
-            code: 'RATE_LIMITED',
-            message: 'Demasiadas solicitudes de vista en poco tiempo',
+            code: "RATE_LIMITED",
+            message: "Demasiadas solicitudes de vista en poco tiempo",
           },
         });
       }
@@ -159,7 +176,7 @@ export class NewsController {
       const result = await this.feedService.recordView(userId, id);
       res.json(result);
     } catch (error: any) {
-      this.sendError(res, error, 'No se pudo registrar la vista');
+      this.sendError(res, error, "No se pudo registrar la vista");
     }
   }
 
@@ -170,7 +187,7 @@ export class NewsController {
       const result = await this.feedService.addFavorite(req.user.id, id);
       res.json(result);
     } catch (error: any) {
-      this.sendError(res, error, 'No se pudo guardar la noticia en favoritos');
+      this.sendError(res, error, "No se pudo guardar la noticia en favoritos");
     }
   }
 
@@ -181,14 +198,14 @@ export class NewsController {
       const result = await this.feedService.removeFavorite(req.user.id, id);
       res.json(result);
     } catch (error: any) {
-      this.sendError(res, error, 'No se pudo eliminar la noticia de favoritos');
+      this.sendError(res, error, "No se pudo eliminar la noticia de favoritos");
     }
   }
 
   private sendError(res: Response, error: any, defaultMessage: string) {
     const status = error.status ?? (error.issues || error.errors ? 400 : 500);
     const issues = error.issues ?? error.errors;
-    const code = error.code ?? (issues ? 'VALIDATION_ERROR' : 'INTERNAL_ERROR');
+    const code = error.code ?? (issues ? "VALIDATION_ERROR" : "INTERNAL_ERROR");
     const message = issues?.[0]?.message ?? error.message ?? defaultMessage;
 
     res.status(status).json({

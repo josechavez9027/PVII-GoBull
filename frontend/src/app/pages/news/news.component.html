@@ -10,7 +10,6 @@
 
     <div class="news-header__search-area">
       <div class="search-input-wrapper">
-        <span class="search-icon" aria-hidden="true">🔍</span>
         <input
           type="search"
           class="search-input"
@@ -49,7 +48,7 @@
         <span class="pill-count">{{ getTotalCount() }}</span>
       </button>
 
-      @for (cat of categories; track cat.category) {
+      @for (cat of visibleCategories; track cat.category) {
         <button
           type="button"
           class="category-pill"
@@ -141,12 +140,19 @@
   <!-- ESTADO VACÍO -->
   @if (!isLoading && !errorMessage && articles.length === 0) {
     <div class="news-empty-state">
-      <div class="empty-icon" aria-hidden="true">📰</div>
-      <h3 class="empty-title">Aún no hay noticias en esta categoría</h3>
-      <p class="empty-description">
-        No se encontraron noticias que coincidan con los filtros o términos de búsqueda
-        seleccionados.
-      </p>
+      @if (sortOption === 'relevance' && !onlyFavorites) {
+        <h3 class="empty-title">No hay noticias relevantes a tus posiciones</h3>
+        <p class="empty-description">
+          Solo marcamos como relevantes las noticias de las acciones donde tienes posiciones
+          abiertas. Abre posiciones para ver recomendaciones personalizadas aquí.
+        </p>
+      } @else {
+        <h3 class="empty-title">Aún no hay noticias en esta categoría</h3>
+        <p class="empty-description">
+          No se encontraron noticias que coincidan con los filtros o términos de búsqueda
+          seleccionados.
+        </p>
+      }
       <button type="button" class="btn-clear-filters" (click)="clearFilters()">
         Limpiar filtros
       </button>

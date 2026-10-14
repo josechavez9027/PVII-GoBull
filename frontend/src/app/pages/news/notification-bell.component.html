@@ -1,0 +1,147 @@
+<div class="bell-container">
+  <!-- Botón Campana -->
+  <button
+    class="bell-btn"
+    type="button"
+    aria-label="Abrir notificaciones"
+    [attr.aria-expanded]="isOpen"
+    (click)="toggleTray()"
+  >
+    <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+
+    @if (notificationsService.unreadCount() > 0) {
+      <span class="badge-count tabular-nums" aria-label="Notificaciones no leídas">
+        {{ notificationsService.unreadCount() > 99 ? '99+' : notificationsService.unreadCount() }}
+      </span>
+    }
+  </button>
+
+  <!-- Bandeja Desplegable (Tray) -->
+  @if (isOpen) {
+    <div class="tray-dropdown" role="region" aria-label="Bandeja de notificaciones">
+      <!-- Encabezado de la bandeja -->
+      <div class="tray-header">
+        <div class="tray-header-left">
+          <span class="tray-title">Notificaciones</span>
+          @if (notificationsService.unreadCount() > 0) {
+            <span class="badge-unread-header tabular-nums">{{ notificationsService.unreadCount() }} nuevas</span>
+          }
+        </div>
+        <div class="tray-header-right">
+          @if (notificationsService.unreadCount() > 0) {
+            <button class="action-link" type="button" (click)="markAllAsRead()">
+              Marcar leídas
+            </button>
+          }
+          <button
+            class="icon-action-btn"
+            type="button"
+            title="Preferencias"
+            aria-label="Preferencias de noticias"
+            (click)="openSettings()"
+          >
+            ⚙
+          </button>
+        </div>
+      </div>
+
+      <!-- Banner de Permisos de Navegador -->
+      @if (notificationsService.pushPermission() === 'default') {
+        <div class="push-banner">
+          <div class="push-banner__text">
+            <strong>¿Recibir alertas en tiempo real?</strong>
+            <span>Activa las notificaciones Web Push en tu navegador</span>
+          </div>
+          <button class="btn-banner" type="button" (click)="enablePush()">
+            Activar
+          </button>
+        </div>
+      } @else if (notificationsService.pushPermission() === 'denied') {
+        <div class="push-banner push-banner--muted">
+          <span>Avisos del navegador desactivados. Consulta las alertas desde esta bandeja.</span>
+        </div>
+      }
+
+      <!-- Contenido / Lista de Notificaciones -->
+      <div class="tray-body">
+        @if (notificationsService.isLoading()) {
+          <div class="skeleton-list">
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+          </div>
+        } @else if (notificationsService.error()) {
+          <div class="tray-error">
+            <p>{{ notificationsService.error() }}</p>
+            <button class="btn-retry" type="button" (click)="notificationsService.loadNotifications().subscribe()">
+              Reintentar
+            </button>
+          </div>
+        } @else if (notificationsService.notifications().length === 0) {
+          <div class="tray-empty">
+            <span class="empty-icon" aria-hidden="true">📭</span>
+            <p class="empty-text">No tienes notificaciones</p>
+            <span class="empty-subtext">Te avisaremos cuando se publiquen noticias de alta relevancia</span>
+          </div>
+        } @else {
+          <ul class="notif-list" role="list">
+            @for (item of notificationsService.notifications(); track item.id) {
+              <li
+                class="notif-item"
+                [class.notif-item--unread]="item.status !== 'READ'"
+                (click)="onSelectNotification(item)"
+              >
+                <!-- Indicador de no leído -->
+                <div class="notif-item__indicator" aria-hidden="true">
+                  @if (item.status !== 'READ') {
+                    <span class="unread-dot"></span>
+                  }
+                </div>
+
+                <!-- Contenido -->
+                <div class="notif-item__content">
+                  <div class="notif-item__meta">
+                    <span class="notif-item__time">{{ getRelativeTime(item.createdAt) }}</span>
+                    <span class="score-pill tabular-nums">Relevancia: {{ item.score }}%</span>
+                  </div>
+                  <h4 class="notif-item__title">{{ item.title }}</h4>
+                  @if (item.snippet) {
+                    <p class="notif-item__snippet">{{ item.snippet }}</p>
+                  }
+                </div>
+
+                <!-- Botón marcar individual -->
+                @if (item.status !== 'READ') {
+                  <button
+                    class="btn-mark-item"
+                    type="button"
+                    title="Marcar como leída"
+                    aria-label="Marcar como leída"
+                    (click)="markAsRead(item, $event)"
+                  >
+                    ✓
+                  </button>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <!-- Pie de bandeja -->
+      <div class="tray-footer">
+        <a routerLink="/noticias" (click)="closeTray()" class="tray-footer-link">
+          Ver todas las noticias →
+        </a>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de Preferencias -->
+  @if (showPreferences) {
+    <app-news-preferences (close)="closeSettings()"></app-news-preferences>
+  }
+</div>

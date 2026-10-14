@@ -1,5 +1,5 @@
-import { Operation, Prisma } from '@prisma/client';
-import { prisma } from '../../services/prisma.service';
+import { Operation, Prisma } from "@prisma/client";
+import { prisma } from "../../services/prisma.service";
 import {
   CapitalSummary,
   CreateOperationInput,
@@ -7,15 +7,15 @@ import {
   OperationDto,
   OperationType as OpType,
   Position,
-} from './operations.types';
+} from "./operations.types";
 
-const TRADE_TYPES: OpType[] = ['BUY', 'SELL'];
+const TRADE_TYPES: OpType[] = ["BUY", "SELL"];
 
-const DEFAULT_NAMES: Record<Exclude<OpType, 'BUY' | 'SELL'>, string> = {
-  DIV: 'Dividendo',
-  DEP: 'Deposito',
-  RET: 'Retiro',
-  TAX: 'Impuesto',
+const DEFAULT_NAMES: Record<Exclude<OpType, "BUY" | "SELL">, string> = {
+  DIV: "Dividendo",
+  DEP: "Deposito",
+  RET: "Retiro",
+  TAX: "Impuesto",
 };
 
 const EPSILON = 1e-6;
@@ -41,7 +41,10 @@ interface RunningPosition {
 }
 
 export class OperationsService {
-  async list(userId: string, filters: ListOperationsFilters = {}): Promise<OperationDto[]> {
+  async list(
+    userId: string,
+    filters: ListOperationsFilters = {},
+  ): Promise<OperationDto[]> {
     const where: Prisma.OperationWhereInput = { userId };
 
     if (filters.type) {
@@ -51,11 +54,15 @@ export class OperationsService {
     if (filters.from || filters.to) {
       where.date = {};
       if (filters.from) {
-        const fromStr = filters.from.includes('T') ? filters.from : `${filters.from}T00:00:00`;
+        const fromStr = filters.from.includes("T")
+          ? filters.from
+          : `${filters.from}T00:00:00`;
         (where.date as Prisma.DateTimeFilter).gte = new Date(fromStr);
       }
       if (filters.to) {
-        const toStr = filters.to.includes('T') ? filters.to : `${filters.to}T23:59:59.999`;
+        const toStr = filters.to.includes("T")
+          ? filters.to
+          : `${filters.to}T23:59:59.999`;
         (where.date as Prisma.DateTimeFilter).lte = new Date(toStr);
       }
     }
@@ -69,37 +76,41 @@ export class OperationsService {
 
     const operations = await prisma.operation.findMany({
       where,
-      orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [{ date: "desc" }, { createdAt: "desc" }],
     });
 
     return operations.map(toDto);
   }
 
-  async create(userId: string, input: CreateOperationInput): Promise<OperationDto> {
+  async create(
+    userId: string,
+    input: CreateOperationInput,
+  ): Promise<OperationDto> {
     const type: OpType = input.type;
     const isTrade = TRADE_TYPES.includes(type);
 
-    const symbol = (isTrade || type === 'DIV') && input.symbol ? input.symbol : null;
+    const symbol =
+      (isTrade || type === "DIV") && input.symbol ? input.symbol : null;
     const qty = isTrade ? (input.qty ?? 1) : 1;
     const name =
       input.name.trim() ||
-      (symbol ?? DEFAULT_NAMES[type as Exclude<OpType, 'BUY' | 'SELL'>]);
+      (symbol ?? DEFAULT_NAMES[type as Exclude<OpType, "BUY" | "SELL">]);
     const date = input.date ? new Date(input.date) : new Date();
 
     if (isTrade && (!symbol || qty <= 0)) {
       const error = new Error(
-        'Las operaciones de compra y venta requieren simbolo y cantidad mayor a 0'
+        "Las operaciones de compra y venta requieren simbolo y cantidad mayor a 0",
       ) as Error & { code?: string; status?: number };
-      error.code = 'VALIDATION_ERROR';
+      error.code = "VALIDATION_ERROR";
       error.status = 400;
       throw error;
     }
 
-    if (type === 'SELL') {
+    if (type === "SELL") {
       await this.assertSellAllowed(userId, symbol as string, qty);
     }
 
-    if (['BUY', 'RET', 'TAX'].includes(type)) {
+    if (["BUY", "RET", "TAX"].includes(type)) {
       await this.assertCashAvailable(userId, input.totalPrice);
     }
 
@@ -123,11 +134,16 @@ export class OperationsService {
   }
 
   async remove(userId: string, id: string): Promise<void> {
-    const operation = await prisma.operation.findFirst({ where: { id, userId } });
+    const operation = await prisma.operation.findFirst({
+      where: { id, userId },
+    });
 
     if (!operation) {
-      const error = new Error('Operacion no encontrada') as Error & { code?: string; status?: number };
-      error.code = 'NOT_FOUND';
+      const error = new Error("Operacion no encontrada") as Error & {
+        code?: string;
+        status?: number;
+      };
+      error.code = "NOT_FOUND";
       error.status = 404;
       throw error;
     }
@@ -139,10 +155,10 @@ export class OperationsService {
     const operations = await prisma.operation.findMany({
       where: {
         userId,
-        type: { in: ['BUY', 'SELL'] },
+        type: { in: ["BUY", "SELL"] },
         symbol: { not: null },
       },
-      orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
+      orderBy: [{ date: "asc" }, { createdAt: "asc" }],
     });
 
     return this.runningPositions(operations)
@@ -156,10 +172,38 @@ export class OperationsService {
       }));
   }
 
+  /**
+   * Unión de símbolos con posición abierta de TODOS los usuarios
+   * (neto BUY−SELL > 0 por usuario). Usado por el backfill de noticias.
+   */
+  async allOpenPositionSymbols(): Promise<string[]> {
+    const operations = await prisma.operation.findMany({
+      where: { type: { in: ["BUY", "SELL"] }, symbol: { not: null } },
+      select: { userId: true, type: true, symbol: true, qty: true },
+    });
+
+    const netByUserSymbol = new Map<string, number>();
+    for (const op of operations) {
+      const key = `${op.userId}|${(op.symbol as string).toUpperCase()}`;
+      const current = netByUserSymbol.get(key) ?? 0;
+      netByUserSymbol.set(
+        key,
+        op.type === "BUY" ? current + op.qty : current - op.qty,
+      );
+    }
+
+    const symbols = new Set<string>();
+    for (const [key, net] of netByUserSymbol.entries()) {
+      const symbol = key.split("|")[1];
+      if (symbol && net > EPSILON) symbols.add(symbol);
+    }
+    return [...symbols];
+  }
+
   async summary(userId: string): Promise<CapitalSummary> {
     const operations = await prisma.operation.findMany({
       where: { userId },
-      orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
+      orderBy: [{ date: "asc" }, { createdAt: "asc" }],
     });
 
     const positions = this.runningPositions(operations);
@@ -169,30 +213,33 @@ export class OperationsService {
     for (const op of operations) {
       const value = Number(op.totalPrice);
       switch (op.type) {
-        case 'DEP':
+        case "DEP":
           caja += value;
           neutral += value;
           break;
-        case 'DIV':
+        case "DIV":
           caja += value;
           break;
-        case 'SELL':
+        case "SELL":
           caja += value;
           break;
-        case 'RET':
+        case "RET":
           caja -= value;
           neutral -= value;
           break;
-        case 'BUY':
+        case "BUY":
           caja -= value;
           break;
-        case 'TAX':
+        case "TAX":
           caja -= value;
           break;
       }
     }
 
-    const patrimonioPorPosiciones = positions.reduce((acc, p) => acc + p.cost, 0);
+    const patrimonioPorPosiciones = positions.reduce(
+      (acc, p) => acc + p.cost,
+      0,
+    );
 
     return {
       caja: this.round2(caja),
@@ -205,13 +252,18 @@ export class OperationsService {
     const map = new Map<string, RunningPosition>();
 
     for (const op of operations) {
-      if (op.type === 'BUY') {
-        const current = map.get(op.symbol as string) ?? { symbol: op.symbol as string, qty: 0, cost: 0, name: op.name };
+      if (op.type === "BUY") {
+        const current = map.get(op.symbol as string) ?? {
+          symbol: op.symbol as string,
+          qty: 0,
+          cost: 0,
+          name: op.name,
+        };
         current.qty += op.qty;
         current.cost += Number(op.totalPrice);
         current.name = op.name;
         map.set(op.symbol as string, current);
-      } else if (op.type === 'SELL') {
+      } else if (op.type === "SELL") {
         const current = map.get(op.symbol as string);
         if (current && current.qty > 0) {
           const avgCost = current.qty > 0 ? current.cost / current.qty : 0;
@@ -232,41 +284,46 @@ export class OperationsService {
     const operations = await prisma.operation.findMany({
       where: {
         userId,
-        type: { in: ['BUY', 'SELL'] },
+        type: { in: ["BUY", "SELL"] },
         symbol,
       },
-      orderBy: [{ date: 'asc' }, { createdAt: 'asc' }],
+      orderBy: [{ date: "asc" }, { createdAt: "asc" }],
     });
 
-    const position = this.runningPositions(operations).find((p) => p.symbol === symbol);
+    const position = this.runningPositions(operations).find(
+      (p) => p.symbol === symbol,
+    );
 
     if (!position || position.qty + EPSILON < qty) {
       const error = new Error(
         `No se puede vender: la posicion abierta de ${symbol} es de ${
           position ? this.round(position.qty) : 0
-        } acciones`
+        } acciones`,
       ) as Error & { code?: string; status?: number };
-      error.code = 'POSITION_EXCEEDED';
+      error.code = "POSITION_EXCEEDED";
       error.status = 400;
       throw error;
     }
   }
 
-  private async assertCashAvailable(userId: string, totalPrice: number): Promise<void> {
+  private async assertCashAvailable(
+    userId: string,
+    totalPrice: number,
+  ): Promise<void> {
     const { caja } = await this.summary(userId);
     if (totalPrice > caja + EPSILON) {
-      const formattedPrice = totalPrice.toLocaleString('es-MX', {
+      const formattedPrice = totalPrice.toLocaleString("es-MX", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
-      const formattedCaja = caja.toLocaleString('es-MX', {
+      const formattedCaja = caja.toLocaleString("es-MX", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
       const error = new Error(
-        `No se puede registrar la operación: el monto ($${formattedPrice} MXN) supera la caja disponible ($${formattedCaja} MXN)`
+        `No se puede registrar la operación: el monto ($${formattedPrice} MXN) supera la caja disponible ($${formattedCaja} MXN)`,
       ) as Error & { code?: string; status?: number };
-      error.code = 'INSUFFICIENT_FUNDS';
+      error.code = "INSUFFICIENT_FUNDS";
       error.status = 400;
       throw error;
     }
@@ -278,12 +335,14 @@ export class OperationsService {
 
   private async assertSymbolInCatalog(symbol: string): Promise<void> {
     const normalized = symbol.trim().toUpperCase();
-    const instrument = await prisma.instrument.findUnique({ where: { symbol: normalized } });
+    const instrument = await prisma.instrument.findUnique({
+      where: { symbol: normalized },
+    });
     if (!instrument || !instrument.isActive) {
       const error = new Error(
-        `El símbolo ${normalized} no está en el catálogo de instrumentos`
+        `El símbolo ${normalized} no está en el catálogo de instrumentos`,
       ) as Error & { code?: string; status?: number };
-      error.code = 'SYMBOL_NOT_FOUND';
+      error.code = "SYMBOL_NOT_FOUND";
       error.status = 400;
       throw error;
     }

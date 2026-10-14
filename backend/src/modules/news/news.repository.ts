@@ -1,5 +1,5 @@
-import type { PrismaClient } from '@prisma/client';
-import { prisma as defaultPrisma } from '../../services/prisma.service';
+import type { PrismaClient } from "@prisma/client";
+import { prisma as defaultPrisma } from "../../services/prisma.service";
 import type {
   BudgetScope,
   NewsBudgetLimits,
@@ -11,7 +11,7 @@ import type {
   NormalizedArticle,
   NormalizedSymbol,
   UpsertOutcome,
-} from './news.types';
+} from "./news.types";
 
 /** Campos que la sincronizacion puede actualizar en un articulo existente. */
 export interface StoredArticleSnapshot {
@@ -22,20 +22,23 @@ export interface StoredArticleSnapshot {
   source: string;
   language: string;
   publishedAt: Date;
-  category: NormalizedArticle['category'];
+  category: NormalizedArticle["category"];
   sentiment: number | null;
   symbols: NormalizedSymbol[];
 }
 
 function symbolKey(symbols: NormalizedSymbol[]): string {
   return symbols
-    .map((s) => `${s.symbol}|${s.matchScore ?? ''}|${s.sentiment ?? ''}`)
+    .map((s) => `${s.symbol}|${s.matchScore ?? ""}|${s.sentiment ?? ""}`)
     .sort()
-    .join(';');
+    .join(";");
 }
 
 /** `true` si el articulo entrante difiere de lo almacenado (contadores excluidos). */
-export function articleDiffers(stored: StoredArticleSnapshot, incoming: NormalizedArticle): boolean {
+export function articleDiffers(
+  stored: StoredArticleSnapshot,
+  incoming: NormalizedArticle,
+): boolean {
   return (
     stored.title !== incoming.title ||
     stored.description !== incoming.description ||
@@ -81,13 +84,21 @@ export class PrismaNewsStore implements NewsStore {
         publishedAt: true,
         category: true,
         sentiment: true,
-        symbols: { select: { symbol: true, matchScore: true, sentiment: true } },
+        symbols: {
+          select: { symbol: true, matchScore: true, sentiment: true },
+        },
       } as const;
 
       // Idempotencia por providerId; la url (tambien unica) cubre reediciones del proveedor.
       const existing =
-        (await tx.newsArticle.findUnique({ where: { providerId: article.providerId }, select })) ??
-        (await tx.newsArticle.findUnique({ where: { url: article.url }, select }));
+        (await tx.newsArticle.findUnique({
+          where: { providerId: article.providerId },
+          select,
+        })) ??
+        (await tx.newsArticle.findUnique({
+          where: { url: article.url },
+          select,
+        }));
 
       if (!existing) {
         await tx.newsArticle.create({
@@ -101,11 +112,17 @@ export class PrismaNewsStore implements NewsStore {
         return { created: true, changed: true };
       }
 
-      if (!articleDiffers(existing, article)) return { created: false, changed: false };
+      if (!articleDiffers(existing, article))
+        return { created: false, changed: false };
 
-      await tx.newsArticle.update({ where: { id: existing.id }, data: mutableFields(article) });
+      await tx.newsArticle.update({
+        where: { id: existing.id },
+        data: mutableFields(article),
+      });
       // Reconstruccion completa de las menciones.
-      await tx.newsArticleSymbol.deleteMany({ where: { articleId: existing.id } });
+      await tx.newsArticleSymbol.deleteMany({
+        where: { articleId: existing.id },
+      });
       if (article.symbols.length) {
         await tx.newsArticleSymbol.createMany({
           data: article.symbols.map((s) => ({ ...s, articleId: existing.id })),
@@ -116,8 +133,19 @@ export class PrismaNewsStore implements NewsStore {
   }
 
   async latestPublishedAt(): Promise<Date | null> {
-    const result = await this.db.newsArticle.aggregate({ _max: { publishedAt: true } });
+    const result = await this.db.newsArticle.aggregate({
+      _max: { publishedAt: true },
+    });
     return result._max.publishedAt;
+  }
+
+  async minPublishedAtForSymbols(symbols: string[]): Promise<Date | null> {
+    if (!symbols.length) return null;
+    const result = await this.db.newsArticle.aggregate({
+      _min: { publishedAt: true },
+      where: { symbols: { some: { symbol: { in: symbols } } } },
+    });
+    return result._min.publishedAt;
   }
 
   async purgeExpired(cutoff: Date): Promise<number> {
@@ -130,21 +158,34 @@ export class PrismaNewsStore implements NewsStore {
 
   async getUsage(day: Date): Promise<NewsUsageRecord> {
     const row = await this.db.newsProviderUsage.findUnique({ where: { day } });
-    return { requests: row?.requests ?? 0, symbolRequests: row?.symbolRequests ?? 0 };
+    return {
+      requests: row?.requests ?? 0,
+      symbolRequests: row?.symbolRequests ?? 0,
+    };
   }
 
-  async tryConsumeRequest(day: Date, scope: BudgetScope, limits: NewsBudgetLimits): Promise<boolean> {
-    await this.db.newsProviderUsage.upsert({ where: { day }, create: { day }, update: {} });
+  async tryConsumeRequest(
+    day: Date,
+    scope: BudgetScope,
+    limits: NewsBudgetLimits,
+  ): Promise<boolean> {
+    await this.db.newsProviderUsage.upsert({
+      where: { day },
+      create: { day },
+      update: {},
+    });
     // UPDATE condicional: atomico a nivel de fila, sin carreras entre corridas.
     const result = await this.db.newsProviderUsage.updateMany({
       where: {
         day,
         requests: { lt: limits.daily },
-        ...(scope === 'symbols' ? { symbolRequests: { lt: limits.symbols } } : {}),
+        ...(scope === "symbols"
+          ? { symbolRequests: { lt: limits.symbols } }
+          : {}),
       },
       data: {
         requests: { increment: 1 },
-        ...(scope === 'symbols' ? { symbolRequests: { increment: 1 } } : {}),
+        ...(scope === "symbols" ? { symbolRequests: { increment: 1 } } : {}),
       },
     });
     return result.count === 1;
@@ -159,11 +200,11 @@ export class PrismaNewsStore implements NewsStore {
   }
 
   async listSyncStates(): Promise<NewsSyncStateRecord[]> {
-    return this.db.newsSyncState.findMany({ orderBy: { job: 'asc' } });
+    return this.db.newsSyncState.findMany({ orderBy: { job: "asc" } });
   }
 
   async saveSyncResult(result: NewsSyncResult): Promise<void> {
-    const ok = result.status === 'OK';
+    const ok = result.status === "OK";
     const data = {
       lastRunAt: result.startedAt,
       lastStatus: result.status,

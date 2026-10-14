@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .detail-backdrop {
   position: fixed;
   inset: 0;
@@ -26,10 +30,17 @@
   box-shadow: -8px 0 24px rgba(32, 44, 56, 0.12);
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 32px 30px;
   position: relative;
   animation: slideInRight 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.detail-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 @keyframes slideInRight {
@@ -299,7 +310,7 @@
 }
 
 .detail-actions {
-  margin-top: auto;
+  flex-shrink: 0;
   padding-top: 20px;
   border-top: 1px solid var(--line, #e3e9ed);
   display: flex;

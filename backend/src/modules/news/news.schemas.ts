@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // Validacion tolerante de la respuesta de Marketaux: los campos opcionales pueden
 // venir como null y los desconocidos se descartan.
@@ -48,15 +48,15 @@ export const marketauxErrorSchema = z.object({
 // ── Schemas de endpoints REST (Sprint 4) ───────────────────────
 
 export const NEWS_CATEGORIES_TUPLE = [
-  'MERCADOS',
-  'EMPRESAS',
-  'ECONOMIA',
-  'CRIPTO',
-  'DIVISAS',
-  'ENERGIA',
-  'TECNOLOGIA',
-  'SALUD',
-  'OTROS',
+  "MERCADOS",
+  "EMPRESAS",
+  "ECONOMIA",
+  "CRIPTO",
+  "DIVISAS",
+  "ENERGIA",
+  "TECNOLOGIA",
+  "SALUD",
+  "OTROS",
 ] as const;
 
 export const listNewsQuerySchema = z.object({
@@ -73,7 +73,7 @@ export const listNewsQuerySchema = z.object({
     .or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/))
     .optional(),
   symbol: z.string().trim().max(20).optional(),
-  sort: z.enum(['recent', 'relevance']).default('recent'),
+  sort: z.enum(["recent", "relevance"]).default("recent"),
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(50).default(12),
 });
@@ -86,6 +86,5 @@ export const listFavoritesQuerySchema = z.object({
 });
 
 export const articleIdParamSchema = z.object({
-  id: z.string().min(1, 'El ID de la noticia es obligatorio'),
+  id: z.string().min(1, "El ID de la noticia es obligatorio"),
 });
-

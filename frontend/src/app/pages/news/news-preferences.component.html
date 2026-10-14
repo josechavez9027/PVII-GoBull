@@ -1,0 +1,142 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)" role="dialog" aria-modal="true" aria-labelledby="prefs-title">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <h2 id="prefs-title" class="modal-title">Preferencias de Noticias</h2>
+        <p class="modal-subtitle">Configura cuándo y con qué frecuencia recibir avisos de mercado</p>
+      </div>
+      <button class="close-btn" type="button" aria-label="Cerrar modal" (click)="close.emit()">
+        ✕
+      </button>
+    </div>
+
+    @if (isLoading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <span>Cargando preferencias...</span>
+      </div>
+    } @else {
+      <div class="modal-body">
+        @if (errorMessage) {
+          <div class="alert alert--danger" role="alert">
+            {{ errorMessage }}
+          </div>
+        }
+
+        @if (saveSuccess) {
+          <div class="alert alert--success" role="status">
+            ✓ Preferencias guardadas correctamente
+          </div>
+        }
+
+        <!-- 1. Switch Notificaciones Push Activas -->
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-label">Avisos automáticos</span>
+            <span class="setting-desc">Generar notificaciones in-app y push al detectar noticias relevantes</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="pushEnabled" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- 2. Permiso del Navegador Web Push -->
+        <div class="browser-push-card">
+          <div class="push-status-header">
+            <span class="push-icon" aria-hidden="true">🔔</span>
+            <div>
+              <span class="push-title">Notificaciones del navegador (Web Push)</span>
+              <p class="push-desc">
+                @if (pushPermission === 'granted') {
+                  Avisos activos en este navegador. Recibirás alertas aunque tengas la pestaña en segundo plano.
+                } @else if (pushPermission === 'denied') {
+                  Permiso bloqueado en este navegador. Debes permitir notificaciones desde los ajustes del sitio.
+                } @else {
+                  Aún no has concedido permisos para recibir notificaciones en este equipo.
+                }
+              </p>
+            </div>
+          </div>
+
+          <div class="push-action">
+            @if (pushPermission === 'granted') {
+              <button
+                type="button"
+                class="btn btn--outline-danger"
+                [disabled]="isSubscribing"
+                (click)="togglePushSubscription()"
+              >
+                {{ isSubscribing ? 'Desactivando...' : 'Desvincular este dispositivo' }}
+              </button>
+            } @else {
+              <button
+                type="button"
+                class="btn btn--primary"
+                [disabled]="isSubscribing || pushPermission === 'denied'"
+                (click)="togglePushSubscription()"
+              >
+                {{ isSubscribing ? 'Solicitando...' : 'Activar en este navegador' }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- 3. Umbral de Relevancia (minScore) -->
+        <div class="form-group">
+          <div class="slider-header">
+            <label for="minScoreRange" class="setting-label">Umbral mínimo de relevancia</label>
+            <span class="badge-score tabular-nums">{{ minScore }}%</span>
+          </div>
+          <span class="setting-desc">
+            Solo se te avisará de artículos con score de relevancia igual o superior a este valor (evaluando cartera, tráfico, recencia y afinidad).
+          </span>
+          <input
+            id="minScoreRange"
+            type="range"
+            min="0"
+            max="100"
+            step="5"
+            [(ngModel)]="minScore"
+            class="range-slider"
+          />
+          <div class="range-labels">
+            <span>0% (Todo)</span>
+            <span>50% (Moderado)</span>
+            <span>70% (Recomendado)</span>
+            <span>90% (Muy crítico)</span>
+          </div>
+        </div>
+
+        <!-- 4. Límite Diario (maxPerDay) -->
+        <div class="form-group">
+          <label for="maxPerDaySelect" class="setting-label">Tope diario de avisos</label>
+          <span class="setting-desc">Número máximo de notificaciones que recibirás en una ventana de 24 horas.</span>
+          <select id="maxPerDaySelect" [(ngModel)]="maxPerDay" class="select-input tabular-nums">
+            <option [value]="1">1 notificación al día</option>
+            <option [value]="3">3 notificaciones al día</option>
+            <option [value]="5">5 notificaciones al día (Recomendado)</option>
+            <option [value]="10">10 notificaciones al día</option>
+            <option [value]="20">20 notificaciones al día (Sin filtro severo)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn--outline" (click)="close.emit()">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn--primary"
+          [disabled]="isSaving"
+          (click)="save()"
+        >
+          {{ isSaving ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+    }
+  </div>
+</div>

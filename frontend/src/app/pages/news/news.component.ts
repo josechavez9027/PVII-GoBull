@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,18 +56,28 @@ export class NewsComponent implements OnInit, OnDestroy {
   private searchSubject = new Subject<string>();
   private subs: Subscription[] = [];
 
+  // Píldoras de filtro ocultas (los artículos de estas categorías siguen en "Todas")
+  private readonly hiddenCategories = new Set<NewsCategory>([
+    'MERCADOS',
+    'DIVISAS',
+    'SALUD',
+    'ECONOMIA',
+    'CRIPTO',
+  ]);
+
   constructor(
     private newsService: NewsService,
     private route: ActivatedRoute,
     private router: Router,
+    private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.loadCategories();
-      this.loadNews();
+    this.loadCategories();
+    this.loadNews();
 
+    if (isPlatformBrowser(this.platformId)) {
       // Escuchar cambios de parámetro :id para deep linking
       const routeSub = this.route.paramMap.subscribe((params) => {
         const id = params.get('id');
@@ -68,6 +85,7 @@ export class NewsComponent implements OnInit, OnDestroy {
           this.openDetailById(id);
         } else {
           this.selectedArticle = null;
+          this.cd.markForCheck();
         }
       });
       this.subs.push(routeSub);
@@ -92,9 +110,10 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.newsService.getCategories().subscribe({
       next: (res) => {
         this.categories = res.categories;
+        this.cd.markForCheck();
       },
       error: () => {
-        // Fallback silencioso
+        this.cd.markForCheck();
       },
     });
   }
@@ -102,6 +121,7 @@ export class NewsComponent implements OnInit, OnDestroy {
   loadNews(): void {
     this.isLoading = true;
     this.errorMessage = '';
+    this.cd.markForCheck();
 
     if (this.onlyFavorites) {
       this.newsService
@@ -116,10 +136,12 @@ export class NewsComponent implements OnInit, OnDestroy {
             this.articles = res.news;
             this.pagination = res.pagination;
             this.isLoading = false;
+            this.cd.markForCheck();
           },
           error: (err) => {
             this.errorMessage = 'No se pudieron cargar las noticias favoritas. Intenta nuevamente.';
             this.isLoading = false;
+            this.cd.markForCheck();
           },
         });
     } else if (this.sortOption === 'relevance') {
@@ -135,10 +157,13 @@ export class NewsComponent implements OnInit, OnDestroy {
             this.articles = res.news;
             this.pagination = res.pagination;
             this.isLoading = false;
+            this.cd.markForCheck();
           },
           error: (err) => {
-            this.errorMessage = 'No se pudieron cargar las noticias recomendadas. Intenta nuevamente.';
+            this.errorMessage =
+              'No se pudieron cargar las noticias recomendadas. Intenta nuevamente.';
             this.isLoading = false;
+            this.cd.markForCheck();
           },
         });
     } else {
@@ -155,10 +180,13 @@ export class NewsComponent implements OnInit, OnDestroy {
             this.articles = res.news;
             this.pagination = res.pagination;
             this.isLoading = false;
+            this.cd.markForCheck();
           },
           error: (err) => {
-            this.errorMessage = 'No se pudieron cargar las noticias de mercado. Intenta nuevamente.';
+            this.errorMessage =
+              'No se pudieron cargar las noticias de mercado. Intenta nuevamente.';
             this.isLoading = false;
+            this.cd.markForCheck();
           },
         });
     }
@@ -174,6 +202,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.selectedCategory = cat;
     this.pagination.page = 1;
     this.loadNews();
+    this.cd.markForCheck();
   }
 
   setSortOption(sort: 'recent' | 'relevance'): void {
@@ -181,12 +210,14 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.sortOption = sort;
     this.pagination.page = 1;
     this.loadNews();
+    this.cd.markForCheck();
   }
 
   toggleFavoritesOnly(): void {
     this.onlyFavorites = !this.onlyFavorites;
     this.pagination.page = 1;
     this.loadNews();
+    this.cd.markForCheck();
   }
 
   clearFilters(): void {
@@ -196,6 +227,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.onlyFavorites = false;
     this.pagination.page = 1;
     this.loadNews();
+    this.cd.markForCheck();
   }
 
   onPageChange(page: number): void {
@@ -209,6 +241,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   openDetail(article: NewsArticle): void {
     this.selectedArticle = article;
+    this.cd.markForCheck();
     this.router.navigate(['/noticias', article.id], { replaceUrl: false });
   }
 
@@ -217,24 +250,30 @@ export class NewsComponent implements OnInit, OnDestroy {
     const found = this.articles.find((a) => a.id === id);
     if (found) {
       this.selectedArticle = found;
+      this.cd.markForCheck();
       return;
     }
 
     this.isLoadingDetail = true;
     this.detailErrorMessage = '';
+    this.cd.markForCheck();
 
     this.newsService.getArticle(id).subscribe({
       next: (res) => {
         this.selectedArticle = res.article;
         this.isLoadingDetail = false;
+        this.cd.markForCheck();
       },
       error: () => {
         this.isLoadingDetail = false;
-        this.detailErrorMessage = 'La noticia solicitada no fue encontrada o ya no está disponible.';
+        this.detailErrorMessage =
+          'La noticia solicitada no fue encontrada o ya no está disponible.';
+        this.cd.markForCheck();
         // Redirigir a /noticias tras advertencia
         setTimeout(() => {
           this.router.navigate(['/noticias']);
           this.detailErrorMessage = '';
+          this.cd.markForCheck();
         }, 3000);
       },
     });
@@ -242,6 +281,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   closeDetail(): void {
     this.selectedArticle = null;
+    this.cd.markForCheck();
     this.router.navigate(['/noticias']);
   }
 
@@ -255,9 +295,10 @@ export class NewsComponent implements OnInit, OnDestroy {
             this.articles = this.articles.filter((a) => a.id !== article.id);
             this.pagination.total = Math.max(0, this.pagination.total - 1);
           }
+          this.cd.markForCheck();
         },
         error: () => {
-          // Revertir optimismo si aplica
+          this.cd.markForCheck();
         },
       });
     } else {
@@ -265,9 +306,10 @@ export class NewsComponent implements OnInit, OnDestroy {
         next: (res) => {
           article.isFavorite = true;
           article.favoriteCount = res.favoriteCount;
+          this.cd.markForCheck();
         },
         error: () => {
-          // Revertir optimismo si aplica
+          this.cd.markForCheck();
         },
       });
     }
@@ -276,6 +318,10 @@ export class NewsComponent implements OnInit, OnDestroy {
   getCategoryCount(cat: NewsCategory): number {
     const item = this.categories.find((c) => c.category === cat);
     return item?.count ?? 0;
+  }
+
+  get visibleCategories(): NewsCategoryCount[] {
+    return this.categories.filter((c) => !this.hiddenCategories.has(c.category));
   }
 
   getTotalCount(): number {

@@ -1,22 +1,26 @@
-import { categorizeArticle } from './news.categorize';
-import { newsLog } from './news.config';
-import { marketauxArticleSchema, marketauxErrorSchema, marketauxResponseSchema } from './news.schemas';
+import { categorizeArticle } from "./news.categorize";
+import { newsLog } from "./news.config";
+import {
+  marketauxArticleSchema,
+  marketauxErrorSchema,
+  marketauxResponseSchema,
+} from "./news.schemas";
 import type {
   FetchNewsParams,
   MarketauxArticle,
   MarketauxPage,
   NormalizedArticle,
   NormalizedSymbol,
-} from './news.types';
+} from "./news.types";
 
 export type NewsProviderErrorKind =
-  | 'BUDGET_EXHAUSTED'
-  | 'RATE_LIMITED'
-  | 'SERVER_ERROR'
-  | 'NETWORK_ERROR'
-  | 'AUTH_ERROR'
-  | 'BAD_REQUEST'
-  | 'INVALID_RESPONSE';
+  | "BUDGET_EXHAUSTED"
+  | "RATE_LIMITED"
+  | "SERVER_ERROR"
+  | "NETWORK_ERROR"
+  | "AUTH_ERROR"
+  | "BAD_REQUEST"
+  | "INVALID_RESPONSE";
 
 export class NewsProviderError extends Error {
   constructor(
@@ -25,13 +29,15 @@ export class NewsProviderError extends Error {
     readonly status?: number,
   ) {
     super(message);
-    this.name = 'NewsProviderError';
+    this.name = "NewsProviderError";
   }
 
   /** Errores transitorios que justifican backoff y reintento. */
   get retryable(): boolean {
     return (
-      this.kind === 'RATE_LIMITED' || this.kind === 'SERVER_ERROR' || this.kind === 'NETWORK_ERROR'
+      this.kind === "RATE_LIMITED" ||
+      this.kind === "SERVER_ERROR" ||
+      this.kind === "NETWORK_ERROR"
     );
   }
 }
@@ -55,7 +61,8 @@ export interface FetchNewsOptions {
   beforeRequest?: () => Promise<boolean>;
 }
 
-const defaultSleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+const defaultSleep = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 /** Formato aceptado por Marketaux: `Y-m-d\TH:i:s` (UTC). */
 export function formatProviderDate(date: Date): string {
@@ -73,26 +80,37 @@ export class MarketauxProvider {
   }
 
   buildUrl(params: FetchNewsParams = {}): URL {
-    const url = new URL('/v1/news/all', this.options.baseUrl);
+    const url = new URL("/v1/news/all", this.options.baseUrl);
     const q = url.searchParams;
-    q.set('api_token', this.options.apiKey);
-    if (this.options.languages.length) q.set('language', this.options.languages.join(','));
+    q.set("api_token", this.options.apiKey);
+    if (this.options.languages.length)
+      q.set("language", this.options.languages.join(","));
     // Sin `sort`: el orden por defecto de Marketaux ya es `published_at` descendente.
-    q.set('limit', String(this.options.pageLimit));
-    q.set('page', String(params.page ?? 1));
-    q.set('group_similar', 'true');
-    if (params.publishedAfter) q.set('published_after', formatProviderDate(params.publishedAfter));
-    if (params.mustHaveEntities) q.set('must_have_entities', 'true');
-    if (params.symbols?.length) q.set('symbols', params.symbols.join(','));
+    q.set("limit", String(this.options.pageLimit));
+    q.set("page", String(params.page ?? 1));
+    q.set("group_similar", "true");
+    if (params.publishedAfter)
+      q.set("published_after", formatProviderDate(params.publishedAfter));
+    if (params.publishedBefore)
+      q.set("published_before", formatProviderDate(params.publishedBefore));
+    if (params.mustHaveEntities) q.set("must_have_entities", "true");
+    if (params.symbols?.length) q.set("symbols", params.symbols.join(","));
+    if (params.domains?.length) q.set("domains", params.domains.join(","));
     return url;
   }
 
-  async fetchNews(params: FetchNewsParams = {}, opts: FetchNewsOptions = {}): Promise<MarketauxPage> {
+  async fetchNews(
+    params: FetchNewsParams = {},
+    opts: FetchNewsOptions = {},
+  ): Promise<MarketauxPage> {
     const delays = this.options.backoffMs;
 
     for (let attempt = 0; ; attempt++) {
       if (opts.beforeRequest && !(await opts.beforeRequest())) {
-        throw new NewsProviderError('Presupuesto diario de peticiones agotado', 'BUDGET_EXHAUSTED');
+        throw new NewsProviderError(
+          "Presupuesto diario de peticiones agotado",
+          "BUDGET_EXHAUSTED",
+        );
       }
 
       try {
@@ -103,13 +121,14 @@ export class MarketauxProvider {
             ? error
             : new NewsProviderError(
                 `Fallo de red al consultar Marketaux: ${(error as Error)?.message ?? error}`,
-                'NETWORK_ERROR',
+                "NETWORK_ERROR",
               );
 
         const delay = delays[attempt];
-        if (!providerError.retryable || delay === undefined) throw providerError;
+        if (!providerError.retryable || delay === undefined)
+          throw providerError;
 
-        newsLog('warn', 'NEWS_PROVIDER_RETRY', {
+        newsLog("warn", "NEWS_PROVIDER_RETRY", {
           kind: providerError.kind,
           status: providerError.status,
           attempt: attempt + 1,
@@ -122,7 +141,7 @@ export class MarketauxProvider {
 
   private async request(params: FetchNewsParams): Promise<MarketauxPage> {
     const response = await this.fetchFn(this.buildUrl(params), {
-      headers: { Accept: 'application/json' },
+      headers: { Accept: "application/json" },
       signal: AbortSignal.timeout(20_000),
     });
 
@@ -137,7 +156,10 @@ export class MarketauxProvider {
 
     const parsed = marketauxResponseSchema.safeParse(body);
     if (!parsed.success) {
-      throw new NewsProviderError('Respuesta de Marketaux con formato inesperado', 'INVALID_RESPONSE');
+      throw new NewsProviderError(
+        "Respuesta de Marketaux con formato inesperado",
+        "INVALID_RESPONSE",
+      );
     }
 
     const articles: MarketauxArticle[] = [];
@@ -160,13 +182,17 @@ export class MarketauxProvider {
     const parsed = marketauxErrorSchema.safeParse(body);
     const code = parsed.success ? parsed.data.error.code : undefined;
     const detail = parsed.success ? parsed.data.error.message : undefined;
-    const message = `Marketaux respondio ${status}${code ? ` (${code})` : ''}${detail ? `: ${detail}` : ''}`;
+    const message = `Marketaux respondio ${status}${code ? ` (${code})` : ""}${detail ? `: ${detail}` : ""}`;
 
-    if (status === 402) return new NewsProviderError(message, 'BUDGET_EXHAUSTED', status);
-    if (status === 429) return new NewsProviderError(message, 'RATE_LIMITED', status);
-    if (status >= 500) return new NewsProviderError(message, 'SERVER_ERROR', status);
-    if (status === 401 || status === 403) return new NewsProviderError(message, 'AUTH_ERROR', status);
-    return new NewsProviderError(message, 'BAD_REQUEST', status);
+    if (status === 402)
+      return new NewsProviderError(message, "BUDGET_EXHAUSTED", status);
+    if (status === 429)
+      return new NewsProviderError(message, "RATE_LIMITED", status);
+    if (status >= 500)
+      return new NewsProviderError(message, "SERVER_ERROR", status);
+    if (status === 401 || status === 403)
+      return new NewsProviderError(message, "AUTH_ERROR", status);
+    return new NewsProviderError(message, "BAD_REQUEST", status);
   }
 }
 
@@ -184,12 +210,12 @@ function cleanText(value: string | null | undefined): string | null {
 }
 
 function finiteOrNull(value: number | null | undefined): number | null {
-  return typeof value === 'number' && Number.isFinite(value) ? value : null;
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
 function hostnameOf(url: string): string | null {
   try {
-    return new URL(url).hostname.replace(/^www\./, '');
+    return new URL(url).hostname.replace(/^www\./, "");
   } catch {
     return null;
   }
@@ -207,7 +233,10 @@ export function extractSymbols(article: MarketauxArticle): NormalizedSymbol[] {
       sentiment: finiteOrNull(entity.sentiment_score),
     };
     const current = bySymbol.get(symbol);
-    if (!current || (candidate.matchScore ?? -Infinity) > (current.matchScore ?? -Infinity)) {
+    if (
+      !current ||
+      (candidate.matchScore ?? -Infinity) > (current.matchScore ?? -Infinity)
+    ) {
       bySymbol.set(symbol, candidate);
     }
   }
@@ -228,7 +257,9 @@ export function averageSentiment(article: MarketauxArticle): number | null {
  * Convierte un articulo de Marketaux al modelo local. Devuelve `null` si no se
  * puede almacenar (sin url valida, fecha invalida o identificadores fuera de rango).
  */
-export function normalizeArticle(article: MarketauxArticle): NormalizedArticle | null {
+export function normalizeArticle(
+  article: MarketauxArticle,
+): NormalizedArticle | null {
   const providerId = article.uuid.trim();
   const url = article.url.trim();
   const title = article.title.trim();
@@ -238,8 +269,14 @@ export function normalizeArticle(article: MarketauxArticle): NormalizedArticle |
   if (!/^https?:\/\//i.test(url) || url.length > MAX_URL) return null;
   if (!title || Number.isNaN(publishedAt.getTime())) return null;
 
-  const source = (cleanText(article.source) ?? hostnameOf(url) ?? 'desconocido').slice(0, MAX_SOURCE);
-  const language = (cleanText(article.language) ?? 'en').toLowerCase().slice(0, 8);
+  const source = (
+    cleanText(article.source) ??
+    hostnameOf(url) ??
+    "desconocido"
+  ).slice(0, MAX_SOURCE);
+  const language = (cleanText(article.language) ?? "en")
+    .toLowerCase()
+    .slice(0, 8);
 
   return {
     providerId,

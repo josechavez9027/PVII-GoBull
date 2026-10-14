@@ -1,17 +1,17 @@
-import type { NewsCategory } from '@prisma/client';
+import type { NewsCategory } from "@prisma/client";
 
 export type { NewsCategory };
 
 export const NEWS_CATEGORIES = [
-  'MERCADOS',
-  'EMPRESAS',
-  'ECONOMIA',
-  'CRIPTO',
-  'DIVISAS',
-  'ENERGIA',
-  'TECNOLOGIA',
-  'SALUD',
-  'OTROS',
+  "MERCADOS",
+  "EMPRESAS",
+  "ECONOMIA",
+  "CRIPTO",
+  "DIVISAS",
+  "ENERGIA",
+  "TECNOLOGIA",
+  "SALUD",
+  "OTROS",
 ] as const satisfies readonly NewsCategory[];
 
 // ── Proveedor (Marketaux) ──────────────────────────────────────
@@ -49,12 +49,15 @@ export interface MarketauxPage {
 export interface FetchNewsParams {
   page?: number;
   publishedAfter?: Date;
+  publishedBefore?: Date;
   symbols?: string[];
   mustHaveEntities?: boolean;
+  /** Restringe resultados a estos dominios de origen (ej. reuters.com, bloomberg.com). */
+  domains?: string[];
 }
 
 /** Tipo de peticion para el presupuesto diario (las dirigidas tienen sub-cupo). */
-export type BudgetScope = 'general' | 'symbols';
+export type BudgetScope = "general" | "symbols";
 
 // ── Modelo normalizado ─────────────────────────────────────────
 
@@ -81,16 +84,17 @@ export interface NormalizedArticle {
 
 // ── Sincronizacion ─────────────────────────────────────────────
 
-export type NewsSyncJob = 'freshness' | 'depth' | 'symbols';
+export type NewsSyncJob = "freshness" | "depth" | "symbols" | "backfill";
 
 export type NewsSyncStatus =
-  | 'NEVER'
-  | 'OK'
-  | 'SKIPPED_BUDGET'
-  | 'SKIPPED_LOCKED'
-  | 'SKIPPED_NO_API_KEY'
-  | 'PARTIAL'
-  | 'FAILED';
+  | "NEVER"
+  | "OK"
+  | "SKIPPED_BUDGET"
+  | "SKIPPED_LOCKED"
+  | "SKIPPED_NO_API_KEY"
+  | "SKIPPED_DISABLED"
+  | "PARTIAL"
+  | "FAILED";
 
 export interface UpsertOutcome {
   created: boolean;
@@ -134,10 +138,16 @@ export interface NewsUsageRecord {
 export interface NewsStore {
   upsertArticle(article: NormalizedArticle): Promise<UpsertOutcome>;
   latestPublishedAt(): Promise<Date | null>;
+  /** Publicación más antigua entre artículos que mencionan alguno de esos símbolos. */
+  minPublishedAtForSymbols(symbols: string[]): Promise<Date | null>;
   purgeExpired(cutoff: Date): Promise<number>;
   getUsage(day: Date): Promise<NewsUsageRecord>;
   /** Reserva atomicamente una peticion si queda cupo. Devuelve `false` si se agoto. */
-  tryConsumeRequest(day: Date, scope: BudgetScope, limits: NewsBudgetLimits): Promise<boolean>;
+  tryConsumeRequest(
+    day: Date,
+    scope: BudgetScope,
+    limits: NewsBudgetLimits,
+  ): Promise<boolean>;
   purgeUsageBefore(day: Date): Promise<void>;
   getSyncState(job: NewsSyncJob): Promise<NewsSyncStateRecord | null>;
   listSyncStates(): Promise<NewsSyncStateRecord[]>;
@@ -157,11 +167,17 @@ export interface NewsConfig {
   languages: string[];
   freshnessCron: string;
   depthCron: string;
+  /** Cron del backfill historico de posiciones abiertas (null si esta deshabilitado). */
+  backfillCron: string | null;
   retentionDays: number;
+  /** Dias de historia que cubre el backfill (ventana hacia atras). */
+  backfillDays: number;
   pageLimit: number;
   depthPages: number;
   overlapMinutes: number;
   budget: NewsBudgetLimits;
+  /** Dominios financieros de alto impacto preferidos para ingesta dirigida. */
+  preferredDomains: string[];
   /** Esperas entre reintentos ante 429/5xx (ms). */
   backoffMs: number[];
   schedulerEnabled: boolean;
@@ -189,7 +205,7 @@ export interface NewsArticleDto {
   favoriteCount: number;
   isFavorite: boolean;
   inPortfolio: boolean;
-  score?: number;
+  score?: number | undefined;
   symbols: NormalizedSymbol[];
 }
 
@@ -199,7 +215,7 @@ export interface ListNewsFilters {
   from?: string | undefined;
   to?: string | undefined;
   symbol?: string | undefined;
-  sort?: 'recent' | 'relevance' | undefined;
+  sort?: "recent" | "relevance" | undefined;
   page?: number | undefined;
   limit?: number | undefined;
 }
@@ -237,4 +253,3 @@ export interface ViewRecordResponse {
   viewed: boolean;
   viewCount: number;
 }
-
