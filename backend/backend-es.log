@@ -6,3 +6,8 @@ Server is running on port 3000
 [notifications.scheduler] Scheduler started with cron: */15 * * * *
 {"ts":"2026-10-14T17:50:06.624Z","level":"warn","module":"news","event":"NEWS_BUDGET_EXHAUSTED","job":"backfill","pagesDone":0,"detail":"Marketaux respondio 402 (usage_limit_reached): The usage limit for this account has been reached."}
 {"ts":"2026-10-14T17:50:06.659Z","level":"info","module":"news","event":"NEWS_SYNC_DONE","job":"backfill","status":"SKIPPED_BUDGET","requests":1,"fetched":0,"created":0,"updated":0,"error":"Marketaux respondio 402 (usage_limit_reached): The usage limit for this account has been reached.","startedAt":"2026-10-14T17:50:06.289Z","finishedAt":"2026-10-14T17:50:06.631Z","durationMs":342}
+{"ts":"2026-10-14T18:00:00.015Z","level":"warn","module":"news","event":"NEWS_SYNC_LOCKED","job":"depth","runningJob":"freshness"}
+{"ts":"2026-10-14T18:00:00.028Z","level":"warn","module":"news","event":"NEWS_BUDGET_EXHAUSTED","job":"freshness","day":"2026-10-14"}
+{"ts":"2026-10-14T18:00:00.062Z","level":"info","module":"news","event":"NEWS_SYNC_DONE","job":"freshness","status":"SKIPPED_BUDGET","requests":0,"fetched":0,"created":0,"updated":0,"startedAt":"2026-10-14T18:00:00.014Z","finishedAt":"2026-10-14T18:00:00.029Z","durationMs":15}
+{"ts":"2026-10-14T18:20:00.022Z","level":"warn","module":"news","event":"NEWS_BUDGET_EXHAUSTED","job":"backfill","day":"2026-10-14"}
+{"ts":"2026-10-14T18:20:00.049Z","level":"info","module":"news","event":"NEWS_SYNC_DONE","job":"backfill","status":"SKIPPED_BUDGET","requests":0,"fetched":0,"created":0,"updated":0,"startedAt":"2026-10-14T18:20:00.018Z","finishedAt":"2026-10-14T18:20:00.022Z","durationMs":4}

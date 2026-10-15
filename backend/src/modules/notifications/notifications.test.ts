@@ -272,6 +272,58 @@ describe("notifications.service - evaluation and delivery rules", () => {
     assert.equal(mockPush.sends.length, 0);
   });
 
+  it("notifies by default for an open-position article with no engagement or affinity", async () => {
+    const prevEnv = process.env.NEWS_PUSH_MIN_SCORE;
+    delete process.env.NEWS_PUSH_MIN_SCORE;
+    try {
+      const created: any[] = [];
+      const mockDb: any = {
+        newsArticle: {
+          findMany: async () => [
+            {
+              id: "art-aapl",
+              title: "Apple supera los cinco billones",
+              category: "EMPRESAS",
+              // ~18h de antiguedad -> recencia 0.6 -> score 45 + 9 = 54
+              publishedAt: new Date("2026-10-04T18:00:00Z"),
+              symbols: [{ symbol: "AAPL" }],
+            },
+          ],
+        },
+        newsView: { count: async () => 0, findMany: async () => [] },
+        favoriteNews: { count: async () => 0 },
+        user: {
+          findMany: async () => [
+            { id: "u-1", newsSetting: null, pushSubscriptions: [] },
+          ],
+        },
+        operation: {
+          findMany: async () => [{ type: "BUY", symbol: "AAPL", qty: 1 }],
+        },
+        newsNotification: {
+          count: async () => 0,
+          findUnique: async () => null,
+          create: async (args: any) => {
+            created.push(args.data);
+            return args.data;
+          },
+        },
+      };
+
+      const service = new NotificationsService(mockDb, new MockPushService());
+      const result = await service.evaluateAndDispatch(
+        new Date("2026-10-05T12:00:00Z"),
+      );
+
+      assert.equal(result.notificationsCreated, 1);
+      assert.equal(created[0].articleId, "art-aapl");
+      assert.equal(created[0].score, 54);
+    } finally {
+      if (prevEnv === undefined) delete process.env.NEWS_PUSH_MIN_SCORE;
+      else process.env.NEWS_PUSH_MIN_SCORE = prevEnv;
+    }
+  });
+
   it("revokes subscription when push provider returns 410 (expired)", async () => {
     let revoked = false;
     const mockDb: any = {

@@ -1,4 +1,4 @@
-import type { PrismaClient, NewsNotificationStatus } from "@prisma/client";
+﻿import type { PrismaClient, NewsNotificationStatus } from "@prisma/client";
 import { prisma as defaultPrisma } from "../../services/prisma.service";
 import { pushService, type PushService } from "./push.service";
 
@@ -30,6 +30,10 @@ const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
 const SEVENTY_TWO_HOURS_MS = 72 * 60 * 60 * 1000;
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+// Umbral por defecto = peso de "cartera" (45): toda noticia sobre una posicion
+// abierta notifica; engagement/recencia/afinidad solo ordenan prioridad.
+const DEFAULT_MIN_SCORE = 45;
 
 export class NotificationsService {
   constructor(
@@ -182,7 +186,7 @@ export class NotificationsService {
       where: { userId },
     });
 
-    const defaultMinScore = Number(process.env.NEWS_PUSH_MIN_SCORE || 70);
+    const defaultMinScore = Number(process.env.NEWS_PUSH_MIN_SCORE || DEFAULT_MIN_SCORE);
     const defaultMaxPerDay = Number(process.env.NEWS_PUSH_MAX_PER_DAY || 5);
 
     return {
@@ -200,7 +204,7 @@ export class NotificationsService {
     userId: string,
     data: { pushEnabled?: boolean; minScore?: number; maxPerDay?: number },
   ): Promise<UserSettingsDto> {
-    const defaultMinScore = Number(process.env.NEWS_PUSH_MIN_SCORE || 70);
+    const defaultMinScore = Number(process.env.NEWS_PUSH_MIN_SCORE || DEFAULT_MIN_SCORE);
     const defaultMaxPerDay = Number(process.env.NEWS_PUSH_MAX_PER_DAY || 5);
 
     const setting = await this.db.userNewsSetting.upsert({
@@ -478,7 +482,7 @@ export class NotificationsService {
       },
     });
 
-    const defaultMinScore = Number(process.env.NEWS_PUSH_MIN_SCORE || 70);
+    const defaultMinScore = Number(process.env.NEWS_PUSH_MIN_SCORE || DEFAULT_MIN_SCORE);
     const defaultMaxPerDay = Number(process.env.NEWS_PUSH_MAX_PER_DAY || 5);
     const since24h = new Date(now.getTime() - TWENTY_FOUR_HOURS_MS);
 
