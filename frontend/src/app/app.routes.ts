@@ -7,6 +7,7 @@ import { ResetPasswordComponent } from './pages/auth/reset-password/reset-passwo
 import { AppShellComponent } from './shared/shell/app-shell.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NewsComponent } from './pages/news/news.component';
+import { IndicatorsComponent } from './pages/indicators/indicators.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'noticias', component: NewsComponent },
       { path: 'noticias/:id', component: NewsComponent },
+      { path: 'indicadores', component: IndicatorsComponent },
     ],
   },
   {

@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Inject,
-  PLATFORM_ID,
-  ElementRef,
-  HostListener,
-} from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ElementRef, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -39,6 +32,7 @@ export class AppShellComponent implements OnInit {
     { label: 'Inicio', icon: '⌂', route: '/dashboard' },
     { label: 'Operaciones', icon: '▣', route: '/dashboard' },
     { label: 'Noticias', icon: '▤', route: '/noticias' },
+    { label: 'Indicadores', icon: '◈', route: '/indicadores' },
   ];
 
   constructor(
@@ -69,6 +63,12 @@ export class AppShellComponent implements OnInit {
         { label: 'GoBull' },
         { label: 'Noticias' },
         { label: 'Feed y Análisis de Mercado', isBold: true },
+      ];
+    } else if (url.startsWith('/indicadores')) {
+      this.breadcrumbs = [
+        { label: 'GoBull' },
+        { label: 'Macro' },
+        { label: 'Indicadores Macroeconómicos', isBold: true },
       ];
     } else {
       this.breadcrumbs = [
@@ -122,7 +122,9 @@ export class AppShellComponent implements OnInit {
   onDocumentClick(event: MouseEvent): void {
     if (this.showProfileMenu && this.hostElement?.nativeElement) {
       const target = event.target as HTMLElement;
-      if (!this.hostElement.nativeElement.querySelector('.profile-menu-container')?.contains(target)) {
+      if (
+        !this.hostElement.nativeElement.querySelector('.profile-menu-container')?.contains(target)
+      ) {
         this.showProfileMenu = false;
       }
     }

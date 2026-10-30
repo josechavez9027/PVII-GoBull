@@ -13,6 +13,10 @@ import newsRoutes from './modules/news/news.routes';
 import { startNewsScheduler } from './modules/news/news.scheduler';
 import notificationsRoutes from './modules/notifications/notifications.routes';
 import { startNotificationScheduler } from './modules/notifications/scheduler';
+import indicatorsRoutes from './modules/indicators/indicators.routes';
+import { indicatorsService } from './modules/indicators/indicators.routes';
+import { loadIndicatorsConfig } from './modules/indicators/indicators.config';
+import { startIndicatorsScheduler } from './modules/indicators/indicators.scheduler';
 
 const app = express();
 
@@ -52,10 +56,13 @@ app.use('/api/v1/operations', operationsRoutes);
 app.use('/api/v1/instruments', instrumentsRoutes);
 app.use('/api/v1/news', newsRoutes);
 app.use('/api/v1/notifications', notificationsRoutes);
+app.use('/api/v1/indicators', indicatorsRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   startNewsScheduler();
   startNotificationScheduler();
+  startIndicatorsScheduler(indicatorsService, loadIndicatorsConfig());
+  void indicatorsService.tick().catch(() => undefined);
 });

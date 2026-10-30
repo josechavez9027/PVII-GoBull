@@ -35,6 +35,13 @@
   "isActive": true
  },
  {
+  "symbol": "AAAB",
+  "name": "Corgi FTSE Aaa-A Intermediate Corporate Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "AAAC",
   "name": "COLUMBIA AAA CLO ETF",
   "market": "NYSE",
@@ -498,7 +505,7 @@
  },
  {
   "symbol": "ABI",
-  "name": "VictoryShares Pioneer Asset-Based Income ETF",
+  "name": "VICTORYSHARES PIONEER ASSET-BASED INCOME ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -728,13 +735,6 @@
   "isActive": true
  },
  {
-  "symbol": "ACA",
-  "name": "Arcosa Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "ACAA",
   "name": "Averin Capital Acquisition Corp - Class A",
   "market": "NASDAQ",
@@ -801,6 +801,13 @@
   "symbol": "ACCS",
   "name": "ACCESS Newswire Inc",
   "market": "AMEX",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "ACCV",
+  "name": "Accelevation Holdings Corp - Class A",
+  "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
@@ -924,6 +931,13 @@
   "isActive": true
  },
  {
+  "symbol": "ACHP",
+  "name": "Global X Asia Semiconductor ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "ACHR",
   "name": "Archer Aviation Inc - Class A",
   "market": "NYSE",
@@ -966,6 +980,20 @@
   "isActive": true
  },
  {
+  "symbol": "ACIG",
+  "name": "Hartford Alpha Capture International Growth ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "ACIN",
+  "name": "Hartford Alpha Capture International Equity ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "ACIO",
   "name": "APTUS COLLARED INVESTMENT OPPORTUNITY ETF",
   "market": "BATS",
@@ -977,6 +1005,13 @@
   "name": "AC Immune SA",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "ACIV",
+  "name": "Hartford Alpha Capture International Value ETF",
+  "market": "BATS",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -1030,8 +1065,8 @@
  },
  {
   "symbol": "ACMG",
-  "name": "American Century Mid Cap Growth Impact ETF",
-  "market": "NYSE",
+  "name": "American Century Mid Cap Growth Insights ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -1183,6 +1218,13 @@
   "isActive": true
  },
  {
+  "symbol": "ACSM",
+  "name": "Hartford Alpha Capture SMID Cap ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "ACSP",
   "name": "ProShares S&P 500 Autocallable Income ETF",
   "market": "NASDAQ",
@@ -1219,7 +1261,7 @@
  },
  {
   "symbol": "ACTS",
-  "name": "FIS Tactical Equity ETF",
+  "name": "FIS TACTICAL EQUITY ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -1248,13 +1290,6 @@
  {
   "symbol": "ACV-A",
   "name": "ACV Auctions Inc Class A",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "ACVA",
-  "name": "ACV Auctions Inc - Class A",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -1617,6 +1652,13 @@
   "isActive": true
  },
  {
+  "symbol": "ADRX",
+  "name": "ADARx Pharmaceuticals Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "ADSE",
   "name": "Ads-Tec Energy Plc",
   "market": "NASDAQ",
@@ -1820,13 +1862,6 @@
   "isActive": true
  },
  {
-  "symbol": "AELV",
-  "name": "AlphaEdge Large Cap Value ETF",
-  "market": "NYSE ARCA",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "AEM",
   "name": "Agnico Eagle Mines Ltd",
   "market": "NYSE",
@@ -2023,10 +2058,10 @@
   "isActive": true
  },
  {
-  "symbol": "AETH",
-  "name": "BITWISE TRENDWISE ETHEREUM AND TREASURIES ROTATION STRATEGY ETF",
-  "market": "NYSE",
-  "kind": "ETF",
+  "symbol": "AETR",
+  "name": "Aetherion Technologies Inc Com",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -2297,8 +2332,15 @@
  },
  {
   "symbol": "AGGA",
-  "name": "EA ASTORIA DYNAMIC CORE US FIXED INCOME ETF",
+  "name": "EA ASTORIA BEACON DYNAMIC CORE US FIXED INCOME ETF",
   "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "AGGB",
+  "name": "Corgi FTSE U.S. Aggregate Bond ETF",
+  "market": "BATS",
   "kind": "ETF",
   "isActive": true
  },
@@ -2828,6 +2870,13 @@
   "isActive": true
  },
  {
+  "symbol": "AIED",
+  "name": "QRAFT AI Enhanced U.S. Large Cap Momentum ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "AIEQ",
   "name": "Amplify AI Powered Equity ETF",
   "market": "NYSE",
@@ -3034,6 +3083,13 @@
   "symbol": "AIO",
   "name": "Virtus Artificial Intelligence & Technology Opportunities Fund",
   "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "AIOK",
+  "name": "AI OKTO Corp",
+  "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
@@ -3245,13 +3301,6 @@
   "name": "Defiance US 100 Tech AI Moat ETF",
   "market": "NASDAQ",
   "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "AIXC",
-  "name": "AIxCrypto Holdings Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -4382,13 +4431,6 @@
   "isActive": true
  },
  {
-  "symbol": "AMOM",
-  "name": "QRAFT AI-ENHANCED U.S. LARGE CAP MOMENTUM ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "AMP",
   "name": "Ameriprise Financial Inc",
   "market": "NYSE",
@@ -4482,6 +4524,13 @@
  {
   "symbol": "AMRN",
   "name": "Amarin Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "AMRO",
+  "name": "Amaero Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -4641,13 +4690,6 @@
   "isActive": true
  },
  {
-  "symbol": "AMZE",
-  "name": "Amaze Holdings Inc",
-  "market": "NYSE MKT",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "AMZG",
   "name": "Leverage Shares 2X Long AMZN Daily ETF",
   "market": "BATS",
@@ -4753,17 +4795,17 @@
   "isActive": true
  },
  {
-  "symbol": "ANEW",
-  "name": "PROSHARES MSCI TRANSFORMATIONAL CHANGES ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "ANF",
   "name": "Abercrombie & Fitch Co. - Class A",
   "market": "NYSE",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "ANG",
+  "name": "Corgi FTSE Fallen Angels Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -4950,7 +4992,7 @@
  },
  {
   "symbol": "AOCT",
-  "name": "Innovator Equity Defined Protection ETF - 2 Yr to October 2026",
+  "name": "Innovator Equity Defined Protection ETF - 2 Yr to October 2028",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -5558,6 +5600,13 @@
   "isActive": true
  },
  {
+  "symbol": "APXC",
+  "name": "Apex Critical Metals Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "APXM",
   "name": "FT VEST U.S. EQUITY MAX BUFFER ETF - APRIL",
   "market": "BATS",
@@ -5685,8 +5734,8 @@
  },
  {
   "symbol": "ARB",
-  "name": "ALTSHARES MERGER ARBITRAGE ETF",
-  "market": "NYSE",
+  "name": "AltShares Merger Arbitrage ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -5700,13 +5749,6 @@
  {
   "symbol": "ARBE",
   "name": "Arbe Robotics Ltd",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "ARBEW",
-  "name": "Arbe Robotics Ltd - Warrants (07/10/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -6489,6 +6531,13 @@
   "isActive": true
  },
  {
+  "symbol": "ASGI-R",
+  "name": "abrdn Global Infrastructure Income Fund Rights expiring October 15 2026 Rights",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "ASGI-R-W",
   "name": "abrdn Global Infrastructure Income Fund Rights expiring October 15 2026 Rights when issued",
   "market": "NYSE",
@@ -6759,6 +6808,13 @@
   "name": "Algoma Steel Group Inc - Warrants (19/10/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "ASTM",
+  "name": "Allspring Strategic Municipal Bond Fund ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -7059,13 +7115,6 @@
   "symbol": "ATIIW",
   "name": "Archimedes Tech SPAC Partners II Co. - Warrants (05/02/2030)",
   "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "ATKR",
-  "name": "Atkore Inc",
-  "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
  },
@@ -7498,7 +7547,7 @@
  },
  {
   "symbol": "AUSM",
-  "name": "Allspring Ultra Short Municipal ETF",
+  "name": "ALLSPRING ULTRA SHORT MUNICIPAL ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -7701,7 +7750,7 @@
  },
  {
   "symbol": "AVGU",
-  "name": "T-REX 2X LONG AVGO DAILY TARGET ETF",
+  "name": "GRANITESHARES 2X LONG AVGO DAILY ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -8332,7 +8381,7 @@
  {
   "symbol": "AZTR",
   "name": "Azitra Inc",
-  "market": "AMEX",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -8576,7 +8625,7 @@
  },
  {
   "symbol": "BAGX",
-  "name": "EA Bridgeway Aggressive Investors ETF",
+  "name": "EA BRIDGEWAY AGGRESSIVE INVESTORS ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -8967,6 +9016,13 @@
   "isActive": true
  },
  {
+  "symbol": "BBBB",
+  "name": "Corgi FTSE BBB Rated Corporate Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "BBBI",
   "name": "BondBloxx BBB Rated 5-10 Year Corporate Bond ETF",
   "market": "NYSE",
@@ -8995,13 +9051,6 @@
   "isActive": true
  },
  {
-  "symbol": "BBBYW",
-  "name": "Neighborhood Intelligence Inc - Warrants (07/10/2026)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "BBC",
   "name": "VIRTUS BIOTECH CLINICAL TRIALS ETF",
   "market": "NYSE",
@@ -9020,6 +9069,20 @@
   "name": "JPMORGAN BETABUILDERS USD INVESTMENT GRADE CORPORATE BOND ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "BBCI",
+  "name": "Bradbury Capital Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "BBCIW",
+  "name": "Bradbury Capital Inc - Warrants (01/10/2031)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -9151,13 +9214,6 @@
  {
   "symbol": "BBLG",
   "name": "Bone Biologics Corp",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "BBLGW",
-  "name": "Bone Biologics Corp - Warrants (13/10/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -9387,6 +9443,20 @@
   "isActive": true
  },
  {
+  "symbol": "BCAT-R",
+  "name": "BlackRock Capital Allocation Term Trust Rights expiring October 21 2026 Rights",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "BCAT-R-W",
+  "name": "BlackRock Capital Allocation Term Trust Rights expiring October 21 2026 Rights when issued",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "BCAX",
   "name": "Bicara Therapeutics Inc",
   "market": "NASDAQ",
@@ -9590,6 +9660,13 @@
   "isActive": true
  },
  {
+  "symbol": "BCOM",
+  "name": "Rareview Bloomberg Commodity Index ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "BCOR",
   "name": "GRAYSCALE BITCOIN ADOPTERS ETF",
   "market": "NYSE",
@@ -9718,6 +9795,13 @@
  {
   "symbol": "BCYC",
   "name": "Bicycle Therapeutics Plc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "BDAI",
+  "name": "Biddance AI Systems Inc - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -10242,7 +10326,7 @@
  },
  {
   "symbol": "BFEW",
-  "name": "FT Vest Laddered U.S. Equity Equal Weight Buffer",
+  "name": "FT VEST LADDERED U.S. EQUITY EQUAL WEIGHT BUFFER ETF",
   "market": "BATS",
   "kind": "STOCK",
   "isActive": true
@@ -10431,7 +10515,7 @@
  },
  {
   "symbol": "BFXU",
-  "name": "FT Vest Laddered U.S. Equity Uncapped Accelerator",
+  "name": "FT VEST LADDERED U.S. EQUITY UNCAPPED ACCELERATOR ETF",
   "market": "BATS",
   "kind": "STOCK",
   "isActive": true
@@ -11082,7 +11166,7 @@
  },
  {
   "symbol": "BIOY",
-  "name": "YIELDMAX(R) TARGET 12(TM) BIOTECH & PHARMA OPTION INCOME ETF",
+  "name": "GRANITESHARES YIELDBOOST BIOTECH ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -11739,13 +11823,6 @@
   "isActive": true
  },
  {
-  "symbol": "BLFS",
-  "name": "Biolife Solutions Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "BLGR",
   "name": "BLUEMONTE LARGE CAP GROWTH ETF",
   "market": "NYSE",
@@ -12152,6 +12229,13 @@
   "isActive": true
  },
  {
+  "symbol": "BMMX",
+  "name": "Black Mammoth Metals Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "BMN",
   "name": "BlackRock 2037 Municipal Target Term Trust",
   "market": "NYSE",
@@ -12293,14 +12377,14 @@
  },
  {
   "symbol": "BNC",
-  "name": "CEA Industries Inc",
+  "name": "BNB Standard Corp",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
  {
   "symbol": "BNCWW",
-  "name": "CEA Industries Inc - Warrants (11/02/2027)",
+  "name": "BNB Standard Corp - Warrants (11/02/2027)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -12398,7 +12482,7 @@
  },
  {
   "symbol": "BNH",
-  "name": "Brookfield Finance Inc",
+  "name": "Brookfield Finance Inc 4.625 Subordinated Notes due October 16 2080",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -13091,7 +13175,7 @@
  },
  {
   "symbol": "BRIB",
-  "name": "FIS Bright Portfolios Core Bond",
+  "name": "FIS BRIGHT PORTFOLIOS CORE BOND ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -13112,7 +13196,7 @@
  },
  {
   "symbol": "BRIF",
-  "name": "FIS Bright Portfolios Focused Equity ETF",
+  "name": "FIS BRIGHT PORTFOLIOS FOCUSED EQUITY ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -13308,7 +13392,14 @@
  },
  {
   "symbol": "BRR",
-  "name": "ProCap Financial Inc",
+  "name": "ACR GROUP INC",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "BRRKU",
+  "name": "Bluerock Acquisition Corp II - Units (1 Ord Cls A & 1/2War)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -13350,7 +13441,7 @@
  },
  {
   "symbol": "BRSV",
-  "name": "EA Bridgeway Select Small-Cap Value ETF",
+  "name": "EA BRIDGEWAY SELECT SMALL-CAP VALUE ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -13825,6 +13916,13 @@
   "isActive": true
  },
  {
+  "symbol": "BSRT",
+  "name": "BSR Real Estate Investment Trust",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "BSSX",
   "name": "Invesco BulletShares 2033 Municipal Bond ETF",
   "market": "NASDAQ",
@@ -14043,7 +14141,7 @@
  },
  {
   "symbol": "BTF",
-  "name": "COINSHARES BITCOIN AND ETHER ETF",
+  "name": "CoinShares Bitcoin and Ether ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -14137,20 +14235,6 @@
   "name": "BTQ Technologies Corp",
   "market": "NASDAQ",
   "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "BTR",
-  "name": "Beacon Tactical Risk ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "BTRN",
-  "name": "GLOBAL X BITCOIN TREND STRATEGY ETF",
-  "market": "NYSE",
-  "kind": "ETF",
   "isActive": true
  },
  {
@@ -14281,7 +14365,7 @@
  },
  {
   "symbol": "BUFH",
-  "name": "FT Vest Laddered Max Buffer ETF",
+  "name": "FT VEST LADDERED MAX BUFFER ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -14498,7 +14582,7 @@
  },
  {
   "symbol": "BUSM",
-  "name": "EA Bridgeway Ultra-Small Company Market ETF",
+  "name": "EA BRIDGEWAY ULTRA-SMALL COMPANY MARKET ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -14812,13 +14896,6 @@
   "isActive": true
  },
  {
-  "symbol": "BXP",
-  "name": "Boston Properties Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "BXSL",
   "name": "Blackstone Secured Lending Fund.",
   "market": "NYSE",
@@ -14934,13 +15011,6 @@
   "symbol": "BZFDW",
   "name": "BuzzFeed Inc - Warrants (01/12/2026)",
   "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "BZH",
-  "name": "Beazer Homes USA Inc",
-  "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
  },
@@ -15222,6 +15292,13 @@
   "name": "Callaway Golf Company",
   "market": "NYSE",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "CAM",
+  "name": "AB California Intermediate Municipal ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -16226,13 +16303,6 @@
   "isActive": true
  },
  {
-  "symbol": "CCO",
-  "name": "Clear Channel Outdoor Holdings Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "CCOI",
   "name": "Cogent Communications Holdings Inc",
   "market": "NASDAQ",
@@ -16969,7 +17039,7 @@
  },
  {
   "symbol": "CFO",
-  "name": "VictoryShares US 500 Enhanced Volatility Wtd ETF",
+  "name": "VICTORYSHARES US 500 ENHANCED VOLATILITY WTD ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -17514,6 +17584,13 @@
   "isActive": true
  },
  {
+  "symbol": "CHIP",
+  "name": "REX AI Chipmaking ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "CHIQ",
   "name": "GLOBAL X MSCI CHINA CONSUMER DISCRETIONARY ETF",
   "market": "NYSE",
@@ -17578,8 +17655,8 @@
  },
  {
   "symbol": "CHOW",
-  "name": "ChowChow Cloud International Holdings Ltd",
-  "market": "AMEX",
+  "name": "ChowChow Cloud International Holdings Ltd - Class A",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -17742,6 +17819,13 @@
   "name": "Calamos Global Dynamic Income Fund",
   "market": "NASDAQ",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "CHWM",
+  "name": "Chilwa Minerals Ltd",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -18291,13 +18375,6 @@
   "isActive": true
  },
  {
-  "symbol": "CLIX",
-  "name": "PROSHARES LONG ONLINE/SHORT STORES RETAIL ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "CLLS",
   "name": "Cellectis",
   "market": "NASDAQ",
@@ -18447,13 +18524,6 @@
  {
   "symbol": "CLRB",
   "name": "Cellectar Biosciences Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "CLRCU",
-  "name": "ClimateRock - Units (1 Ord Class A 1 Rts & 1/2 War)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -18621,7 +18691,7 @@
  },
  {
   "symbol": "CMBT",
-  "name": "Euronav NV",
+  "name": "Cmb.Tech NV",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -19510,7 +19580,7 @@
  },
  {
   "symbol": "COLAU",
-  "name": "Columbus Acquisition Corp - Units ( Ord Cls A & 1 Rts)",
+  "name": "Columbus Acquisition Corp - Units ( Ord Cls & 1 Rts)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -19965,7 +20035,7 @@
  },
  {
   "symbol": "CPAI",
-  "name": "COUNTERPOINT QUANTITATIVE EQUITY ETF",
+  "name": "Counterpoint Quantitative Equity ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -20035,7 +20105,7 @@
  },
  {
   "symbol": "CPII",
-  "name": "AMERICAN BEACON IONIC INFLATION PROTECTION ETF",
+  "name": "IONIC INFLATION PROTECTION ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -20297,6 +20367,13 @@
   "name": "Crown PropTech Acquisitions - Units (1 Ord Share Class A & 1/3 War)",
   "market": "NYSE",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "CPU",
+  "name": "Amplify Top 10 Semiconductors ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -21322,13 +21399,6 @@
   "isActive": true
  },
  {
-  "symbol": "CTEX",
-  "name": "PROSHARES S&P KENSHO CLEANTECH ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "CTGG",
   "name": "Qwest Corporation 6.500 Senior Notes due 2051 denominations of 25",
   "market": "NYSE",
@@ -21534,6 +21604,13 @@
  {
   "symbol": "CTXR",
   "name": "Citius Pharmaceuticals Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "CTY",
+  "name": "City Therapeutics Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -22387,7 +22464,7 @@
  },
  {
   "symbol": "DANA",
-  "name": "Dana Ltd Volatility ETF",
+  "name": "DANA LIMITED VOLATILITY ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -22456,13 +22533,6 @@
   "isActive": true
  },
  {
-  "symbol": "DAT",
-  "name": "PROSHARES BIG DATA REFINERS ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "DAUG",
   "name": "FT VEST U.S. EQUITY DEEP BUFFER ETF - AUGUST",
   "market": "BATS",
@@ -22491,6 +22561,13 @@
   "isActive": true
  },
  {
+  "symbol": "DAVI",
+  "name": "Davion Healthcare Plc.",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "DAX",
   "name": "GLOBAL X DAX GERMANY ETF",
   "market": "NASDAQ",
@@ -22508,6 +22585,13 @@
   "symbol": "DBA",
   "name": "Invesco DB Agriculture Fund",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "DBAR",
+  "name": "IMGP DBI Absolute Return ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -22659,13 +22743,6 @@
   "isActive": true
  },
  {
-  "symbol": "DBRG",
-  "name": "DigitalBridge Group Inc - Class A",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "DBRG-P-H",
   "name": "DigitalBridge Group Inc 7.125 Cum Red Perp Pfd Ser H",
   "market": "NYSE",
@@ -22722,6 +22799,13 @@
   "isActive": true
  },
  {
+  "symbol": "DCAP",
+  "name": "T-Strive Digital Credit Preferred Income ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "DCBG",
   "name": "Dime Community Bancshares Inc",
   "market": "NYSE",
@@ -22760,6 +22844,13 @@
   "symbol": "DCI",
   "name": "Donaldson Co. Inc",
   "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "DCM",
+  "name": "Universal Safety Products Inc",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -22807,8 +22898,8 @@
  },
  {
   "symbol": "DCOR",
-  "name": "DIMENSIONAL US CORE EQUITY 1 ETF",
-  "market": "NYSE",
+  "name": "US Core Equity 1 Portfolio ETF Class Shares",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -22842,7 +22933,7 @@
  },
  {
   "symbol": "DCX",
-  "name": "Digital Currency X Technology Inc",
+  "name": "Digital Currency X Technology Inc - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -23034,13 +23125,6 @@
   "name": "Innovator Equity Dual Directional 5 Buffer ETF Quarterly",
   "market": "BATS",
   "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "DDT",
-  "name": "Dillards Capital Trust I",
-  "market": "NYSE",
-  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -23388,8 +23472,8 @@
  },
  {
   "symbol": "DFAC",
-  "name": "DIMENSIONAL U.S. CORE EQUITY 2 ETF",
-  "market": "NYSE",
+  "name": "U.S. Core Equity 2 Portfolio-ETF Class Shares",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -23416,22 +23500,22 @@
  },
  {
   "symbol": "DFAR",
-  "name": "DIMENSIONAL US REAL ESTATE ETF",
-  "market": "NYSE",
+  "name": "DFA Real Estate Securities Portfolio ETF Class Shares",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
  {
   "symbol": "DFAS",
-  "name": "DIMENSIONAL U.S. SMALL CAP ETF",
-  "market": "NYSE",
+  "name": "U.S. Small Cap Portfolio-ETF Class Shares",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
  {
   "symbol": "DFAT",
-  "name": "DIMENSIONAL U.S. TARGETED VALUE ETF",
-  "market": "NYSE",
+  "name": "U.S. Targeted Value Portfolio-ETF Class Shares",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -23530,6 +23614,13 @@
   "symbol": "DFGR",
   "name": "DIMENSIONAL GLOBAL REAL ESTATE ETF",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "DFGV",
+  "name": "DFA Intermediate Government Fixed Income Portfolio ETF Class Shares",
+  "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
  },
@@ -23710,8 +23801,8 @@
  },
  {
   "symbol": "DFSV",
-  "name": "DIMENSIONAL US SMALL CAP VALUE ETF",
-  "market": "NYSE",
+  "name": "US Small Cap Value Portfolio ETF Class Shares",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -24263,7 +24354,7 @@
  },
  {
   "symbol": "DIVE",
-  "name": "CEANIC CORP",
+  "name": "DANA CONCENTRATED DIVIDEND ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -24913,13 +25004,6 @@
   "isActive": true
  },
  {
-  "symbol": "DOC",
-  "name": "Healthpeak OP LLC",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "DOCK",
   "name": "Corgi Ports Rail & Freight",
   "market": "BATS",
@@ -25006,13 +25090,6 @@
  {
   "symbol": "DOMH",
   "name": "Dominari Holdings Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "DOMO",
-  "name": "Domo Inc - Class B",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -25775,8 +25852,8 @@
  },
  {
   "symbol": "DUHP",
-  "name": "DIMENSIONAL US HIGH PROFITABILITY ETF",
-  "market": "NYSE",
+  "name": "US High Relative Profitability Portfolio ETF Class Shares",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -25852,7 +25929,7 @@
  },
  {
   "symbol": "DUNK",
-  "name": "Dana Unconstrained Equity ETF",
+  "name": "DANA UNCONSTRAINED EQUITY ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -25950,7 +26027,7 @@
  },
  {
   "symbol": "DVAL",
-  "name": "BRANDYWINEGLOBAL-DYNAMIC US LARGE CAP VALUE ETF",
+  "name": "BrandywineGLOBAL - Dynamic US Large Cap Value ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -26229,6 +26306,13 @@
   "isActive": true
  },
  {
+  "symbol": "DX-P-D",
+  "name": "Dynex Capital Inc 9.375 Series D FixedRate Cumulative Redeemable Preferred Stock",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "DXC",
   "name": "DXC Technology Company",
   "market": "NYSE",
@@ -26484,6 +26568,13 @@
   "symbol": "EAFG",
   "name": "PACER DEVELOPED MARKETS CASH COWS GROWTH LEADERS ETF",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "EAFH",
+  "name": "Xtrackers MSCI EAFE 50% Hedged Equity ETF",
+  "market": "BATS",
   "kind": "ETF",
   "isActive": true
  },
@@ -26769,7 +26860,7 @@
  },
  {
   "symbol": "ECO",
-  "name": "ECHO BAY MINES LTD",
+  "name": "Okeanis Eco Tankers Corp",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -27315,7 +27406,7 @@
  },
  {
   "symbol": "EFTY",
-  "name": "Etoiles Capital Group Co Ltd - Class A",
+  "name": "Etoiles Capital Group Co Ltd",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -27832,13 +27923,6 @@
   "isActive": true
  },
  {
-  "symbol": "ELME",
-  "name": "Elme Communities",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "ELMT",
   "name": "Elmet Group Co. (The)",
   "market": "NASDAQ",
@@ -27955,6 +28039,13 @@
   "name": "Emera Incorporated",
   "market": "NYSE",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "EMAG",
+  "name": "Emerging Markets AI Mag 3 ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -28315,13 +28406,6 @@
   "isActive": true
  },
  {
-  "symbol": "EMPG",
-  "name": "Empro Group Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "EMPW",
   "name": "Emerge EMPWR Unified Sustainable Equity ETF",
   "market": "BATS",
@@ -28448,6 +28532,13 @@
   "isActive": true
  },
  {
+  "symbol": "ENHE",
+  "name": "iShares Enhanced Emerging Markets Active ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "ENHI",
   "name": "iShares Enhanced International Active ETF",
   "market": "NASDAQ",
@@ -28543,6 +28634,13 @@
   "name": "Einride AB - Warrants (08/06/2031)",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "ENRG",
+  "name": "Ninepoint North American Energy Independence ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -29477,9 +29575,9 @@
   "isActive": true
  },
  {
-  "symbol": "ET",
-  "name": "Energy Transfer LP",
-  "market": "NYSE",
+  "symbol": "ESYN",
+  "name": "EnerSyn Global Inc",
+  "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
@@ -29541,7 +29639,7 @@
  },
  {
   "symbol": "ETHA",
-  "name": "iShares Ethereum Trust (The)",
+  "name": "iShares Ethereum Trust ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -30101,8 +30199,8 @@
  },
  {
   "symbol": "EVNT",
-  "name": "ALTSHARES EVENT-DRIVEN ETF",
-  "market": "NYSE",
+  "name": "AltShares Event-Driven ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -31276,6 +31374,13 @@
   "isActive": true
  },
  {
+  "symbol": "FCDH",
+  "name": "Forcendra Holding Ltd - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "FCEF",
   "name": "FIRST TRUST INCOME OPPORTUNITIES ETF",
   "market": "NASDAQ",
@@ -32117,7 +32222,7 @@
  },
  {
   "symbol": "FESM",
-  "name": "FIDELITY ENHANCED SMALL CAP ETF",
+  "name": "FIDELITY ENHANCED SMALL CAP CORE ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -32285,7 +32390,7 @@
  },
  {
   "symbol": "FFLX",
-  "name": "First Trust Flexible Income ETF",
+  "name": "FIRST TRUST FLEXIBLE INCOME ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -32319,10 +32424,24 @@
   "isActive": true
  },
  {
+  "symbol": "FFR",
+  "name": "FF EAI Robotics Ecosystem Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "FFSM",
   "name": "FIDELITY FUNDAMENTAL SMALL-MID CAP ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "FFTT",
+  "name": "Masonglory Ltd - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -32370,6 +32489,20 @@
  {
   "symbol": "FGBIP",
   "name": "First Guaranty Bancshares Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "FGC",
+  "name": "FG Communities Holdings Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "FGCPP",
+  "name": "FG Nexus Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -32445,15 +32578,8 @@
   "isActive": true
  },
  {
-  "symbol": "FGNX",
-  "name": "FG Nexus Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "FGNXP",
-  "name": "Fundamental Global Inc",
+  "name": "FG Communities Holdings Inc Com Pfd Ser A 8",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -33013,7 +33139,7 @@
  },
  {
   "symbol": "FIYY",
-  "name": "GraniteShares YieldBOOST 20Y+ Treasuries ETF",
+  "name": "GRANITESHARES YIELDBOOST 20Y+ TREASURIES ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -33040,8 +33166,29 @@
   "isActive": true
  },
  {
+  "symbol": "FJDI",
+  "name": "ARC Group Securities Acquisition I - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "FJDIR",
+  "name": "ARC Group Securities Acquisition I",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "FJDIU",
   "name": "ARC Group Securities Acquisition I - Units (1 Ord Cls A 1 Rts & 1 War)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "FJDIW",
+  "name": "ARC Group Securities Acquisition I - Warrants (23/09/2031)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -33558,6 +33705,13 @@
   "isActive": true
  },
  {
+  "symbol": "FLSC",
+  "name": "Frazier Life Sciences Acquisition Corp II - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "FLSP",
   "name": "FRANKLIN SYSTEMATIC STYLE PREMIA ETF",
   "market": "NYSE",
@@ -33818,7 +33972,7 @@
  },
  {
   "symbol": "FMDE",
-  "name": "FIDELITY ENHANCED MID CAP ETF",
+  "name": "FIDELITY ENHANCED MID CAP CORE ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -33860,7 +34014,7 @@
  },
  {
   "symbol": "FMKT",
-  "name": "FREEMARKETS INC",
+  "name": "THE FREE MARKETS ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -34553,7 +34707,7 @@
  },
  {
   "symbol": "FRDM",
-  "name": "FREEDOM 100 EMERGING MARKETS ETF",
+  "name": "Freedom 100 Emerging Markets ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -34829,13 +34983,6 @@
   "name": "First Trust High Income Long Short Fund",
   "market": "NYSE",
   "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "FSEA",
-  "name": "First Seacoast Bancorp Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -35260,7 +35407,7 @@
  },
  {
   "symbol": "FTHB",
-  "name": "FIS Faith Income",
+  "name": "FIS FAITH INCOME ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -35371,6 +35518,13 @@
   "isActive": true
  },
  {
+  "symbol": "FTN",
+  "name": "Corgi FTSE 5-10 Year IG Corporate Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "FTNJ",
   "name": "Franklin New Jersey Municipal Income ETF",
   "market": "NYSE",
@@ -35449,7 +35603,7 @@
  },
  {
   "symbol": "FTRE",
-  "name": "Fortrea Holdings Inc",
+  "name": "FORTE SOFTWARE INC",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -36260,6 +36414,13 @@
   "isActive": true
  },
  {
+  "symbol": "GANZ",
+  "name": "Tuttle Capital Thematic ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "GAP",
   "name": "Gap Inc",
   "market": "NYSE",
@@ -36463,13 +36624,6 @@
   "isActive": true
  },
  {
-  "symbol": "GBTG",
-  "name": "Global Business Travel Group Inc - Class A",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "GBUG",
   "name": "Sprott Active Gold & Silver Miners",
   "market": "NASDAQ",
@@ -36515,6 +36669,13 @@
   "symbol": "GCAL",
   "name": "GOLDMAN SACHS DYNAMIC CALIFORNIA MUNICIPAL INCOME ETF",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "GCB",
+  "name": "Corgi FTSE Intermediate Government/Credit Bond ETF",
+  "market": "BATS",
   "kind": "ETF",
   "isActive": true
  },
@@ -36569,7 +36730,7 @@
  },
  {
   "symbol": "GCLO",
-  "name": "Guggenheim Investment Grade CLO ETF",
+  "name": "GUGGENHEIM INVESTMENT GRADE CLO ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -36621,6 +36782,13 @@
   "name": "Goldman Sachs Core Plus Bond ETF",
   "market": "NYSE",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "GCPU",
+  "name": "Grayscale AI Compute",
+  "market": "NYSE ARCA",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -37191,13 +37359,6 @@
   "isActive": true
  },
  {
-  "symbol": "GETY",
-  "name": "Getty Images Holdings Inc - Class A",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "GEV",
   "name": "GE Vernova LLC",
   "market": "NYSE",
@@ -37261,13 +37422,6 @@
   "isActive": true
  },
  {
-  "symbol": "GFAIW",
-  "name": "Guardforce AI Co Ltd - Warrants (01/09/2026)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "GFEB",
   "name": "FT VEST U.S. EQUITY MODERATE BUFFER ETF - FEBRUARY",
   "market": "BATS",
@@ -37283,7 +37437,7 @@
  },
  {
   "symbol": "GFGF",
-  "name": "GURU FAVORITE STOCKS ETF",
+  "name": "Guru Favorite Stocks ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -37794,7 +37948,7 @@
  },
  {
   "symbol": "GISC",
-  "name": "Guggenheim Securitized Income ETF",
+  "name": "GUGGENHEIM SECURITIZED INCOME ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -38402,6 +38556,13 @@
   "isActive": true
  },
  {
+  "symbol": "GMAC",
+  "name": "Simplify Brookwood Global Macro ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "GMAR",
   "name": "FT VEST U.S. EQUITY MODERATE BUFFER ETF - MARCH",
   "market": "BATS",
@@ -38476,6 +38637,13 @@
   "name": "Gamehaus Holdings Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "GMIE",
+  "name": "GMO International Equity Fund ETF Class",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -38935,7 +39103,7 @@
  },
  {
   "symbol": "GOP",
-  "name": "UNUSUAL WHALES SUBVERSIVE REPUBLICAN TRADING ETF",
+  "name": "SUBVERSIVE CONGRESSIONAL REPUBLICANS TRADING ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -39001,6 +39169,13 @@
   "name": "ISHARES 25+ YEAR TREASURY STRIPS BOND ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "GOW",
+  "name": "GOWell Energy Technology",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -39300,13 +39475,6 @@
  {
   "symbol": "GRDX",
   "name": "Entero Therapeutics Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "GREEL",
-  "name": "Greenidge Generation Holdings Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -40159,6 +40327,13 @@
   "isActive": true
  },
  {
+  "symbol": "GUNN",
+  "name": "Gunnison Copper Corp",
+  "market": "NYSE MKT",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "GUNR",
   "name": "FLEXSHARES MORNINGSTAR GLOBAL UPSTREAM NATURAL RESOURCES INDEX FUND",
   "market": "NYSE",
@@ -40316,13 +40491,6 @@
   "symbol": "GWAV",
   "name": "Greenwave Technology Solutions Inc",
   "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "GWH",
-  "name": "ESS Tech Inc",
-  "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
  },
@@ -41510,6 +41678,13 @@
   "isActive": true
  },
  {
+  "symbol": "HH",
+  "name": "Corgi FTSE High Yield Corporate Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "HHH",
   "name": "Howard Hughes Corporation",
   "market": "NYSE",
@@ -41657,6 +41832,13 @@
   "isActive": true
  },
  {
+  "symbol": "HINC",
+  "name": "Hartford High Yield ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "HIND",
   "name": "ReShape Lifesciences Inc",
   "market": "NASDAQ",
@@ -41763,7 +41945,7 @@
  },
  {
   "symbol": "HKIT",
-  "name": "Hitek Global Inc - Class A",
+  "name": "Hitek Global Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -42945,6 +43127,13 @@
   "isActive": true
  },
  {
+  "symbol": "HUCK",
+  "name": "Huckleberry.ai Inc - Class B",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "HUDI",
   "name": "Huadi International Group Co Ltd",
   "market": "NASDAQ",
@@ -43071,13 +43260,6 @@
   "isActive": true
  },
  {
-  "symbol": "HVIIU",
-  "name": "Hennessy Capital Investment Corp VII - Units (1 Ord Shs & 1 Rts)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "HVMC",
   "name": "Highview Merger Corp - Class A",
   "market": "NASDAQ",
@@ -43141,13 +43323,6 @@
   "isActive": true
  },
  {
-  "symbol": "HWH",
-  "name": "HWH International Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "HWIV",
   "name": "HOTCHKIS AND WILEY INTERNATIONAL VALUE FUND ETF CLASS",
   "market": "NASDAQ",
@@ -43173,6 +43348,13 @@
   "name": "Howmet Aerospace Inc 375 Preferred Stock",
   "market": "AMEX",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "HWMV",
+  "name": "Hotchkis & Wiley Mid-Cap Value Fund",
+  "market": "NASDAQ",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -43708,6 +43890,13 @@
   "isActive": true
  },
  {
+  "symbol": "IAM",
+  "name": "Iambic Therapeutics Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "IAPR",
   "name": "Innovator International Developed Power Buffer ETF April",
   "market": "NYSE",
@@ -44023,13 +44212,6 @@
   "isActive": true
  },
  {
-  "symbol": "IBIC",
-  "name": "ISHARES IBONDS OCT 2026 TERM TIPS ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "IBID",
   "name": "ISHARES IBONDS OCT 2027 TERM TIPS ETF",
   "market": "NYSE",
@@ -44228,7 +44410,7 @@
  {
   "symbol": "IBO",
   "name": "Impact BioMedical Inc",
-  "market": "AMEX",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -44482,6 +44664,13 @@
   "name": "Investcorp Credit Management BDC Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "ICMO",
+  "name": "Symmetry Panoramic International Country Momentum ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -45108,6 +45297,13 @@
   "isActive": true
  },
  {
+  "symbol": "IGB",
+  "name": "Corgi FTSE U.S. IG Corporate Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "IGBH",
   "name": "ISHARES INTEREST RATE HEDGED LONG-TERM CORPORATE BOND ETF",
   "market": "NYSE",
@@ -45437,6 +45633,13 @@
   "isActive": true
  },
  {
+  "symbol": "IIPR-P-B",
+  "name": "Innovative Industrial Properties Inc 9.25 Series B Cumulative Redeemable Preferred Stock",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "IIVI",
   "name": "Coherent Corp",
   "market": "NASDAQ",
@@ -45521,13 +45724,6 @@
   "isActive": true
  },
  {
-  "symbol": "ILCB",
-  "name": "ISHARES MORNINGSTAR U.S. EQUITY ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "ILCG",
   "name": "ISHARES MORNINGSTAR GROWTH ETF",
   "market": "NYSE",
@@ -45565,13 +45761,6 @@
  {
   "symbol": "ILLR",
   "name": "Triller Corp - Class A",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "ILLRW",
-  "name": "Triller Group Inc - Warrants (14/11/2027)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -46788,27 +46977,6 @@
   "isActive": true
  },
  {
-  "symbol": "IPEX",
-  "name": "Inflection Point Acquisition Corp V - Class A",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "IPEXR",
-  "name": "Inflection Point Acquisition Corp V",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "IPEXU",
-  "name": "Inflection Point Acquisition Corp V - Units (1 Ord Cls A & 1 Rts)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "IPFX",
   "name": "Inflection Point Acquisition Corp VI",
   "market": "NASDAQ",
@@ -46844,8 +47012,22 @@
   "isActive": true
  },
  {
+  "symbol": "IPHX",
+  "name": "Inflection Point Acquisition Corp VIII - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "IPHXU",
   "name": "Inflection Point Acquisition Corp VIII - Units (1 Ord Cls A & 1/3 War)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "IPHXW",
+  "name": "Inflection Point Acquisition Corp VIII - Warrants (28/08/2031)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -46999,7 +47181,7 @@
  },
  {
   "symbol": "IQGR",
-  "name": "Astoria International Quality Growth Kings ETF",
+  "name": "ASTORIA INTERNATIONAL QUALITY GROWTH KINGS ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -47236,6 +47418,13 @@
   "isActive": true
  },
  {
+  "symbol": "IRLA",
+  "name": "IRulya Therapeutics Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "IRM",
   "name": "Iron Mountain Inc",
   "market": "NYSE",
@@ -47306,13 +47495,6 @@
   "isActive": true
  },
  {
-  "symbol": "IRVH",
-  "name": "GLOBAL X INTEREST RATE VOLATILITY & INFLATION HEDGE ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "IRWD",
   "name": "Ironwood Pharmaceuticals Inc - Class A",
   "market": "NASDAQ",
@@ -47330,13 +47512,6 @@
   "symbol": "ISBG",
   "name": "IncomeSTKd 1x Bitcoin & 1x Gold Premium ETF",
   "market": "BATS",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "ISCB",
-  "name": "ISHARES MORNINGSTAR SMALL-CAP ETF",
-  "market": "NYSE",
   "kind": "ETF",
   "isActive": true
  },
@@ -47692,7 +47867,7 @@
  },
  {
   "symbol": "ITOC",
-  "name": "Pheton Holdings Ltd - Class A",
+  "name": "iTonic Holdings Ltd - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -47799,6 +47974,13 @@
   "symbol": "IVA",
   "name": "Inventiva",
   "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "IVAI",
+  "name": "Ives Ultra AI Opportunities Inc",
+  "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
  },
@@ -49239,7 +49421,7 @@
  },
  {
   "symbol": "JKS",
-  "name": "JinkoSolar Holding Co. Ltd",
+  "name": "Jinko Holdings Ltd",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -49722,7 +49904,7 @@
  },
  {
   "symbol": "JPRF",
-  "name": "JPMorgan Preferred and Income Securities ETF",
+  "name": "JPMORGAN PREFERRED AND INCOME SECURITIES ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -49905,13 +50087,6 @@
  {
   "symbol": "JSPR",
   "name": "Jasper Therapeutics Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "JSPRW",
-  "name": "Jasper Therapeutics Inc - Warrants (24/09/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -50519,13 +50694,6 @@
   "isActive": true
  },
  {
-  "symbol": "KCAI",
-  "name": "KRANESHARES CHINA ALPHA INDEX ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "KCCA",
   "name": "KRANESHARES CALIFORNIA CARBON ALLOWANCE STRATEGY ETF",
   "market": "NYSE",
@@ -50939,13 +51107,6 @@
   "isActive": true
  },
  {
-  "symbol": "KHYB",
-  "name": "KRANESHARES ASIA PACIFIC HIGH INCOME USD BOND ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "KIDS",
   "name": "OrthoPediatrics Corp",
   "market": "NASDAQ",
@@ -51220,13 +51381,6 @@
  },
  {
   "symbol": "KLXE",
-  "name": "KLX Energy Services Holdings Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "KLXER",
   "name": "KLX Energy Services Holdings Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
@@ -51724,7 +51878,7 @@
  },
  {
   "symbol": "KQQQ",
-  "name": "Kurv Technology Titans Select ETF",
+  "name": "KURV TECHNOLOGY TITANS SELECT ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -51766,7 +51920,7 @@
  },
  {
   "symbol": "KRE",
-  "name": "STATE STREET(R) SPDR(R) S&P REGIONAL BANKING(SM) ETF",
+  "name": "STATE STREET(R) SPDR(R) S&P(R) REGIONAL BANKING ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -52089,13 +52243,6 @@
  {
   "symbol": "KTTA",
   "name": "Pasithea Therapeutics Corp",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "KTTAW",
-  "name": "Pasithea Therapeutics Corp - Warrants (17/09/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -52878,6 +53025,13 @@
   "isActive": true
  },
  {
+  "symbol": "LCIV",
+  "name": "Logan Capital International ETF",
+  "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "LCIZ",
   "name": "Tradr 2X Short LCID Daily ETF",
   "market": "BATS",
@@ -52951,6 +53105,13 @@
   "symbol": "LCTX",
   "name": "Lineage Cell Therapeutics Inc",
   "market": "AMEX",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "LCU",
+  "name": "Lion Copper Corp",
+  "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
@@ -53207,13 +53368,6 @@
   "isActive": true
  },
  {
-  "symbol": "LESL",
-  "name": "Leslies Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "LEU",
   "name": "Centrus Energy Corp - Class A",
   "market": "NYSE",
@@ -53424,13 +53578,6 @@
   "isActive": true
  },
  {
-  "symbol": "LGCF",
-  "name": "THEMES US CASH FLOW CHAMPIONS ETF",
-  "market": "NASDAQ",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "LGCL",
   "name": "Lucas GC Ltd",
   "market": "NASDAQ",
@@ -53446,7 +53593,7 @@
  },
  {
   "symbol": "LGDS",
-  "name": "JPMorgan Fundamental Data Science Large Growth ETF",
+  "name": "JPMORGAN FUNDAMENTAL DATA SCIENCE LARGE GROWTH ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -53718,6 +53865,13 @@
   "isActive": true
  },
  {
+  "symbol": "LIGB",
+  "name": "Corgi FTSE 10+ Year IG Corporate Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "LII",
   "name": "Lennox International Inc",
   "market": "NYSE",
@@ -53771,13 +53925,6 @@
   "name": "Neutron Holdings Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "LIMI",
-  "name": "THEMES LITHIUM & BATTERY METAL MINERS ETF",
-  "market": "BATS",
-  "kind": "ETF",
   "isActive": true
  },
  {
@@ -54502,6 +54649,13 @@
   "isActive": true
  },
  {
+  "symbol": "LOVIU",
+  "name": "Live Oak Acquisition Corp VI - Units (1 Ord Cls A & 1/2 War)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "LOW",
   "name": "Lowe`s Cos. Inc",
   "market": "NYSE",
@@ -54796,13 +54950,6 @@
   "isActive": true
  },
  {
-  "symbol": "LRHC",
-  "name": "La Rosa Holdings Corp",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "LRMR",
   "name": "Larimar Therapeutics Inc",
   "market": "NASDAQ",
@@ -54978,6 +55125,13 @@
   "isActive": true
  },
  {
+  "symbol": "LTB",
+  "name": "Corgi FTSE 20+ Year U.S. Treasury Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "LTBR",
   "name": "Lightbridge Corp",
   "market": "NASDAQ",
@@ -55077,7 +55231,7 @@
  },
  {
   "symbol": "LTRYW",
-  "name": "Lottery.com Inc - Warrants (29/10/2026)",
+  "name": "Sports Entertainment Gaming Global Corp - Warrants (29/10/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -55391,6 +55545,13 @@
   "isActive": true
  },
  {
+  "symbol": "LYCA",
+  "name": "Lycia Therapeutics Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "LYEL",
   "name": "Lyell Immunopharma Inc",
   "market": "NASDAQ",
@@ -55511,13 +55672,6 @@
  },
  {
   "symbol": "MAA",
-  "name": "Mid-America Apartment Communities Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "MAA-P-I",
   "name": "Mid-America Apartment Communities Inc",
   "market": "NYSE",
   "kind": "STOCK",
@@ -55675,13 +55829,6 @@
   "name": "MAKO Surgical Corp",
   "market": "NASDAQ",
   "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "MAKX",
-  "name": "PROSHARES S&P KENSHO SMART FACTORIES ETF",
-  "market": "NYSE",
-  "kind": "ETF",
   "isActive": true
  },
  {
@@ -55924,7 +56071,7 @@
  },
  {
   "symbol": "MAXI",
-  "name": "SIMPLIFY BITCOIN STRATEGY PLUS INCOME ETF",
+  "name": "SIMPLIFY BITCOIN STRATEGY ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -57072,8 +57219,8 @@
  },
  {
   "symbol": "METV",
-  "name": "ROUNDHILL BALL METAVERSE ETF",
-  "market": "NYSE",
+  "name": "Roundhill Metaverse ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -57393,6 +57540,13 @@
   "isActive": true
  },
  {
+  "symbol": "MGIN",
+  "name": "Man Active Global Infrastructure ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "MGK",
   "name": "Vanguard Morningstar Mega Cap Growth ETF",
   "market": "NYSE",
@@ -57453,6 +57607,13 @@
   "name": "Macrogenics Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "MGOL",
+  "name": "Leverage Shares MANGOS ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -57786,7 +57947,7 @@
  },
  {
   "symbol": "MIMI",
-  "name": "Mint Inc Ltd - Class A",
+  "name": "Axonex AI Group Ltd - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -58317,6 +58478,13 @@
   "isActive": true
  },
  {
+  "symbol": "MLRG",
+  "name": "iShares Morningstar U.S. Equity ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "MLSS",
   "name": "Milestone Scientific Inc",
   "market": "AMEX",
@@ -58339,8 +58507,8 @@
  },
  {
   "symbol": "MMA",
-  "name": "Alta Global Group Ltd",
-  "market": "AMEX",
+  "name": "Mixed Martial Arts Group Ltd",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -58384,6 +58552,20 @@
   "name": "MiniMed Group Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "MMEDV",
+  "name": "MiniMed Group Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "MMF",
+  "name": "Corgi Money Market ETF",
+  "market": "BATS",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -58534,6 +58716,13 @@
   "isActive": true
  },
  {
+  "symbol": "MN",
+  "name": "Corgi MANGOS ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "MNA",
   "name": "NYLIM Merger Arbitrage ETF",
   "market": "NYSE ARCA",
@@ -58566,6 +58755,13 @@
   "name": "Monday.Com Ltd",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "MNGB",
+  "name": "Yorkville America 2X Inverse MANGOS Plus Daily Target ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -59158,7 +59354,7 @@
  },
  {
   "symbol": "MRAL",
-  "name": "DEFIANCE DAILY TARGET 2X LONG MRAM ETF",
+  "name": "GRANITESHARES 2X LONG MARA DAILY ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -59619,6 +59815,20 @@
   "isActive": true
  },
  {
+  "symbol": "MSGK",
+  "name": "MSG Knickerbockers Corp - Class A",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "MSGK-W",
+  "name": "Madison Square Garden Sports Corp Class A WhenIssued",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "MSGM",
   "name": "Motorsport Games Inc - Class A",
   "market": "NASDAQ",
@@ -59626,8 +59836,15 @@
   "isActive": true
  },
  {
-  "symbol": "MSGS",
-  "name": "Madison Square Garden Sports Corp - Class A",
+  "symbol": "MSGR",
+  "name": "MSG Rangers Corp - Class A",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "MSGR-W",
+  "name": "MSG Rangers Corp Class A WhenIssued",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -59686,6 +59903,13 @@
   "name": "MSC Industrial Direct Co. Inc - Class A",
   "market": "NYSE",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "MSML",
+  "name": "iShares Morningstar Small-Cap ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -59846,13 +60070,6 @@
   "symbol": "MSTX",
   "name": "Defiance Daily Target 2x Long MSTR ETF",
   "market": "NASDAQ",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "MSTY",
-  "name": "YIELDMAX(R) MSTR OPTION INCOME STRATEGY ETF",
-  "market": "NYSE",
   "kind": "ETF",
   "isActive": true
  },
@@ -60046,6 +60263,13 @@
   "isActive": true
  },
  {
+  "symbol": "MTGG",
+  "name": "MayTech Global Growth ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "MTGP",
   "name": "WISDOMTREE MORTGAGE PLUS BOND FUND",
   "market": "NYSE",
@@ -60076,7 +60300,7 @@
  {
   "symbol": "MTNB",
   "name": "Matinas Biopharma Holdings Inc",
-  "market": "AMEX",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -60386,13 +60610,6 @@
   "name": "Murphy USA Inc",
   "market": "NYSE",
   "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "MUSQ",
-  "name": "MUSQ GLOBAL MUSIC INDUSTRY INDEX ETF",
-  "market": "NYSE",
-  "kind": "ETF",
   "isActive": true
  },
  {
@@ -60711,6 +60928,13 @@
   "isActive": true
  },
  {
+  "symbol": "MYCP",
+  "name": "State Street My2036 Corporate Bond ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "MYD",
   "name": "BlackRock MuniYield Fund Inc",
   "market": "NYSE",
@@ -60774,6 +60998,13 @@
   "isActive": true
  },
  {
+  "symbol": "MYHF",
+  "name": "State Street My2032 High Yield Corporate Bond ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "MYI",
   "name": "BlackRock MuniYield Quality Fund III Inc",
   "market": "NYSE",
@@ -60825,6 +61056,13 @@
  {
   "symbol": "MYMK",
   "name": "SPDR SSGA MY2031 MUNICIPAL BOND ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "MYML",
+  "name": "State Street My2032 Municipal Bond ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -61090,9 +61328,23 @@
  },
  {
   "symbol": "NANC",
-  "name": "UNUSUAL WHALES SUBVERSIVE DEMOCRATIC TRADING ETF",
+  "name": "SUBVERSIVE CONGRESSIONAL DEMOCRATS TRADING ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "NANO",
+  "name": "Forge Nano Holdings Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "NANOW",
+  "name": "Forge Nano Holdings Inc - Warrants (22/10/2031)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -61664,7 +61916,7 @@
  },
  {
   "symbol": "NDAQ",
-  "name": "Nasdaq Inc - 144A",
+  "name": "Nasdaq Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -62370,22 +62622,8 @@
   "isActive": true
  },
  {
-  "symbol": "NHIC",
-  "name": "NewHold Investment Corp III - Class A",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "NHICU",
-  "name": "NewHold Investment Corp III - Units (1 Ord Cls A & 1/2 War)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "NHICW",
-  "name": "NewHold Investment Corp III - Warrants (01/01/9999)",
+  "name": "NewHold Investment Corp II - Units (1 Ord Share Class A & 1/2 War)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -62412,14 +62650,14 @@
   "isActive": true
  },
  {
-  "symbol": "NHPAP",
+  "symbol": "NHP",
   "name": "National Healthcare Properties Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
  {
-  "symbol": "NHPBP",
+  "symbol": "NHPAP",
   "name": "National Healthcare Properties Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
@@ -62770,13 +63008,6 @@
  },
  {
   "symbol": "NLY-P-G",
-  "name": "Annaly Capital Management Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "NLY-P-I",
   "name": "Annaly Capital Management Inc",
   "market": "NYSE",
   "kind": "STOCK",
@@ -63469,6 +63700,13 @@
   "isActive": true
  },
  {
+  "symbol": "NRG",
+  "name": "NRG Energy Inc",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "NRGD",
   "name": "Bank of Montreal",
   "market": "NYSE ARCA",
@@ -63536,6 +63774,13 @@
   "name": "Natural Resource Partners LP",
   "market": "NYSE",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "NRR",
+  "name": "Common Shares of Beneficial Interest of Bitwise NEAR ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -63721,9 +63966,16 @@
   "isActive": true
  },
  {
-  "symbol": "NSTS",
-  "name": "NSTS Bancorp Inc",
-  "market": "NASDAQ",
+  "symbol": "NSTR",
+  "name": "NorthStar Earth & Space Enterprises Inc",
+  "market": "NYSE MKT",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "NSTR-WS",
+  "name": "NorthStar Earth & Space Enterprises Inc Warrants",
+  "market": "AMEX",
   "kind": "STOCK",
   "isActive": true
  },
@@ -63877,13 +64129,6 @@
  {
   "symbol": "NTRB",
   "name": "Nutriband Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "NTRBW",
-  "name": "Nutriband Inc - Warrants (30/09/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -64211,13 +64456,6 @@
   "isActive": true
  },
  {
-  "symbol": "NUTR",
-  "name": "Nusatrip Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "NUTX",
   "name": "Nutex Health Inc",
   "market": "NASDAQ",
@@ -64477,15 +64715,8 @@
   "isActive": true
  },
  {
-  "symbol": "NVNI",
+  "symbol": "NVNIF",
   "name": "Nvni Group Ltd",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "NVNIW",
-  "name": "Nvni Group Ltd - Warrants (01/11/2028)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -64493,6 +64724,13 @@
  {
   "symbol": "NVNO",
   "name": "enVVeno Medical Corporation",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "NVNWF",
+  "name": "Nvni Group Ltd - Warrants (01/11/2028)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -64568,6 +64806,13 @@
   "isActive": true
  },
  {
+  "symbol": "NVT",
+  "name": "nVent Electric plc",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "NVTC",
   "name": "Corgi NVTS 2x Daily ETF",
   "market": "BATS",
@@ -64633,6 +64878,20 @@
  {
   "symbol": "NWBI",
   "name": "Northwest Bancshares Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "NWCL",
+  "name": "Newcleo plc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "NWCLW",
+  "name": "Newcleo plc - Warrants (21/09/2031)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -64752,7 +65011,7 @@
  {
   "symbol": "NXDR",
   "name": "Nextdoor Holdings Inc - Class A",
-  "market": "NYSE",
+  "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
@@ -65192,7 +65451,7 @@
  },
  {
   "symbol": "OBAI",
-  "name": "TG-17 Inc",
+  "name": "Our Bond Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -65436,6 +65695,13 @@
   "isActive": true
  },
  {
+  "symbol": "OCT",
+  "name": "VanEck U.S. Equity Buffer ETF - October",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "OCTA",
   "name": "OCTANE ALL-CAP VALUE ENERGY ETF",
   "market": "NASDAQ",
@@ -65452,6 +65718,13 @@
  {
   "symbol": "OCTH",
   "name": "Innovator Premium Income 20 Barrier ETF - October",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "OCTI",
+  "name": "AllianzIM International Equity Buffer15 Uncapped Oct ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -66227,13 +66500,6 @@
   "isActive": true
  },
  {
-  "symbol": "OND",
-  "name": "PROSHARES ON-DEMAND ETF PROSHARE ON-DEMAND ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "ONDC",
   "name": "Corgi ONDS 2x Daily ETF",
   "market": "BATS",
@@ -66280,6 +66546,13 @@
   "name": "TrueShares Equity Hedge ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "ONEN",
+  "name": "ONE Nuclear Energy Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -66556,6 +66829,13 @@
   "isActive": true
  },
  {
+  "symbol": "OPNW",
+  "name": "OpenWorld Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "OPP",
   "name": "RiverNorth/DoubleLine Strategic opportunity fund Inc",
   "market": "NYSE",
@@ -66630,6 +66910,13 @@
   "name": "OptiNose Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "OPTO",
+  "name": "Tuttle Capital Photonics Income Blast ETF",
+  "market": "BATS",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -66817,13 +67104,6 @@
  {
   "symbol": "ORIQW",
   "name": "Origin Investment Corp I onehalf of one redeemable warrant.",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "ORIS",
-  "name": "Oriental Rise Holdings Ltd",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -67823,13 +68103,6 @@
   "isActive": true
  },
  {
-  "symbol": "PAPL",
-  "name": "Pineapple Financial Inc",
-  "market": "AMEX",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "PAPR",
   "name": "Innovator U.S. Equity Power Buffer ETF - April",
   "market": "BATS",
@@ -67845,7 +68118,7 @@
  },
  {
   "symbol": "PARA",
-  "name": "Banzai International Inc - Class A",
+  "name": "Parabolic Technologies Inc - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -67859,7 +68132,7 @@
  },
  {
   "symbol": "PARAW",
-  "name": "Banzai International Inc - Warrants (14/12/2028)",
+  "name": "Parabolic Technologies Inc - Warrants (14/12/2028)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -67958,6 +68231,27 @@
  {
   "symbol": "PAX",
   "name": "Patria Investments Ltd - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "PAXG",
+  "name": "Pine Tree Acquisition Corp - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "PAXGR",
+  "name": "Pine Tree Acquisition Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "PAXGU",
+  "name": "Pine Tree Acquisition Corp - Units (1 Ord Cls A & 1 Rts)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -68573,7 +68867,7 @@
  },
  {
   "symbol": "PCOV",
-  "name": "Principal Equity Premium Income ETF",
+  "name": "PRINCIPAL EQUITY PREMIUM INCOME ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -68845,13 +69139,6 @@
   "isActive": true
  },
  {
-  "symbol": "PDYNW",
-  "name": "Palladyne AI Corp - Warrants (24/09/2026)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "PE&OLES",
   "name": "Industrias Penoles",
   "market": "BMV",
@@ -69048,10 +69335,10 @@
   "isActive": true
  },
  {
-  "symbol": "PERF",
-  "name": "Perfect Corp - Class A",
-  "market": "NYSE",
-  "kind": "STOCK",
+  "symbol": "PEPT",
+  "name": "REX Peptide ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -69252,7 +69539,7 @@
  },
  {
   "symbol": "PFH",
-  "name": "Prudential Financial Inc",
+  "name": "Prudential Wealth Advisors",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -69345,6 +69632,13 @@
   "symbol": "PFRL",
   "name": "PGIM FLOATING RATE INCOME ETF",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "PFRX",
+  "name": "Putnam Focused U.S. Research ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -69686,7 +69980,7 @@
  },
  {
   "symbol": "PHYL",
-  "name": "PGIM ACTIVE HIGH YIELD BOND ETF",
+  "name": "PGIM Active High Yield Bond ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -70742,6 +71036,20 @@
   "isActive": true
  },
  {
+  "symbol": "PNAQ",
+  "name": "Pinnacle Acquisition Corp - Class A",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "PNAQ-R",
+  "name": "Pinnacle Acquisition Corporation Rights each right entitling the holder to receive oneeighth 18 of one Class A ordinary share",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "PNAQ-U",
   "name": "Pinnacle Acquisition Corporation Units each consisting of one Class A ordinary share and one right",
   "market": "NYSE",
@@ -70863,7 +71171,7 @@
  {
   "symbol": "POAS",
   "name": "Phaos Technology (Cayman) Holdings Ltd - Class A",
-  "market": "AMEX",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -70946,7 +71254,7 @@
  },
  {
   "symbol": "POM",
-  "name": "Pomdoctor Ltd",
+  "name": "Pomdoctor Ltd - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -70996,6 +71304,13 @@
  {
   "symbol": "POR",
   "name": "Portland General Electric Company",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "PORT-U",
+  "name": "Southport Acquisition Corp II Units each consisting of one Class A ordinary share and onethird of one redeemable warrant",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -71172,13 +71487,6 @@
   "symbol": "PQAP",
   "name": "PGIM NASDAQ-100 BUFFER 12 ETF - APRIL",
   "market": "NASDAQ",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "PQDI",
-  "name": "PRINCIPAL SPECTRUM TAX-ADVANTAGED DIVIDEND ACTIVE ETF",
-  "market": "NYSE",
   "kind": "ETF",
   "isActive": true
  },
@@ -71597,7 +71905,7 @@
  },
  {
   "symbol": "PRS",
-  "name": "Prudential Financial Inc",
+  "name": "Prudential Wealth Advisors",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -71660,7 +71968,7 @@
  },
  {
   "symbol": "PRU",
-  "name": "Prudential Financial Inc",
+  "name": "Prudential Wealth Advisors",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -71961,7 +72269,7 @@
  },
  {
   "symbol": "PSET",
-  "name": "PRINCIPAL QUALITY ETF",
+  "name": "Principal Quality ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -72062,13 +72370,6 @@
   "name": "STATE STREET(R) SPDR(R) ICE PREFERRED SECURITIES ETF",
   "market": "NYSE",
   "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "PSKY",
-  "name": "Paramount Skydance Corp - Class B",
-  "market": "NASDAQ",
-  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -72408,6 +72709,13 @@
   "isActive": true
  },
  {
+  "symbol": "PTIV",
+  "name": "Pineapple Financial Inc",
+  "market": "NYSE MKT",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "PTL",
   "name": "INSPIRE 500 ETF",
   "market": "NYSE",
@@ -72445,13 +72753,6 @@
  {
   "symbol": "PTN",
   "name": "Palatin Technologies Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "PTNM",
-  "name": "Pitanium Ltd - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -72591,7 +72892,7 @@
  },
  {
   "symbol": "PUSA",
-  "name": "Aureus Greenway Holdings Inc",
+  "name": "Powerus Corp",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -73158,7 +73459,7 @@
  },
  {
   "symbol": "QBY",
-  "name": "GraniteShares YieldBoost QBTS ETF",
+  "name": "GRANITESHARES YIELDBOOST QBTS ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -73187,13 +73488,6 @@
  {
   "symbol": "QCLN",
   "name": "FIRST TRUST NASDAQ CLEAN EDGE GREEN ENERGY INDEX FUND",
-  "market": "NASDAQ",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "QCLR",
-  "name": "GLOBAL X NASDAQ 100 COLLAR 95-110 ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -73329,20 +73623,6 @@
   "name": "STATE STREET(R) SPDR(R) MSCI EMERGING MARKETS STRATEGICFACTORS(SM) ETF",
   "market": "NYSE",
   "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "QETA",
-  "name": "Quetta Acquisition Corp",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "QETAR",
-  "name": "Quetta Acquisition Corp",
-  "market": "NASDAQ",
-  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -73682,13 +73962,6 @@
   "isActive": true
  },
  {
-  "symbol": "QNCX",
-  "name": "Quince Therapeutics Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "QNME",
   "name": "Quanome Technologies Inc",
   "market": "NASDAQ",
@@ -73801,6 +74074,13 @@
   "isActive": true
  },
  {
+  "symbol": "QQI",
+  "name": "Invesco Nasdaq International Innovators 100 ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "QQJL",
   "name": "Corgi Growth & Technology 15% Structured Buffer ETF - July Series",
   "market": "BATS",
@@ -73845,6 +74125,13 @@
  {
   "symbol": "QQQA",
   "name": "PROSHARES NASDAQ-100 DORSEY WRIGHT MOMENTUM ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "QQQB",
+  "name": "VistaShares Shield Nasdaq 100 Enhanced Protection ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -74027,13 +74314,6 @@
  {
   "symbol": "QRTEP",
   "name": "QVC Group Inc Cum Red Pfd Ser A 8%",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "QRVO",
-  "name": "Qorvo Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -74495,7 +74775,7 @@
  },
  {
   "symbol": "RAAA",
-  "name": "RECKONER LEVERAGED AAA CLO ETF",
+  "name": "RECKONER YIELD ENHANCED AAA CLO ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -74841,6 +75121,13 @@
   "name": "Rubicon Technologies Inc Warrants each whole warrant exercisable to purchase one share of Class A Common Stock at an exercise price of 11.50 per share",
   "market": "NYSE",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "RBTX",
+  "name": "iShares Future Robotics and Related Technologies Active ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -75929,13 +76216,6 @@
   "isActive": true
  },
  {
-  "symbol": "RGR",
-  "name": "Sturm Ruger & Co. Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "RGT",
   "name": "Royce Global Value Trust Inc",
   "market": "NYSE",
@@ -76028,8 +76308,8 @@
  },
  {
   "symbol": "RHRX",
-  "name": "RH TACTICAL ROTATION ETF",
-  "market": "NYSE",
+  "name": "Adaptive Tactical Rotation ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -76126,13 +76406,6 @@
  },
  {
   "symbol": "RILYL",
-  "name": "B. Riley Financial Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "RILYN",
   "name": "B. Riley Financial Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
@@ -76843,6 +77116,13 @@
   "name": "YIELDMAX(R) TARGET 12(TM) REAL ESTATE OPTION INCOME ETF",
   "market": "NYSE",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "RNTZ",
+  "name": "Rantizo Cl A Ord",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -77609,6 +77889,13 @@
   "isActive": true
  },
  {
+  "symbol": "RTHY",
+  "name": "F/m Long-Term Treasury Inflation-Protected Security (TIPS) ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "RTO",
   "name": "Rentokil Initial",
   "market": "NYSE",
@@ -77627,6 +77914,13 @@
   "name": "RAREVIEW TOTAL RETURN BOND ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "RTSN",
+  "name": "Retension Pharmaceuticals Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -77862,6 +78156,13 @@
  },
  {
   "symbol": "RWAYL",
+  "name": "Runway Growth Finance Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "RWAYM",
   "name": "Runway Growth Finance Corp",
   "market": "NASDAQ",
   "kind": "STOCK",
@@ -78141,6 +78442,13 @@
   "isActive": true
  },
  {
+  "symbol": "RZAI",
+  "name": "Roze AI Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "RZC",
   "name": "Reinsurance Group Of America Inc",
   "market": "NYSE",
@@ -78247,7 +78555,7 @@
  },
  {
   "symbol": "SABSW",
-  "name": "SAB Biotherapeutics Inc - Warrants (25/07/2027)",
+  "name": "SAB Biotherapeutics Inc - Warrants (22/10/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -78393,6 +78701,13 @@
   "isActive": true
  },
  {
+  "symbol": "SAIQ",
+  "name": "WISeSat.Space Holdings Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "SAJ",
   "name": "Saratoga Investment Corp",
   "market": "NYSE",
@@ -78533,13 +78848,6 @@
   "isActive": true
  },
  {
-  "symbol": "SAT",
-  "name": "Saratoga Investment Corp",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "SATA",
   "name": "Strive Inc",
   "market": "NASDAQ",
@@ -78572,6 +78880,13 @@
   "name": "INVESCO ALERIAN GALAXY CRYPTO ECONOMY ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "SATS",
+  "name": "Strive Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -78855,22 +79170,8 @@
   "isActive": true
  },
  {
-  "symbol": "SBXD",
-  "name": "SilverBox Corp IV - Class A",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "SBXD-U",
   "name": "SilverBox Corp IV Units each consisting of one Class A ordinary share and onethird of one redeemable warrant",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "SBXD-WS",
-  "name": "SilverBox Corp IV - Warrants(01/01/9999)",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -78932,8 +79233,29 @@
   "isActive": true
  },
  {
+  "symbol": "SCAT",
+  "name": "Southern Cross Acquisition II Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SCATR",
+  "name": "Southern Cross Acquisition II Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "SCATU",
   "name": "Southern Cross Acquisition II Corp - Units (1 Ord Shs 1 War & 1 Rts)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SCATW",
+  "name": "Southern Cross Acquisition II Corp - Warrants (30/08/2028)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -79275,6 +79597,13 @@
   "isActive": true
  },
  {
+  "symbol": "SCIN",
+  "name": "Schwab International Bond ETF",
+  "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "SCIO",
   "name": "FIRST TRUST STRUCTURED CREDIT INCOME OPPORTUNITIES ETF",
   "market": "NYSE",
@@ -79464,6 +79793,13 @@
   "isActive": true
  },
  {
+  "symbol": "SCQCU",
+  "name": "SPACCircle Acquisition Corp - Units (1 Ord Share Class A & 1 War & 1 Rts)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "SCSB",
   "name": "Sterling Capital Short Duration Bond ETF",
   "market": "BATS",
@@ -79619,7 +79955,7 @@
  },
  {
   "symbol": "SDFI",
-  "name": "AB SHORT DURATION INCOME ETF",
+  "name": "SOUND FIXED INCOME ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -79821,13 +80157,6 @@
   "isActive": true
  },
  {
-  "symbol": "SEATW",
-  "name": "Vivid Seats Inc - Warrants (18/10/2026)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "SEB",
   "name": "Seaboard Corp",
   "market": "AMEX",
@@ -80024,13 +80353,6 @@
   "isActive": true
  },
  {
-  "symbol": "SELX",
-  "name": "Semilux International Ltd",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "SEM-W",
   "name": "Select Medical Holdings Corporation WhenIssued",
   "market": "NYSE",
@@ -80153,6 +80475,13 @@
   "symbol": "SEPZ",
   "name": "TRUESHARES STRUCTURED OUTCOME (SEPTEMBER) ETF",
   "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "SEQ",
+  "name": "Sequoia ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -80396,7 +80725,7 @@
  },
  {
   "symbol": "SFYI",
-  "name": "SoFi Social 50 Income ETF",
+  "name": "SOFI SOCIAL 50 INCOME ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -80858,7 +81187,7 @@
  },
  {
   "symbol": "SHRD",
-  "name": "Arimathea Catholic Core Bond ETF",
+  "name": "ARIMATHEA CATHOLIC CORE BOND ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -81222,7 +81551,7 @@
  },
  {
   "symbol": "SIX",
-  "name": "Six Flags Entertainment Corp",
+  "name": "GLOBAL X MAGNIFICENT SIX ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -81446,7 +81775,7 @@
  },
  {
   "symbol": "SKIN",
-  "name": "Beauty Health Company (The) - Class A",
+  "name": "SkinHealth Systems Inc - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -81525,6 +81854,27 @@
   "symbol": "SKYAW",
   "name": "SkyAI Inc - Warrants (13/04/2027)",
   "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SKYD",
+  "name": "Skydance Corp - Class B",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SKYD-WS",
+  "name": "Skydance Corporation Warrants to Purchase Class B Common Stock",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SKYD-WS-W",
+  "name": "Skydance Corporation Warrants to Purchase Class B Common Stock WhenIssued",
+  "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
  },
@@ -81802,13 +82152,6 @@
   "isActive": true
  },
  {
-  "symbol": "SLP",
-  "name": "Simulations Plus Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "SLQD",
   "name": "ISHARES 0-5 YEAR INVESTMENT GRADE CORPORATE BOND ETF",
   "market": "NASDAQ",
@@ -81872,6 +82215,13 @@
   "isActive": true
  },
  {
+  "symbol": "SLVI",
+  "name": "NEOS Silver High Income ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "SLVM",
   "name": "Sylvamo Corp",
   "market": "NYSE",
@@ -81882,7 +82232,7 @@
   "symbol": "SLVO",
   "name": "UBS AG London Branch",
   "market": "NASDAQ",
-  "kind": "STOCK",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -82033,13 +82383,6 @@
   "isActive": true
  },
  {
-  "symbol": "SMCF",
-  "name": "THEMES US SMALL CAP CASH FLOW CHAMPIONS ETF",
-  "market": "NASDAQ",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "SMCI",
   "name": "Super Micro Computer Inc",
   "market": "NASDAQ",
@@ -82104,7 +82447,7 @@
  },
  {
   "symbol": "SMDV",
-  "name": "PROSHARES RUSSELL 2000 DIVIDEND GROWERS ETF",
+  "name": "ProShares S&P SmallCap 600 Dividend Aristocrats ETF",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -82271,6 +82614,13 @@
   "isActive": true
  },
  {
+  "symbol": "SMNG",
+  "name": "xETFs Samsung Group ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "SMOG",
   "name": "VANECK LOW CARBON ENERGY ETF",
   "market": "NYSE",
@@ -82394,6 +82744,13 @@
   "name": "Sanara MedTech Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SMTJ",
+  "name": "Synera Funds Takumi+ ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -82754,13 +83111,6 @@
   "isActive": true
  },
  {
-  "symbol": "SNUS-P-I",
-  "name": "Santander Holdings USA Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "SNWV",
   "name": "Sanuwave Health Inc",
   "market": "NASDAQ",
@@ -82797,8 +83147,8 @@
  },
  {
   "symbol": "SOAR",
-  "name": "Volato Group Inc - Class A",
-  "market": "AMEX",
+  "name": "SOAR AI Inc - Class A",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -83287,7 +83637,7 @@
  },
  {
   "symbol": "SPAX",
-  "name": "T-REX 2X Long SpaceX Daily Target ETF",
+  "name": "ROBINSON ALTERNATIVE YIELD PRE-MERGER SPAC ETF",
   "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
@@ -83308,7 +83658,7 @@
  },
  {
   "symbol": "SPBO",
-  "name": "STATE STREET(R) SPDR PORTFOLIO CORPORATE BOND ETF",
+  "name": "STATE STREET(R) SPDR(R) PORTFOLIO CORPORATE BOND ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -83706,22 +84056,22 @@
   "isActive": true
  },
  {
-  "symbol": "SPKL",
+  "symbol": "SPKLF",
   "name": "Spark I Acquisition Corp - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
  {
-  "symbol": "SPKLU",
+  "symbol": "SPKUF",
   "name": "Spark I Acquisition Corp - Units (1 Ord Class A & 1/2 War)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
  {
-  "symbol": "SPKLW",
-  "name": "Spark I Acquisition Corp - Warrants (28/09/2028)",
+  "symbol": "SPKWF",
+  "name": "Spark I Acquisition Corp - Warrants (01/10/2030)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -83994,7 +84344,7 @@
  },
  {
   "symbol": "SPTU",
-  "name": "STATE STREET SPDR PORTFOLIO ULTRA SHORT T-BILL ETF",
+  "name": "STATE STREET(R) SPDR(R) PORTFOLIO ULTRA SHORT T-BILL ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -84008,7 +84358,7 @@
  },
  {
   "symbol": "SPUC",
-  "name": "SIMPLIFY US EQUITY PLUS UPSIDE CONVEXITY ETF",
+  "name": "SIMPLIFY US EQUITY INCOME ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -84101,6 +84451,13 @@
   "symbol": "SPXN",
   "name": "PROSHARES S&P 500 EX-FINANCIALS ETF",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "SPXP",
+  "name": "Direxion U.S. 500 Plus ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -84225,7 +84582,7 @@
  },
  {
   "symbol": "SPYX",
-  "name": "STATE STREET(R) SPDR(R) S&P 500(R) FOSSIL FUEL RESERVES FREE ETF",
+  "name": "STATE STREET(R) SPDR(R) S&P(R) 500 FOSSIL FUEL RESERVES FREE ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -84476,6 +84833,13 @@
   "isActive": true
  },
  {
+  "symbol": "SRTM",
+  "name": "Stratum Holdings Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "SRTS",
   "name": "Sensus Healthcare Inc",
   "market": "NASDAQ",
@@ -84582,7 +84946,7 @@
  },
  {
   "symbol": "SSCP",
-  "name": "SMART Small Cap",
+  "name": "SMART SMALL CAP ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -85289,7 +85653,7 @@
  },
  {
   "symbol": "STXF",
-  "name": "Strive 500 ETF",
+  "name": "STRIVE 500 ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -85449,13 +85813,6 @@
   "isActive": true
  },
  {
-  "symbol": "SUN",
-  "name": "Sunoco LP",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "SUNB",
   "name": "Sunbelt Rentals Holdings Inc",
   "market": "NYSE",
@@ -85481,13 +85838,6 @@
   "name": "Sunrise Realty Trust Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "SUPL",
-  "name": "PROSHARES SUPPLY CHAIN LOGISTICS ETF",
-  "market": "NYSE",
-  "kind": "ETF",
   "isActive": true
  },
  {
@@ -85666,6 +86016,20 @@
   "isActive": true
  },
  {
+  "symbol": "SVIA",
+  "name": "Silvia Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SVIAW",
+  "name": "Silvia Inc Warrant.",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "SVIV",
   "name": "Spring Valley Acquisition Corp IV - Class A",
   "market": "NASDAQ",
@@ -85697,20 +86061,6 @@
   "symbol": "SVM",
   "name": "Silvercorp Metals Inc",
   "market": "AMEX",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "SVMH",
-  "name": "SRIVARU Holding Ltd",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "SVMHW",
-  "name": "SRIVARU Holding Ltd - Warrants (08/12/2028)",
-  "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
@@ -85761,6 +86111,13 @@
   "name": "Servotronics Inc",
   "market": "NYSE MKT",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "SVTN",
+  "name": "Corgi FTSE 7-10 Year U.S. Treasury Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -86534,8 +86891,22 @@
   "isActive": true
  },
  {
+  "symbol": "TBCV",
+  "name": "Thunder Bridge Capital Partners V Ltd - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "TBCVU",
   "name": "Thunder Bridge Capital Partners V Ltd - Units (1 Ord Cls A & 1/5 War)",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "TBCVW",
+  "name": "Thunder Bridge Capital Partners V Ltd - Warrants (06/08/2031)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -86639,13 +87010,6 @@
   "isActive": true
  },
  {
-  "symbol": "TBPH",
-  "name": "Theravance Biopharma Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "TBSA",
   "name": "TB SA Acquisition Corp - Class A",
   "market": "NASDAQ",
@@ -86731,13 +87095,6 @@
  },
  {
   "symbol": "TCBI",
-  "name": "Texas Capital Bancshares Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "TCBIO",
   "name": "Texas Capital Bancshares Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
@@ -86858,6 +87215,13 @@
  {
   "symbol": "TCX",
   "name": "Tucows Inc - Class A",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "TCXB",
+  "name": "TCGX Acquisition Corp II - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -87434,6 +87798,27 @@
   "name": "YIELDMAX(R) TSLA PERFORMANCE & DISTRIBUTION TARGET 25(TM) ETF",
   "market": "BATS",
   "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "TEST235",
+  "name": "null",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "TETE",
+  "name": "Technology & Telecommunication Acquisition Corporation",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "TETEW",
+  "name": "Technology & Telecommunication Acquisition Corporation Warrant",
+  "market": "NASDAQ",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -88088,13 +88473,6 @@
   "isActive": true
  },
  {
-  "symbol": "TINT",
-  "name": "PROSHARES SMART MATERIALS ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "TINY",
   "name": "PROSHARES NANOTECHNOLOGY ETF",
   "market": "NYSE",
@@ -88600,8 +88978,8 @@
  },
  {
   "symbol": "TMDE",
-  "name": "TMD Energy Ltd",
-  "market": "AMEX",
+  "name": "TMD Energy Ltd - Class A",
+  "market": "NYSE MKT",
   "kind": "STOCK",
   "isActive": true
  },
@@ -88900,6 +89278,13 @@
   "isActive": true
  },
  {
+  "symbol": "TNTW",
+  "name": "Corgi FTSE 10-20 Year U.S. Treasury Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "TNUK",
   "name": "Tortoise Nuclear Renaissance ETF",
   "market": "NYSE",
@@ -89085,6 +89470,13 @@
   "symbol": "TOPW",
   "name": "ROUNDHILL TOP WEEKLYPAY ETF",
   "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "TORK",
+  "name": "KraneShares Actuator ETF",
+  "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
  },
@@ -89566,8 +89958,8 @@
  },
  {
   "symbol": "TRIL",
-  "name": "Defiance Trillion Dollar Club Index ETF",
-  "market": "NASDAQ",
+  "name": "VegaShares Trillions ETF",
+  "market": "BATS",
   "kind": "ETF",
   "isActive": true
  },
@@ -89943,6 +90335,13 @@
   "isActive": true
  },
  {
+  "symbol": "TRXB",
+  "name": "Trex Bio Inc",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "TRXS",
   "name": "Canary Staked TRX ETF",
   "market": "BATS",
@@ -90049,9 +90448,9 @@
  },
  {
   "symbol": "TSEU",
-  "name": "Tradr 2X Long TSEM Daily ETF",
+  "name": "Tradr 2X Long TSEM Daily",
   "market": "BATS",
-  "kind": "ETF",
+  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -90252,7 +90651,7 @@
  },
  {
   "symbol": "TSMU",
-  "name": "T-REX 2X LONG TSM DAILY TARGET ETF",
+  "name": "GRANITESHARES 2X LONG TSM DAILY ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -90520,6 +90919,13 @@
   "symbol": "TTT",
   "name": "ProShares UltraPro Short 20+ Year Treasury -3x Shares",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "TTTT",
+  "name": "Corgi FTSE U.S. TIPS Bond ETF",
+  "market": "BATS",
   "kind": "ETF",
   "isActive": true
  },
@@ -90867,27 +91273,6 @@
   "isActive": true
  },
  {
-  "symbol": "TWO-P-A",
-  "name": "Two Harbors Investment Corp",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "TWO-P-B",
-  "name": "Two Harbors Investment Corp",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "TWO-P-C",
-  "name": "Two Harbors Investment Corp",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "TWOD",
   "name": "Two Harbors Investment Corp",
   "market": "NYSE",
@@ -90937,6 +91322,13 @@
   "isActive": true
  },
  {
+  "symbol": "TXCA",
+  "name": "Northern Trust California Intermediate Tax-Exempt Bond ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "TXG",
   "name": "10x Genomics Inc - Class A",
   "market": "NASDAQ",
@@ -90968,6 +91360,13 @@
   "symbol": "TXNU",
   "name": "Direxion Daily TXN Bull 2X",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "TXNY",
+  "name": "Northern Trust New York Intermediate Tax-Exempt Bond ETF",
+  "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
  },
@@ -91245,6 +91644,13 @@
   "isActive": true
  },
  {
+  "symbol": "UB",
+  "name": "Corgi FTSE U.S. Treasury Bond ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "UBCP",
   "name": "United Bancorp Inc (Martins Ferry OH)",
   "market": "NASDAQ",
@@ -91270,6 +91676,13 @@
   "name": "United Security Bancshares (CA)",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "UBIQ",
+  "name": "AAM Ubiquitous ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -91402,13 +91815,6 @@
   "symbol": "UCTX",
   "name": "Corgi UCTT 2x Daily ETF",
   "market": "BATS",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "UCYB",
-  "name": "PROSHARES ULTRA NASDAQ CYBERSECURITY",
-  "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
  },
@@ -92925,13 +93331,6 @@
   "isActive": true
  },
  {
-  "symbol": "UUU",
-  "name": "Universal Security Instruments Inc",
-  "market": "AMEX",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "UUUC",
   "name": "Corgi UUUU 2x Daily ETF",
   "market": "BATS",
@@ -93002,6 +93401,20 @@
   "isActive": true
  },
  {
+  "symbol": "UWMC-R",
+  "name": "UWM Holdings Corporation Rights November 12 2026 Rights when issued",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "UWMC-R-W",
+  "name": "UWM Holdings Corporation Rights November 12 2026 Rights when issued",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "UWMC-WS",
   "name": "UWM Holdings Corporation Warrant",
   "market": "NYSE",
@@ -93045,7 +93458,7 @@
  },
  {
   "symbol": "UXJL",
-  "name": "FT Vest U.S. Equity Uncapped Accelerator ETF July",
+  "name": "FT VEST U.S. EQUITY UNCAPPED ACCELERATOR ETF - JULY",
   "market": "BATS",
   "kind": "ETF",
   "isActive": true
@@ -93191,13 +93604,6 @@
   "isActive": true
  },
  {
-  "symbol": "VACI-U",
-  "name": "Viking Acquisition Corp I - Units (1 Ord Cls A & 1/3 War)",
-  "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "VACI-WS",
   "name": "Viking Acquisition Corp I Warrants to purchase one Class A Ordinary Share",
   "market": "NYSE",
@@ -93209,6 +93615,13 @@
   "name": "Valor Energy Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "VAIC",
+  "name": "VegaShares US Equity Autocallable Conservative Income ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -93821,13 +94234,6 @@
   "isActive": true
  },
  {
-  "symbol": "VERS",
-  "name": "PROSHARES METAVERSE ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
   "symbol": "VERU",
   "name": "Veru Inc",
   "market": "NASDAQ",
@@ -94069,6 +94475,13 @@
   "symbol": "VGT",
   "name": "VANGUARD INFORMATION TECHNOLOGY INDEX FUND ETF SHARES",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "VGTX",
+  "name": "XFUNDS Technology Income ETF",
+  "market": "NYSE ARCA",
   "kind": "ETF",
   "isActive": true
  },
@@ -94416,6 +94829,13 @@
   "isActive": true
  },
  {
+  "symbol": "VJET",
+  "name": "Flyte Aviation Inc",
+  "market": "NYSE MKT",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "VKI",
   "name": "Invesco Advantage Municipal Income Trust II",
   "market": "AMEX",
@@ -94630,6 +95050,13 @@
   "name": "VMG Consumer Acquisition Corp - Warrants (08/11/2026)",
   "market": "NASDAQ",
   "kind": "STOCK",
+  "isActive": true
+ },
+ {
+  "symbol": "VMHY",
+  "name": "VICTORYSHARES MUNICIPAL HIGH YIELD ETF",
+  "market": "NASDAQ",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -95116,13 +95543,6 @@
   "isActive": true
  },
  {
-  "symbol": "VRME",
-  "name": "VerifyMe Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "VRNS",
   "name": "Varonis Systems Inc",
   "market": "NASDAQ",
@@ -95256,13 +95676,6 @@
   "isActive": true
  },
  {
-  "symbol": "VSEE",
-  "name": "VSee Health Inc",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "VSEEW",
   "name": "VSee Health Inc - Warrants(24/04/2029)",
   "market": "NASDAQ",
@@ -95295,13 +95708,6 @@
   "name": "APPLIED FINANCE VALUATION LARGE CAP ETF",
   "market": "NYSE",
   "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "VSME",
-  "name": "Vs Media Holdings Ltd - Class A",
-  "market": "NASDAQ",
-  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -95753,6 +96159,13 @@
   "isActive": true
  },
  {
+  "symbol": "VYLR",
+  "name": "Vylor Inc",
+  "market": "NYSE",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "VYM",
   "name": "VANGUARD HIGH DIVIDEND YIELD INDEX FUND ETF SHARES",
   "market": "NYSE",
@@ -95872,20 +96285,6 @@
   "isActive": true
  },
  {
-  "symbol": "WALD",
-  "name": "Waldencast plc - Class A",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "WALDW",
-  "name": "Waldencast plc - Warrants (27/07/2027)",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
   "symbol": "WALMEX",
   "name": "Wal Mart de Mexico",
   "market": "BMV",
@@ -95977,10 +96376,10 @@
   "isActive": true
  },
  {
-  "symbol": "WBD",
-  "name": "Warner Bros. Discovery Inc - Class A",
-  "market": "NASDAQ",
-  "kind": "STOCK",
+  "symbol": "WBEM",
+  "name": "William Blair Emerging Markets Equity ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
   "isActive": true
  },
  {
@@ -95991,22 +96390,29 @@
   "isActive": true
  },
  {
+  "symbol": "WBIE",
+  "name": "William Blair International Equity ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "WBIF",
-  "name": "WBI BULLBEAR VALUE 3000 ETF",
+  "name": "WBI FUNDAMENTAL FACTORS HEDGED ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
  },
  {
   "symbol": "WBIG",
-  "name": "WBI BULLBEAR YIELD 3000 ETF",
+  "name": "WBI INCOME GENERATORS HEDGED ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
  },
  {
   "symbol": "WBIL",
-  "name": "WBI BULLBEAR QUALITY 3000 ETF",
+  "name": "WBI TREND LEADERS HEDGED ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -96254,13 +96660,6 @@
   "name": "Teucrium Wheat Fund",
   "market": "NYSE",
   "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "WEAV",
-  "name": "Weave Communications Inc",
-  "market": "NYSE",
-  "kind": "STOCK",
   "isActive": true
  },
  {
@@ -96670,6 +97069,13 @@
   "isActive": true
  },
  {
+  "symbol": "WINC",
+  "name": "William Blair Emerging Income ETF",
+  "market": "NYSE ARCA",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "WING",
   "name": "Wingstop Inc",
   "market": "NASDAQ",
@@ -96736,13 +97142,6 @@
   "symbol": "WKC",
   "name": "World Kinect Corp",
   "market": "NYSE",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "WKEY",
-  "name": "WISeKey International Holding Ltd",
-  "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
@@ -97104,6 +97503,13 @@
   "isActive": true
  },
  {
+  "symbol": "WQEY",
+  "name": "WISeQey Corp",
+  "market": "NASDAQ",
+  "kind": "STOCK",
+  "isActive": true
+ },
+ {
   "symbol": "WQTM",
   "name": "WISDOMTREE QUANTUM COMPUTING FUND",
   "market": "BATS",
@@ -97252,7 +97658,7 @@
  },
  {
   "symbol": "WSDB",
-  "name": "Weitz Short Duration Bond",
+  "name": "WEITZ SHORT DURATION BOND ETF",
   "market": "NYSE",
   "kind": "STOCK",
   "isActive": true
@@ -97322,7 +97728,7 @@
  },
  {
   "symbol": "WSPC",
-  "name": "WisdomTree Space Economy Fund",
+  "name": "WISDOMTREE SPACE ECONOMY FUND",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -97967,13 +98373,6 @@
  {
   "symbol": "XCHG",
   "name": "AB US EQUITY ETF",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "XCLR",
-  "name": "GLOBAL X S&P 500 COLLAR 95-110 ETF",
   "market": "NYSE",
   "kind": "ETF",
   "isActive": true
@@ -99128,21 +99527,14 @@
  },
  {
   "symbol": "XRPN",
-  "name": "Armada Acquisition Corp II - Class A",
-  "market": "NASDAQ",
-  "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "XRPNU",
-  "name": "Armada Acquisition Corp II - Units (1 Ord Cls A & 1/2 War)",
+  "name": "Evernorth Holdings Inc - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
  },
  {
   "symbol": "XRPNW",
-  "name": "Armada Acquisition Corp II - Warrants(21/05/2030)",
+  "name": "Evernorth Holdings Inc - Warrants (07/10/2031)",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -99282,7 +99674,7 @@
  },
  {
   "symbol": "XSPC",
-  "name": "VEGASHARES SPACE & AI ETF",
+  "name": "Tidal Trust IV VegaShares Space & AI ETF",
   "market": "NASDAQ",
   "kind": "ETF",
   "isActive": true
@@ -99554,6 +99946,13 @@
   "isActive": true
  },
  {
+  "symbol": "XX",
+  "name": "Roundhill S&P 500 Target 10000 2030 ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "XXI",
   "name": "Twenty One Capital Inc Class A",
   "market": "NYSE",
@@ -99568,9 +99967,23 @@
   "isActive": true
  },
  {
+  "symbol": "XXQQ",
+  "name": "Subversive Growth 100 Redacted ETF",
+  "market": "BATS",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
   "symbol": "XXRP",
   "name": "TEUCRIUM 2X LONG DAILY XRP ETF",
   "market": "NYSE",
+  "kind": "ETF",
+  "isActive": true
+ },
+ {
+  "symbol": "XXSP",
+  "name": "Subversive S&P 500 Redacted ETF",
+  "market": "BATS",
   "kind": "ETF",
   "isActive": true
  },
@@ -100290,7 +100703,7 @@
  },
  {
   "symbol": "ZBAO",
-  "name": "Zhibao Technology Inc",
+  "name": "Zhibao Technology Inc - Class A",
   "market": "NASDAQ",
   "kind": "STOCK",
   "isActive": true
@@ -100776,20 +101189,6 @@
   "name": "Zscaler Inc",
   "market": "NASDAQ",
   "kind": "STOCK",
-  "isActive": true
- },
- {
-  "symbol": "ZSB",
-  "name": "USCF SUSTAINABLE BATTERY METALS STRATEGY FUND",
-  "market": "NYSE",
-  "kind": "ETF",
-  "isActive": true
- },
- {
-  "symbol": "ZSC",
-  "name": "USCF SUSTAINABLE COMMODITY STRATEGY FUND",
-  "market": "NYSE",
-  "kind": "ETF",
   "isActive": true
  },
  {

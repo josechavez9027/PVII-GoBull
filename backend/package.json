@@ -7,6 +7,7 @@
     "start": "ts-node src/index.ts",
     "dev": "ts-node src/index.ts",
     "news:fetch": "ts-node src/scripts/fetch-news.ts",
+    "indicators:seed": "ts-node src/scripts/seed-indicators.ts",
     "test": "node -r ts-node/register --test \"src/**/*.test.ts\""
   },
   "keywords": [],

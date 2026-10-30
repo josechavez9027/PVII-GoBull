@@ -1,0 +1,161 @@
+@if (activeGroup(); as group) {
+  <section class="live" aria-label="Indicadores en tiempo real">
+    <div
+      class="cats"
+      role="tablist"
+      aria-label="Categorias de indicadores"
+      (keydown)="onCategoryKeydown($event)"
+    >
+      @for (g of groups(); track g.category) {
+        <button
+          type="button"
+          role="tab"
+          class="cats__tab"
+          [id]="'live-tab-' + g.category"
+          [class.cats__tab--active]="g.category === group.category"
+          [attr.aria-selected]="g.category === group.category"
+          [attr.aria-controls]="'live-panel'"
+          [attr.tabindex]="g.category === group.category ? 0 : -1"
+          [attr.data-testid]="'live-cat-' + g.category"
+          (click)="selectCategory(g.category)"
+        >
+          {{ g.label }}
+          <span class="cats__count">{{ g.items.length }}</span>
+        </button>
+      }
+    </div>
+
+    <div
+      class="panel"
+      id="live-panel"
+      role="tabpanel"
+      [attr.aria-labelledby]="'live-tab-' + group.category"
+    >
+      <div class="picker" role="group" aria-label="Indicador a graficar">
+        @for (item of group.items; track item.code) {
+          <app-indicator-card
+            [item]="item"
+            [selected]="item.code === activeItem()?.code"
+            (picked)="selectItem(item.code)"
+          />
+        }
+      </div>
+
+      @if (activeItem(); as item) {
+        <div class="chart-card" [attr.data-testid]="'live-chart-' + item.code">
+          <header class="chart-card__head">
+            <div class="chart-card__title">
+              <h2 class="text-label chart-card__name">{{ item.name }}</h2>
+              <p class="text-metric chart-card__price" data-testid="live-price">
+                {{ formatValue(item.value) }}
+              </p>
+              @if (stats(); as s) {
+                <p
+                  class="chart-card__delta"
+                  [class.chart-card__delta--up]="trend() === 'up'"
+                  [class.chart-card__delta--down]="trend() === 'down'"
+                >
+                  {{ formatPct(s.changePct) }}
+                  <span class="chart-card__delta-period">en el periodo</span>
+                </p>
+              }
+            </div>
+
+            <div class="ranges" role="group" aria-label="Rango de tiempo">
+              @for (r of ranges; track r.value) {
+                <button
+                  type="button"
+                  class="ranges__btn"
+                  [class.ranges__btn--active]="effectiveRange() === r.value"
+                  [attr.aria-pressed]="effectiveRange() === r.value"
+                  [disabled]="rangeDisabled(r.value)"
+                  [attr.title]="
+                    rangeDisabled(r.value) ? 'Sin datos intradia para este indicador' : r.hint
+                  "
+                  [attr.data-testid]="'live-range-' + r.value"
+                  (click)="selectRange(r.value)"
+                >
+                  {{ r.label }}
+                </button>
+              }
+            </div>
+          </header>
+
+          <div class="chart-card__body">
+            @switch (state()) {
+              @case ('loading') {
+                <div class="chart-state" aria-busy="true" data-testid="live-chart-loading">
+                  <span class="spinner"></span>
+                  Cargando grafico...
+                </div>
+              }
+              @case ('error') {
+                <div class="chart-state chart-state--error" role="alert">
+                  <span>No se pudo cargar el grafico.</span>
+                  <button type="button" class="retry-button" (click)="retry()">Reintentar</button>
+                </div>
+              }
+              @case ('ready') {
+                @if (points().length >= 2) {
+                  <app-indicator-live-chart
+                    [points]="points()"
+                    [range]="effectiveRange()"
+                    [decimals]="item.decimals"
+                    [trend]="trend()"
+                    [label]="'Grafico de ' + item.name + ', ' + rangeHint()"
+                  />
+                } @else {
+                  <div class="chart-state" role="status" data-testid="live-chart-empty">
+                    Aun no hay suficientes datos para este rango. Los puntos intradia se acumulan
+                    durante el horario de mercado.
+                  </div>
+                }
+              }
+            }
+          </div>
+
+          @if (stats(); as s) {
+            <dl class="stats" data-testid="live-stats">
+              <div class="stats__item">
+                <dt class="text-caption">Apertura del periodo</dt>
+                <dd>{{ formatValue(s.first) }}</dd>
+              </div>
+              <div class="stats__item">
+                <dt class="text-caption">Maximo</dt>
+                <dd>{{ formatValue(s.high) }}</dd>
+              </div>
+              <div class="stats__item">
+                <dt class="text-caption">Minimo</dt>
+                <dd>{{ formatValue(s.low) }}</dd>
+              </div>
+              <div class="stats__item">
+                <dt class="text-caption">Ultimo</dt>
+                <dd>{{ formatValue(s.last) }}</dd>
+              </div>
+              <div class="stats__item">
+                <dt class="text-caption">Cambio</dt>
+                <dd
+                  [class.up]="trend() === 'up'"
+                  [class.down]="trend() === 'down'"
+                >
+                  {{ formatValue(s.change) }}
+                </dd>
+              </div>
+              <div class="stats__item">
+                <dt class="text-caption">Puntos</dt>
+                <dd>{{ s.count }}</dd>
+              </div>
+            </dl>
+          }
+
+          <p class="chart-card__note text-caption">
+            {{ rangeHint() }}.
+            @if (granularityNote(); as note) {
+              {{ note }}
+            }
+          </p>
+        </div>
+      }
+    </div>
+  </section>
+}

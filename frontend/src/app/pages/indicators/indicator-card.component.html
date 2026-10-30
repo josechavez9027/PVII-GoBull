@@ -1,0 +1,34 @@
+<article
+  class="card"
+  role="button"
+  tabindex="0"
+  [attr.aria-pressed]="selected()"
+  [class.card--selected]="selected()"
+  (click)="picked.emit()"
+  (keydown)="onKey($event)"
+  [class.card--stale]="item().status === 'stale'"
+  [class.card--unavailable]="item().status === 'unavailable'"
+  [attr.data-testid]="'indicator-' + item().code"
+>
+  <header class="card__head">
+    <h3 class="card__name" [attr.title]="item().name">{{ item().name }}</h3>
+  </header>
+
+  @if (changeLabel(); as change) {
+    <p
+      class="card__change"
+      [class.card__change--up]="trend() === 'up'"
+      [class.card__change--down]="trend() === 'down'"
+    >
+      {{ change }}
+    </p>
+  } @else {
+    <p class="card__change card__change--flat">-</p>
+  }
+
+  <p class="card__value" [attr.data-testid]="'indicator-value-' + item().code">
+    {{ valueLabel() }}
+  </p>
+
+  <footer class="card__footer">{{ updatedLabel() }}</footer>
+</article>

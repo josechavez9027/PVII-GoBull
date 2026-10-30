@@ -1,0 +1,155 @@
+<div class="page">
+  <div class="page__head">
+    <div>
+      <h1 class="page__title text-display" data-testid="indicators-title">Indicadores</h1>
+      <p class="page__subtitle text-body">
+        Pulso macro del mercado: volatilidad, dolar, tasas y activos de referencia.
+      </p>
+    </div>
+  </div>
+
+  @switch (loadState()) {
+    @case ('loading') {
+      <div class="skeletons" data-testid="indicators-loading" aria-busy="true" aria-live="polite">
+        @for (slot of skeletonSlots; track slot) {
+          <div class="skeleton-card"></div>
+        }
+        <span class="visually-hidden">Cargando indicadores</span>
+      </div>
+    }
+    @case ('error') {
+      <div class="state state--error" data-testid="indicators-error" role="alert">
+        <div class="state__body">
+          <span>No se pudo conectar con el servicio de indicadores.</span>
+          <button type="button" class="retry-button" (click)="retry()" data-testid="indicators-retry">
+            Reintentar
+          </button>
+        </div>
+      </div>
+    }
+    @case ('ready') {
+      @if (!configured()) {
+        <div class="state state--notice" data-testid="indicators-not-configured" role="status">
+          <div class="state__body">
+            <span>Configura FMP_API_KEY para activar los indicadores.</span>
+            <span>Mientras tanto solo se muestran los datos ya almacenados.</span>
+          </div>
+        </div>
+      } @else if (panelEmpty()) {
+        <div class="state state--notice" data-testid="indicators-empty" role="status">
+          El proveedor de indicadores no tiene datos disponibles en este momento.
+        </div>
+      }
+
+      @if (!panelEmpty()) {
+        <nav class="tabs" role="tablist" aria-label="Vistas de indicadores" (keydown)="onTabKeydown($event)">
+          <button
+            type="button"
+            role="tab"
+            id="tab-live"
+            class="tabs__tab"
+            [class.tabs__tab--active]="activeTab() === 'live'"
+            [attr.aria-selected]="activeTab() === 'live'"
+            aria-controls="panel-live"
+            [attr.tabindex]="activeTab() === 'live' ? 0 : -1"
+            (click)="setTab('live')"
+            data-testid="tab-live"
+          >
+            Tiempo real
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="tab-history"
+            class="tabs__tab"
+            [class.tabs__tab--active]="activeTab() === 'history'"
+            [attr.aria-selected]="activeTab() === 'history'"
+            aria-controls="panel-history"
+            [attr.tabindex]="activeTab() === 'history' ? 0 : -1"
+            (click)="setTab('history')"
+            data-testid="tab-history"
+          >
+            Comparativa historica
+          </button>
+        </nav>
+      }
+    }
+  }
+
+  @if (activeTab() === 'live' && panel(); as panelData) {
+    <div class="live" id="panel-live" role="tabpanel" aria-labelledby="tab-live">
+      <app-indicator-live [groups]="visibleGroups()" [refreshKey]="panelData.generatedAt" />
+      <p class="refresh-info">
+        Actualizado {{ formatAsOf(panelData.generatedAt) }} - refresco automatico cada 60 segundos.
+      </p>
+    </div>
+  }
+
+  @if (activeTab() === 'history') {
+    <div class="history" id="panel-history" role="tabpanel" aria-labelledby="tab-history">
+      <div class="history__controls">
+        <div class="ranges" role="group" aria-label="Rango temporal">
+          @for (option of rangeOptions; track option) {
+            <button
+              type="button"
+              class="ranges__btn"
+              [class.ranges__btn--active]="range() === option"
+              [attr.aria-pressed]="range() === option"
+              (click)="setRange(option)"
+            >
+              {{ option }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="pills" role="group" aria-label="Indicadores a comparar">
+        @for (item of selectIndicators(); track item.code) {
+          <button
+            type="button"
+            class="pill"
+            [class.pill--active]="isSelected(item.code)"
+            [attr.aria-pressed]="isSelected(item.code)"
+            (click)="toggleCode(item.code)"
+            [attr.data-testid]="'pill-' + item.code"
+          >
+            {{ item.name }}
+          </button>
+        }
+      </div>
+
+      @switch (compareState()) {
+        @case ('loading') {
+          <div class="state" aria-busy="true">
+            <span class="spinner"></span>
+            Cargando historico...
+          </div>
+        }
+        @case ('error') {
+          <div class="state state--error" role="alert">
+            <div class="state__body">
+              <span>No se pudo cargar la comparativa historica.</span>
+              <button type="button" class="retry-button" (click)="retryCompare()">
+                Reintentar
+              </button>
+            </div>
+          </div>
+        }
+        @case ('ready') {
+          @if (compare(); as compareData) {
+            @if (chartSeries().length > 0) {
+              <div class="chart-wrap">
+                <app-indicator-chart [series]="chartSeries()" />
+              </div>
+              <app-indicator-compare-table [compare]="compareData" />
+            } @else {
+              <div class="state state--notice">
+                Sin historico suficiente para los indicadores seleccionados.
+              </div>
+            }
+          }
+        }
+      }
+    </div>
+  }
+</div>
