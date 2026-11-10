@@ -62,6 +62,53 @@ export interface CompareResponse {
   missing: string[];
 }
 
+export type AnalysisBias = 'alcista' | 'neutral' | 'bajista';
+export type AnalysisRiskLevel = 'bajo' | 'moderado' | 'alto' | 'extremo';
+export type AnalysisSeverity = 'info' | 'alerta' | 'critica';
+export type AnalysisStance = 'positivo' | 'neutral' | 'negativo';
+export type AnalysisNewsLabel = 'positivo' | 'neutral' | 'negativo';
+
+export interface AnalysisSignal {
+  code: string;
+  indicator: string;
+  severity: AnalysisSeverity;
+  title: string;
+  message: string;
+}
+
+export interface IndicatorInterpretation {
+  code: string;
+  name: string;
+  stance: AnalysisStance;
+  text: string;
+}
+
+export interface AnalysisNewsItem {
+  title: string;
+  source: string;
+  url: string;
+  publishedAt: string;
+  sentiment: number | null;
+}
+
+export interface AnalysisNews {
+  count: number;
+  label: AnalysisNewsLabel;
+  averageSentiment: number | null;
+  items: AnalysisNewsItem[];
+}
+
+export interface AnalysisResponse {
+  asOf: string;
+  bias: AnalysisBias;
+  riskLevel: AnalysisRiskLevel;
+  summary: string;
+  signals: AnalysisSignal[];
+  interpretations: IndicatorInterpretation[];
+  news: AnalysisNews;
+  disclaimer: string;
+}
+
 export type IndicatorRange = '1M' | '3M' | '6M' | '1Y' | '5Y';
 export type LiveRange = '5MIN' | '1HR' | '1W' | '1M' | '1Y' | '2Y';
 export type HistoryRange = IndicatorRange | LiveRange;
@@ -86,5 +133,9 @@ export class IndicatorsService {
   getCompare(codes: string[], range: IndicatorRange): Observable<CompareResponse> {
     const params = new HttpParams().set('codes', codes.join(',')).set('range', range);
     return this.http.get<CompareResponse>(`${this.apiUrl}/compare`, { params });
+  }
+
+  getAnalysis(): Observable<AnalysisResponse> {
+    return this.http.get<AnalysisResponse>(`${this.apiUrl}/analysis`);
   }
 }

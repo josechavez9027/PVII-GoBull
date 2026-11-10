@@ -15,18 +15,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IndicatorsService } from '../../core/services/indicators.service';
 import {
   CompareResponse,
+  AnalysisResponse,
   IndicatorGroup,
   IndicatorItem,
   IndicatorRange,
   IndicatorsPanel,
 } from '../../core/services/indicators.service';
+import { FuturesPanel, FuturesService } from '../../core/services/futures.service';
 import { IndicatorLiveComponent } from './indicator-live.component';
 import { ChartSeries, IndicatorChartComponent } from './indicator-chart.component';
 import { IndicatorCompareTableComponent } from './indicator-compare-table.component';
+import { IndicatorAnalysisComponent } from './indicator-analysis.component';
+import { FuturesPanelComponent } from './futures-panel.component';
 
 const RANGE_OPTIONS: IndicatorRange[] = ['1M', '3M', '6M', '1Y', '5Y'];
-const TAB_ORDER = ['live', 'history'] as const;
+const TAB_ORDER = ['live', 'history', 'analysis', 'futures'] as const;
+type ActiveTab = (typeof TAB_ORDER)[number];
 const SKELETON_SLOTS = Array.from({ length: 8 }, (_, index) => index);
+const FUTURES_REFRESH_MS = 5 * 60 * 1000;
 
 const CATEGORY_LABELS: Record<string, string> = {
   VOLATILITY: 'Volatilidad',
@@ -51,6 +57,8 @@ export interface LabeledIndicatorGroup extends IndicatorGroup {
     IndicatorLiveComponent,
     IndicatorChartComponent,
     IndicatorCompareTableComponent,
+    IndicatorAnalysisComponent,
+    FuturesPanelComponent,
   ],
   templateUrl: './indicators.component.html',
   styleUrl: './indicators.component.css',
@@ -60,13 +68,17 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
   readonly rangeOptions = RANGE_OPTIONS;
   readonly skeletonSlots = SKELETON_SLOTS;
 
-  readonly activeTab = signal<'live' | 'history'>('live');
+  readonly activeTab = signal<ActiveTab>('live');
   readonly panel = signal<IndicatorsPanel | null>(null);
   readonly loadState = signal<'loading' | 'ready' | 'error'>('loading');
   readonly range = signal<IndicatorRange>('1Y');
   readonly selectedCodes = signal<string[]>(['VIX', 'DXY', 'US10Y']);
   readonly compare = signal<CompareResponse | null>(null);
   readonly compareState = signal<'loading' | 'ready' | 'error'>('loading');
+  readonly analysis = signal<AnalysisResponse | null>(null);
+  readonly analysisState = signal<'loading' | 'ready' | 'error'>('loading');
+  readonly futures = signal<FuturesPanel | null>(null);
+  readonly futuresState = signal<'loading' | 'ready' | 'error'>('loading');
 
   readonly configured = computed(() => this.panel()?.configured ?? true);
 
@@ -114,9 +126,13 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
 
   private destroyRef = inject(DestroyRef);
   private indicatorsService = inject(IndicatorsService);
+  private futuresService = inject(FuturesService);
   private platformId = inject(PLATFORM_ID);
   private pollingSub: Subscription | null = null;
   private panelSub: Subscription | null = null;
+  private analysisSub: Subscription | null = null;
+  private futuresSub: Subscription | null = null;
+  private futuresTimerSub: Subscription | null = null;
   private stopPolling = new Subject<void>();
   private compareRequest = new Subject<void>();
   private visibilityHandler = this.handleVisibility.bind(this);
@@ -157,14 +173,23 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
     this.stopPolling.complete();
     this.pollingSub?.unsubscribe();
     this.panelSub?.unsubscribe();
+    this.analysisSub?.unsubscribe();
+    this.futuresSub?.unsubscribe();
+    this.futuresTimerSub?.unsubscribe();
   }
 
-  setTab(tab: 'live' | 'history'): void {
+  setTab(tab: ActiveTab): void {
     if (tab === this.activeTab()) {
       if (tab === 'history') this.loadCompare();
+      if (tab === 'futures') this.loadFutures();
       return;
     }
     this.activeTab.set(tab);
+    if (tab === 'futures') {
+      this.startFuturesPolling();
+    } else {
+      this.stopFuturesPolling();
+    }
     if (tab === 'history') {
       this.loadCompare();
     }
@@ -210,6 +235,14 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
     this.loadCompare();
   }
 
+  retryAnalysis(): void {
+    this.loadAnalysis();
+  }
+
+  retryFutures(): void {
+    this.loadFutures();
+  }
+
   formatAsOf(asOf: string | null): string {
     if (!asOf) return 'sin datos';
     const minutes = Math.max(0, Math.round((Date.now() - new Date(asOf).getTime()) / 60000));
@@ -241,6 +274,11 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
     this.pollingSub = null;
     this.panelSub?.unsubscribe();
     this.panelSub = null;
+    this.analysisSub?.unsubscribe();
+    this.analysisSub = null;
+    this.stopFuturesPolling();
+    this.futuresSub?.unsubscribe();
+    this.futuresSub = null;
   }
 
   private startPolling(): void {
@@ -252,6 +290,7 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
       )
       .subscribe((panel) => this.applyPanel(panel));
     this.loadPanel();
+    if (this.activeTab() === 'futures') this.startFuturesPolling();
   }
 
   private loadPanel(): void {
@@ -275,6 +314,27 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
     if (!panel) return;
     this.loadState.set('ready');
     this.panel.set(panel);
+    this.loadAnalysis();
+  }
+
+  private loadAnalysis(): void {
+    if (!this.analysis()) this.analysisState.set('loading');
+    this.analysisSub?.unsubscribe();
+    this.analysisSub = this.indicatorsService
+      .getAnalysis()
+      .pipe(
+        catchError(() => {
+          this.analysisState.set('error');
+          return of(null);
+        }),
+        takeUntil(this.stopPolling),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((analysis) => {
+        if (!analysis) return;
+        this.analysis.set(analysis);
+        this.analysisState.set('ready');
+      });
   }
 
   private loadCompare(): void {
@@ -282,5 +342,45 @@ export class IndicatorsComponent implements OnInit, OnDestroy {
     if (this.selectedCodes().length === 0) return;
     this.compareState.set('loading');
     this.compareRequest.next();
+  }
+
+  private startFuturesPolling(): void {
+    if (this.futuresTimerSub) return;
+    this.futuresTimerSub = timer(FUTURES_REFRESH_MS, FUTURES_REFRESH_MS)
+      .pipe(
+        switchMap(() => this.futuresService.getPanel().pipe(catchError(() => of(null)))),
+        takeUntil(this.stopPolling),
+      )
+      .subscribe((panel) => {
+        if (!panel) return;
+        this.futures.set(panel);
+        this.futuresState.set('ready');
+      });
+    this.loadFutures();
+  }
+
+  private stopFuturesPolling(): void {
+    this.futuresTimerSub?.unsubscribe();
+    this.futuresTimerSub = null;
+  }
+
+  private loadFutures(): void {
+    if (!this.futures()) this.futuresState.set('loading');
+    this.futuresSub?.unsubscribe();
+    this.futuresSub = this.futuresService
+      .getPanel()
+      .pipe(
+        catchError(() => {
+          this.futuresState.set('error');
+          return of(null);
+        }),
+        takeUntil(this.stopPolling),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((panel) => {
+        if (!panel) return;
+        this.futures.set(panel);
+        this.futuresState.set('ready');
+      });
   }
 }

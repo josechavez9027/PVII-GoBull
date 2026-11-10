@@ -17,6 +17,8 @@ import indicatorsRoutes from './modules/indicators/indicators.routes';
 import { indicatorsService } from './modules/indicators/indicators.routes';
 import { loadIndicatorsConfig } from './modules/indicators/indicators.config';
 import { startIndicatorsScheduler } from './modules/indicators/indicators.scheduler';
+import futuresRoutes from './modules/futures/futures.routes';
+import { futuresService } from './modules/futures/futures.routes';
 
 const app = express();
 
@@ -57,6 +59,7 @@ app.use('/api/v1/instruments', instrumentsRoutes);
 app.use('/api/v1/news', newsRoutes);
 app.use('/api/v1/notifications', notificationsRoutes);
 app.use('/api/v1/indicators', indicatorsRoutes);
+app.use('/api/v1/futures', futuresRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
@@ -65,4 +68,5 @@ app.listen(PORT, () => {
   startNotificationScheduler();
   startIndicatorsScheduler(indicatorsService, loadIndicatorsConfig());
   void indicatorsService.tick().catch(() => undefined);
+  void futuresService.warmup().catch(() => undefined);
 });

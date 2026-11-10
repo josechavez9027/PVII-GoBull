@@ -103,3 +103,54 @@ export interface SyncStatusDto {
   quota: { used: number; budget: number };
   jobs: SyncJobState[];
 }
+
+export type AnalysisBias = "alcista" | "neutral" | "bajista";
+
+export type AnalysisRiskLevel = "bajo" | "moderado" | "alto" | "extremo";
+
+export type AnalysisSeverity = "info" | "alerta" | "critica";
+
+export type AnalysisStance = "positivo" | "neutral" | "negativo";
+
+export type AnalysisNewsLabel = "positivo" | "neutral" | "negativo";
+
+export interface AnalysisSignalDto {
+  code: string;
+  indicator: string;
+  severity: AnalysisSeverity;
+  title: string;
+  message: string;
+}
+
+export interface IndicatorInterpretationDto {
+  code: string;
+  name: string;
+  stance: AnalysisStance;
+  text: string;
+}
+
+export interface AnalysisNewsItemDto {
+  title: string;
+  source: string;
+  url: string;
+  publishedAt: string;
+  sentiment: number | null;
+}
+
+export interface AnalysisNewsDto {
+  count: number;
+  label: AnalysisNewsLabel;
+  averageSentiment: number | null;
+  items: AnalysisNewsItemDto[];
+}
+
+export interface AnalysisDto {
+  asOf: string;
+  bias: AnalysisBias;
+  riskLevel: AnalysisRiskLevel;
+  summary: string;
+  signals: AnalysisSignalDto[];
+  interpretations: IndicatorInterpretationDto[];
+  news: AnalysisNewsDto;
+  disclaimer: string;
+}

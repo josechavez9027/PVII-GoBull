@@ -21,6 +21,17 @@ export class IndicatorsController {
     }
   }
 
+  async analysis(_req: Request, res: Response): Promise<void> {
+    try {
+      res.json(await this.service.analysis());
+    } catch (error) {
+      res.status(503).json({
+        error: "INDICATORS_ANALYSIS_UNAVAILABLE",
+        message: errorMessage(error),
+      });
+    }
+  }
+
   async history(req: Request, res: Response): Promise<void> {
     const parsed = historyQuerySchema.safeParse(req.query);
     if (!parsed.success) {

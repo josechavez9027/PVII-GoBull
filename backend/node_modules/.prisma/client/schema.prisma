@@ -281,3 +281,14 @@ model IndicatorProviderUsage {
   requests  Int      @default(0)
   updatedAt DateTime @updatedAt
 }
+
+model FutureSnapshot {
+  id        String   @id @default(uuid())
+  code      String   @db.VarChar(16)
+  asOf      DateTime
+  close     Decimal  @db.Decimal(18, 6)
+  createdAt DateTime @default(now())
+
+  @@unique([code, asOf])
+  @@index([code, asOf])
+}

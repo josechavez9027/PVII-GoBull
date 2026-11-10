@@ -21,7 +21,12 @@
       <div class="state state--error" data-testid="indicators-error" role="alert">
         <div class="state__body">
           <span>No se pudo conectar con el servicio de indicadores.</span>
-          <button type="button" class="retry-button" (click)="retry()" data-testid="indicators-retry">
+          <button
+            type="button"
+            class="retry-button"
+            (click)="retry()"
+            data-testid="indicators-retry"
+          >
             Reintentar
           </button>
         </div>
@@ -41,38 +46,69 @@
         </div>
       }
 
-      @if (!panelEmpty()) {
-        <nav class="tabs" role="tablist" aria-label="Vistas de indicadores" (keydown)="onTabKeydown($event)">
-          <button
-            type="button"
-            role="tab"
-            id="tab-live"
-            class="tabs__tab"
-            [class.tabs__tab--active]="activeTab() === 'live'"
-            [attr.aria-selected]="activeTab() === 'live'"
-            aria-controls="panel-live"
-            [attr.tabindex]="activeTab() === 'live' ? 0 : -1"
-            (click)="setTab('live')"
-            data-testid="tab-live"
-          >
-            Tiempo real
-          </button>
-          <button
-            type="button"
-            role="tab"
-            id="tab-history"
-            class="tabs__tab"
-            [class.tabs__tab--active]="activeTab() === 'history'"
-            [attr.aria-selected]="activeTab() === 'history'"
-            aria-controls="panel-history"
-            [attr.tabindex]="activeTab() === 'history' ? 0 : -1"
-            (click)="setTab('history')"
-            data-testid="tab-history"
-          >
-            Comparativa historica
-          </button>
-        </nav>
-      }
+      <nav
+        class="tabs"
+        role="tablist"
+        aria-label="Vistas de indicadores"
+        (keydown)="onTabKeydown($event)"
+      >
+        <button
+          type="button"
+          role="tab"
+          id="tab-live"
+          class="tabs__tab"
+          [class.tabs__tab--active]="activeTab() === 'live'"
+          [attr.aria-selected]="activeTab() === 'live'"
+          aria-controls="panel-live"
+          [attr.tabindex]="activeTab() === 'live' ? 0 : -1"
+          (click)="setTab('live')"
+          data-testid="tab-live"
+        >
+          Tiempo real
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id="tab-history"
+          class="tabs__tab"
+          [class.tabs__tab--active]="activeTab() === 'history'"
+          [attr.aria-selected]="activeTab() === 'history'"
+          aria-controls="panel-history"
+          [attr.tabindex]="activeTab() === 'history' ? 0 : -1"
+          (click)="setTab('history')"
+          data-testid="tab-history"
+        >
+          Comparativa historica
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id="tab-analysis"
+          class="tabs__tab"
+          [class.tabs__tab--active]="activeTab() === 'analysis'"
+          [attr.aria-selected]="activeTab() === 'analysis'"
+          aria-controls="panel-analysis"
+          [attr.tabindex]="activeTab() === 'analysis' ? 0 : -1"
+          (click)="setTab('analysis')"
+          data-testid="tab-analysis"
+        >
+          Analisis
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id="tab-futures"
+          class="tabs__tab"
+          [class.tabs__tab--active]="activeTab() === 'futures'"
+          [attr.aria-selected]="activeTab() === 'futures'"
+          aria-controls="panel-futures"
+          [attr.tabindex]="activeTab() === 'futures' ? 0 : -1"
+          (click)="setTab('futures')"
+          data-testid="tab-futures"
+        >
+          Futuros
+        </button>
+      </nav>
     }
   }
 
@@ -150,6 +186,22 @@
           }
         }
       }
+    </div>
+  }
+
+  @if (activeTab() === 'analysis') {
+    <div class="analysis-panel" id="panel-analysis" role="tabpanel" aria-labelledby="tab-analysis">
+      <app-indicator-analysis
+        [analysis]="analysis()"
+        [state]="analysisState()"
+        (retry)="retryAnalysis()"
+      />
+    </div>
+  }
+
+  @if (activeTab() === 'futures') {
+    <div class="futures-panel" id="panel-futures" role="tabpanel" aria-labelledby="tab-futures">
+      <app-futures-panel [panel]="futures()" [state]="futuresState()" (retry)="retryFutures()" />
     </div>
   }
 </div>

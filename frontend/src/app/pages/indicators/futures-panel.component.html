@@ -1,0 +1,200 @@
+@switch (state()) {
+  @case ('loading') {
+    <div class="futures-state" aria-busy="true" data-testid="futures-loading">
+      <span class="spinner"></span>
+      Cargando rendimiento de futuros...
+    </div>
+  }
+  @case ('error') {
+    <div class="futures-state futures-state--error" role="alert" data-testid="futures-error">
+      <div class="futures-state__body">
+        <span>No se pudo cargar el rendimiento de futuros.</span>
+        <button
+          type="button"
+          class="retry-button"
+          (click)="retry.emit()"
+          data-testid="futures-retry"
+        >
+          Reintentar
+        </button>
+      </div>
+    </div>
+  }
+  @case ('ready') {
+    @if (panel(); as data) {
+      <section class="futures" data-testid="futures-panel" aria-label="Rendimiento de futuros">
+        @if (categories().length > 1) {
+          <div class="controls">
+            <div class="control-group">
+              <span class="control-label text-label">Categoría</span>
+              <div class="chips" role="group" aria-label="Filtrar por categoría">
+                <button
+                  type="button"
+                  class="chip"
+                  [class.chip--active]="selectedCategory() === 'ALL'"
+                  [attr.aria-pressed]="selectedCategory() === 'ALL'"
+                  (click)="setCategory('ALL')"
+                  data-testid="futures-category-ALL"
+                >
+                  Todo
+                </button>
+                @for (category of categories(); track category) {
+                  <button
+                    type="button"
+                    class="chip"
+                    [class.chip--active]="selectedCategory() === category"
+                    [attr.aria-pressed]="selectedCategory() === category"
+                    (click)="setCategory(category)"
+                    [attr.data-testid]="'futures-category-' + category"
+                  >
+                    {{ categoryLabel(category) }}
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (data.stale) {
+          <p class="notice" role="status" data-testid="futures-stale">
+            Datos en caché: el proveedor no respondió en la última actualización.
+          </p>
+        }
+
+        @if (data.items.length === 0) {
+          <div class="futures-state" data-testid="futures-empty">
+            Todavía no hay cierres de futuros almacenados. Intenta de nuevo en unos minutos.
+          </div>
+        } @else {
+          <header class="summary">
+            <div class="summary__head">
+              <h2 class="summary__title">Rendimiento por temporalidad</h2>
+              <p class="summary__meta text-caption">
+                {{ availableCount() }} futuros con dato · actualizado {{ updatedLabel() }}
+              </p>
+            </div>
+            <div class="summary__movers">
+              @if (leader(); as top) {
+                <span class="mover" [class]="'tone--' + changeTone(top.changes[focusPeriod()])">
+                  <span class="mover__label text-label">Líder {{ focusLabel() }}</span>
+                  <span class="mover__name">{{ top.name }}</span>
+                  <span
+                    class="mover__value"
+                    [class]="'tone--' + changeTone(top.changes[focusPeriod()])"
+                  >
+                    {{ formatChange(top.changes[focusPeriod()]) }}
+                  </span>
+                </span>
+              }
+              @if (laggard(); as bottom) {
+                <span class="mover" [class]="'tone--' + changeTone(bottom.changes[focusPeriod()])">
+                  <span class="mover__label text-label">Rezagado {{ focusLabel() }}</span>
+                  <span class="mover__name">{{ bottom.name }}</span>
+                  <span
+                    class="mover__value"
+                    [class]="'tone--' + changeTone(bottom.changes[focusPeriod()])"
+                  >
+                    {{ formatChange(bottom.changes[focusPeriod()]) }}
+                  </span>
+                </span>
+              }
+            </div>
+          </header>
+
+          <div class="chart-card">
+            <p class="chart-caption text-label">{{ chartCaption() }}</p>
+            @if (chartItems().length > 0) {
+              <app-futures-bar-chart [items]="chartItems()" [period]="focusPeriod()" />
+            } @else {
+              <p class="muted" data-testid="futures-chart-empty">
+                Sin variaciones calculables para esta temporalidad y categoría.
+              </p>
+            }
+          </div>
+
+          <div class="table-wrap">
+            <table class="ranking" data-testid="futures-table">
+              <caption class="visually-hidden">
+                Rendimiento de futuros en 1 día, 1 mes, 3 meses y año en curso
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col" [attr.aria-sort]="ariaSort('code')">
+                    <button
+                      type="button"
+                      class="sort-button"
+                      (click)="sortBy('code')"
+                      data-testid="futures-sort-code"
+                    >
+                      Futuro
+                      <span class="sort-glyph" aria-hidden="true">{{ sortGlyph('code') }}</span>
+                    </button>
+                  </th>
+                  <th scope="col">Categoría</th>
+                  <th scope="col" class="num" [attr.aria-sort]="ariaSort('price')">
+                    <button
+                      type="button"
+                      class="sort-button sort-button--num"
+                      (click)="sortBy('price')"
+                      data-testid="futures-sort-price"
+                    >
+                      Precio
+                      <span class="sort-glyph" aria-hidden="true">{{ sortGlyph('price') }}</span>
+                    </button>
+                  </th>
+                  @for (option of periods; track option) {
+                    <th scope="col" class="num" [attr.aria-sort]="ariaSort(option)">
+                      <button
+                        type="button"
+                        class="sort-button sort-button--num"
+                        (click)="sortBy(option)"
+                        [attr.data-testid]="'futures-sort-' + option"
+                      >
+                        {{ option }}
+                        <span class="sort-glyph" aria-hidden="true">{{ sortGlyph(option) }}</span>
+                      </button>
+                    </th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of sortedItems(); track item.code) {
+                  <tr
+                    [attr.data-testid]="'futures-row-' + item.code"
+                    [class.row--muted]="!item.available"
+                  >
+                    <th scope="row">
+                      <span class="name">{{ item.name }}</span>
+                      <span class="code">{{ item.code }} · {{ item.yahooSymbol }}</span>
+                    </th>
+                    <td>{{ categoryLabel(item.category) }}</td>
+                    <td class="num">{{ formatPrice(item) }}</td>
+                    @for (option of periods; track option) {
+                      <td class="num">
+                        <span
+                          class="change"
+                          [class]="'tone--' + changeTone(item.changes[option])"
+                          [attr.data-testid]="'futures-change-' + item.code + '-' + option"
+                        >
+                          <span class="change__glyph" aria-hidden="true">
+                            {{ changeGlyph(item.changes[option]) }}
+                          </span>
+                          <span>{{ formatChange(item.changes[option]) }}</span>
+                        </span>
+                      </td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <p class="disclaimer text-caption" data-testid="futures-disclaimer">
+            <span class="disclaimer__icon" aria-hidden="true">i</span>
+            {{ data.disclaimer }}
+          </p>
+        }
+      </section>
+    }
+  }
+}

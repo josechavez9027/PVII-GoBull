@@ -179,6 +179,30 @@ export function groupByCategory<T extends { category: IndicatorCategory }>(
   return [...map.entries()].map(([category, items]) => ({ category, items }));
 }
 
+export interface MacroNewsRow {
+  title: string;
+  source: string;
+  url: string;
+  publishedAt: Date;
+  sentiment: number | null;
+}
+
+/** Noticias macroeconomicas recientes, sin contexto de usuario. */
+export function recentMacroNews(since: Date, limit = 8): Promise<MacroNewsRow[]> {
+  return prisma.newsArticle.findMany({
+    where: { category: "ECONOMIA", publishedAt: { gte: since } },
+    orderBy: { publishedAt: "desc" },
+    take: limit,
+    select: {
+      title: true,
+      source: true,
+      url: true,
+      publishedAt: true,
+      sentiment: true,
+    },
+  });
+}
+
 export function getSyncState(job: string) {
   return prisma.indicatorSyncState.findUnique({ where: { job } });
 }

@@ -29,7 +29,6 @@ export class AppShellComponent implements OnInit {
   ];
 
   navigation = [
-    { label: 'Inicio', icon: '⌂', route: '/dashboard' },
     { label: 'Operaciones', icon: '▣', route: '/dashboard' },
     { label: 'Noticias', icon: '▤', route: '/noticias' },
     { label: 'Indicadores', icon: '◈', route: '/indicadores' },

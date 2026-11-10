@@ -19,6 +19,7 @@ const controller = new IndicatorsController(service);
 router.use(authenticate);
 
 router.get("/compare", controller.compare.bind(controller));
+router.get("/analysis", controller.analysis.bind(controller));
 router.get("/sync-status", controller.syncStatus.bind(controller));
 router.post("/sync", controller.sync.bind(controller));
 router.get("/:code/history", controller.history.bind(controller));

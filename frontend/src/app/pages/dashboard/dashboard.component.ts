@@ -45,8 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild('chartCanvas') chartCanvas?: ElementRef<HTMLCanvasElement>;
 
   protected readonly navigation = [
-    { label: 'Inicio', icon: '⌂', active: true },
-    { label: 'Operaciones', icon: '▣' },
+    { label: 'Operaciones', icon: '▣', active: true },
     { label: 'Noticias', icon: '▤' },
   ];
 

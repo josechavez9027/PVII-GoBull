@@ -29,12 +29,14 @@ import {
   toDateKey,
   type TimeRange,
 } from "./indicators.calc";
+import { CURATED_ANALYSIS_CODES, buildAnalysis, computeWeeklyChangePct } from "./indicators.analysis";
 import type { FmpProvider, FmpHistoryRow, FmpTreasuryRow } from "./indicators.provider";
 import { IndicatorsProviderError } from "./indicators.provider";
 import type { IndicatorQuotaService } from "./indicators.quota";
 import type { SnapshotRow, UpsertSnapshotInput } from "./indicators.repository";
 import * as repo from "./indicators.repository";
 import type {
+  AnalysisDto,
   CompareDto,
   CompareSeriesDto,
   HistoryDto,
@@ -459,6 +461,58 @@ export class IndicatorsService {
       quota: usage,
       groups: groupList,
     };
+  }
+
+  async analysis(): Promise<AnalysisDto> {
+    const now = new Date();
+    const weekStart = new Date(now.getTime() - 7 * DAY_MS);
+    const windowStart = new Date(now.getTime() - 8 * DAY_MS);
+    const indicators = await repo.listActiveIndicators();
+    const curatedCodes = new Set<string>(CURATED_ANALYSIS_CODES);
+    const curated = indicators.filter((indicator) => curatedCodes.has(indicator.code));
+    const ids = curated.map((indicator) => indicator.id);
+
+    const [latestByIndicator, windowRows, newsRows] = await Promise.all([
+      repo.latestSnapshotsFor(ids),
+      repo.snapshotsInWindowFor(ids, windowStart, now),
+      repo.recentMacroNews(weekStart, 8),
+    ]);
+
+    const windowByIndicator = new Map<string, { asOf: Date; value: number }[]>();
+    for (const row of windowRows) {
+      if (!Number.isFinite(row.value)) continue;
+      const list = windowByIndicator.get(row.indicatorId) ?? [];
+      list.push({ asOf: row.asOf, value: row.value });
+      windowByIndicator.set(row.indicatorId, list);
+    }
+
+    const items = curated.map((indicator) => {
+      const latest = latestByIndicator.get(indicator.id) ?? null;
+      const weeklyChange = computeWeeklyChangePct(
+        windowByIndicator.get(indicator.id) ?? [],
+        weekStart,
+      );
+
+      return {
+        code: indicator.code,
+        name: indicator.name,
+        value: latest ? roundTo(latest.value, indicator.decimals) : null,
+        weeklyChangePct: weeklyChange,
+        decimals: indicator.decimals,
+        unit: indicator.unit,
+        asOf: latest ? latest.asOf.toISOString() : null,
+      };
+    });
+
+    const news = newsRows.map((row) => ({
+      title: row.title,
+      source: row.source,
+      url: row.url,
+      publishedAt: row.publishedAt.toISOString(),
+      sentiment: row.sentiment,
+    }));
+
+    return buildAnalysis({ generatedAt: now.toISOString(), items, news });
   }
 
   async history(code: string, range: TimeRange): Promise<HistoryDto> {

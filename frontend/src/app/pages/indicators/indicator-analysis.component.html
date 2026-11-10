@@ -1,0 +1,148 @@
+@switch (state()) {
+  @case ('loading') {
+    <div class="analysis-state" aria-busy="true" data-testid="analysis-loading">
+      <span class="spinner"></span>
+      Generando la lectura semanal del mercado...
+    </div>
+  }
+  @case ('error') {
+    <div class="analysis-state analysis-state--error" role="alert" data-testid="analysis-error">
+      <div class="analysis-state__body">
+        <span>No se pudo generar la interpretación automática.</span>
+        <button
+          type="button"
+          class="retry-button"
+          (click)="retry.emit()"
+          data-testid="analysis-retry"
+        >
+          Reintentar
+        </button>
+      </div>
+    </div>
+  }
+  @case ('ready') {
+    @if (analysis(); as analysisData) {
+      <section
+        class="analysis"
+        data-testid="indicator-analysis"
+        aria-label="Interpretación automática semanal de indicadores"
+      >
+        <header class="verdict" [class]="'verdict tone--' + biasTone()">
+          <div class="verdict__main">
+            <div class="verdict__lead">
+              <p class="verdict__eyebrow text-label">Lectura semanal</p>
+              <p class="verdict__bias text-metric">
+                <span class="verdict__glyph" aria-hidden="true">{{ biasGlyph() }}</span>
+                <span data-testid="analysis-bias">{{ biasLabel() }}</span>
+              </p>
+              <p class="verdict__risk text-label" data-testid="analysis-risk">
+                Riesgo <strong>{{ riskLabel() }}</strong>
+              </p>
+            </div>
+            <p class="verdict__summary" data-testid="analysis-summary">
+              {{ analysisData.summary }}
+            </p>
+          </div>
+          <div class="verdict__meta text-caption">
+            <span>Actualizado {{ formatAsOf(analysisData.asOf) }}</span>
+            <span aria-hidden="true">·</span>
+          </div>
+        </header>
+
+        <section class="news" aria-labelledby="analysis-news-title" data-testid="analysis-news">
+          <div class="news__head">
+            <h3 id="analysis-news-title" class="section-title">Contexto macroeconómico</h3>
+            <div class="news__summary">
+              <span
+                class="dot"
+                [class]="'dot tone--' + newsTone(analysisData.news.label)"
+                aria-hidden="true"
+              ></span>
+              <span class="text-label" data-testid="analysis-news-label">
+                {{ newsLabel(analysisData.news.label) }}
+              </span>
+              <span class="text-caption news__meta"> {{ analysisData.news.count }} titulares </span>
+            </div>
+          </div>
+          @if (analysisData.news.items.length === 0) {
+            <p class="muted text-body">No hay titulares macro registrados en los últimos 7 días.</p>
+          } @else {
+            <ul class="news__list">
+              @for (item of analysisData.news.items; track item.url) {
+                <li class="news__item">
+                  <a class="news__link" [href]="item.url" target="_blank" rel="noopener noreferrer">
+                    {{ item.title }}
+                  </a>
+                  <span class="news__source text-caption">
+                    {{ item.source }} · {{ formatNewsDate(item.publishedAt) }}
+                  </span>
+                  <span class="news__sentiment text-caption">
+                    <span
+                      class="dot"
+                      [class]="'dot tone--' + sentimentTone(item.sentiment)"
+                      aria-hidden="true"
+                    ></span>
+                    {{ sentimentLabel(item.sentiment) }}
+                  </span>
+                </li>
+              }
+            </ul>
+          }
+        </section>
+
+        <section class="block" aria-labelledby="analysis-signals-title">
+          <h3 id="analysis-signals-title" class="section-title">Señales de la semana</h3>
+          @if (analysisData.signals.length === 0) {
+            <p class="muted text-body">
+              Los indicadores curados no muestran señales relevantes en este momento.
+            </p>
+          } @else {
+            <ul class="rows" data-testid="analysis-signals">
+              @for (signal of analysisData.signals; track signal.code) {
+                <li class="row" [attr.data-testid]="'analysis-signal-' + signal.code">
+                  <span
+                    class="dot"
+                    [class]="'dot tone--' + severityTone(signal.severity)"
+                    aria-hidden="true"
+                  ></span>
+                  <div class="row__body">
+                    <p class="row__title">{{ signal.title }}</p>
+                    <p class="row__text">{{ signal.message }}</p>
+                  </div>
+                  <span class="row__tag text-label">{{ severityLabel(signal.severity) }}</span>
+                </li>
+              }
+            </ul>
+          }
+        </section>
+
+        <section class="block" aria-labelledby="analysis-interpretations-title">
+          <h3 id="analysis-interpretations-title" class="section-title">
+            Interpretación por indicador
+          </h3>
+          <ul class="rows" data-testid="analysis-interpretations">
+            @for (interpretation of analysisData.interpretations; track interpretation.code) {
+              <li class="row">
+                <span
+                  class="dot"
+                  [class]="'dot tone--' + stanceTone(interpretation.stance)"
+                  aria-hidden="true"
+                ></span>
+                <div class="row__body">
+                  <p class="row__title">{{ interpretation.name }}</p>
+                  <p class="row__text">{{ interpretation.text }}</p>
+                </div>
+                <span class="row__tag text-label">{{ stanceLabel(interpretation.stance) }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+
+        <p class="disclaimer text-caption" data-testid="analysis-disclaimer">
+          <span class="disclaimer__icon" aria-hidden="true">i</span>
+          {{ analysisData.disclaimer }}
+        </p>
+      </section>
+    }
+  }
+}

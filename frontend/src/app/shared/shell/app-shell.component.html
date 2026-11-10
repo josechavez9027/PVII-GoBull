@@ -22,7 +22,7 @@
           class="nav-item"
           [routerLink]="item.route"
           routerLinkActive="nav-item--active"
-          [routerLinkActiveOptions]="{ exact: item.label === 'Inicio' }"
+          [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
         >
           <span class="nav-item__icon" aria-hidden="true">{{ item.icon }}</span>
           <span>{{ item.label }}</span>
